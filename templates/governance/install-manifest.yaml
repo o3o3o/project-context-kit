@@ -1,0 +1,21 @@
+version: "1.0.0"
+kit_source: "https://github.com/example/repo-governance-kit"
+installed_at: "{{INSTALLED_AT}}"
+managed_paths:
+  - ".ai-governance/"
+  - "docs/project/"
+  - "docs/task/"
+merge_targets:
+  - "AGENTS.md"
+  - "CLAUDE.md"
+canonical_project_docs:
+  - "docs/project/context.md"
+  - "docs/project/architecture.md"
+  - "docs/project/coding-standards.md"
+  - "docs/project/verify-runbook.md"
+canonical_task_docs:
+  - "task.md"
+  - "plan.md"
+  - "progress.md"
+  - "handoff.md"
+  - "verification.md"

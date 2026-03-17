@@ -1,0 +1,41 @@
+version: "1.0.0"
+package_name: "repo-governance-kit"
+description: "Multi-Agent / multi-IDE collaboration governance layer"
+canonical_source: "https://github.com/example/repo-governance-kit"
+
+structure:
+  governance_dir: ".ai-governance"
+  project_docs_dir: "docs/project"
+  task_docs_dir: "docs/task"
+
+injection_targets:
+  - file: "AGENTS.md"
+    marker: "AI-GOVERNANCE"
+    append_template: "templates/root/AGENTS.append.md"
+  - file: "CLAUDE.md"
+    marker: "AI-GOVERNANCE"
+    append_template: "templates/root/CLAUDE.append.md"
+
+assets:
+  governance:
+    - templates/governance/AGENTS.shared.md
+    - templates/governance/CLAUDE.shared.md
+    - templates/governance/repo-contract.md
+    - templates/governance/install-manifest.yaml
+  rules:
+    - templates/.agents/rules/00-repo-contract.md
+  skills:
+    - templates/.agents/skills/task-bootstrap
+    - templates/.agents/skills/task-resume
+    - templates/.agents/skills/verify-change
+  docs_project:
+    - templates/docs/project/context.md
+    - templates/docs/project/architecture.md
+    - templates/docs/project/coding-standards.md
+    - templates/docs/project/verify-runbook.md
+  docs_task_template:
+    - templates/docs/task/_template/task.md
+    - templates/docs/task/_template/plan.md
+    - templates/docs/task/_template/progress.md
+    - templates/docs/task/_template/handoff.md
+    - templates/docs/task/_template/verification.md
