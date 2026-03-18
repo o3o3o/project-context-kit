@@ -7,6 +7,20 @@ This kit installs a **Git-Context-Controller (GCC)** memory layer. It treats AI 
 
 ---
 
+## ⚡ Continuity Flow (MVP)
+
+The fastest way to use this kit is through the **Continuity Slash Commands**. These are designed for quick handoffs when switching IDEs, models, or sessions.
+
+### `/gov-context`
+**When to use**: Immediately upon starting a new session.
+**Behavior**: Reads `task.md` and `summary.md` to provide a concise brief on the current goal, progress, risks, and next steps. It ensures you don't start from zero.
+
+### `/gov-writeback`
+**When to use**: Just before ending your session.
+**Behavior**: Overwrites `summary.md` with the current implementation state, decisions, and blockers. This serves as the "resumable image" for the next agent.
+
+---
+
 ## The GCC Hierarchy
 
 ### 1. Global Awareness (`docs/project/`)

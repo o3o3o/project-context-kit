@@ -5,6 +5,6 @@
 - **Metadata**: @.ai-governance/docs/project/metadata.yaml
 - **Rules**: @.ai-governance/GEMINI.shared.md
 
-**Required on every session start**: Run `task-context` or read `metadata.yaml`, `task.md`, and branch `summary.md`.
-**Required on every session end**: Run `task-commit` on success, or update `summary.md` (State/Action) for partial progress.
+**Required on every session start**: Run `/gov-context`.
+**Required on every session end**: Run `/gov-writeback`.
 <!-- END AI-GOVERNANCE -->

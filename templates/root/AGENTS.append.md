@@ -4,7 +4,7 @@ This repository uses a Git-Context-Controller (GCC) shared governance layer.
 **Rules**: `.ai-governance/AGENTS.shared.md` | **Contract**: `.ai-governance/repo-contract.md`
 
 ### Required Every Session
-**START**: Read `metadata.yaml` (env/commands) and `task.md`. Run `task-context` to load the active branch state.
-**END**: Run `task-commit` for milestones, OR update `summary.md` (State/Next Action) for partial progress.
+**START**: Run `/gov-context` to load current task state and objective.
+**END**: Run `/gov-writeback` to leave a resumable summary for the next agent.
 
 GCC records context/decisions in `.ai-governance/docs/`. Do not treat IDE memory or chat history as durable state.

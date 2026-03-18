@@ -19,13 +19,25 @@ injection_targets:
     marker: "AI-GOVERNANCE"
     append_template: "templates/root/GEMINI.append.md"
 
-assets:
+  assets:
   governance:
     - templates/governance/AGENTS.shared.md
     - templates/governance/CLAUDE.shared.md
     - templates/governance/GEMINI.shared.md
     - templates/governance/repo-contract.md
     - templates/governance/install-manifest.yaml
+  commands:
+    - templates/governance/commands/gov-context.md
+    - templates/governance/commands/gov-writeback.md
+  host_commands:
+    - templates/.claude/commands/gov-context.md
+    - templates/.claude/commands/gov-writeback.md
+    - templates/.opencode/commands/gov-context.md
+    - templates/.opencode/commands/gov-writeback.md
+    - templates/.codex/prompts/gov-context.md
+    - templates/.codex/prompts/gov-writeback.md
+  scripts:
+    - templates/governance/scripts/sync-commands.sh
   rules:
     - templates/.agents/rules/00-repo-contract.md
   skills:
