@@ -41,7 +41,11 @@ def merge_file(target_path, template_path):
     with open(template_path, 'r') as f:
         template_content = f.read().strip()
 
-    new_block = f"{MARKER_START}\n{template_content}\n{MARKER_END}"
+    # Prevent nesting: if template already contains markers, don't wrap it.
+    if MARKER_START in template_content and MARKER_END in template_content:
+        new_block = template_content
+    else:
+        new_block = f"{MARKER_START}\n{template_content}\n{MARKER_END}"
 
     if not os.path.exists(target_path):
         with open(target_path, 'w') as f:
@@ -58,9 +62,11 @@ def merge_file(target_path, template_path):
         re.DOTALL
     )
     if pattern.search(content):
+        # REPLACE existing block
         new_content = pattern.sub(new_block, content)
         log(f"  Updated existing governance block.")
     else:
+        # APPEND new block
         new_content = content.rstrip() + "\n\n" + new_block + "\n"
         log(f"  Appended governance block.")
 
