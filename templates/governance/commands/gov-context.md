@@ -27,6 +27,7 @@ The single most important next step to take.
 
 ## Rules
 
+- **Gemini CLI**: Call `activate_skill(name="task-context")` after reading these files to synthesize state.
 - Do not modify code.
 - Do not modify governance files.
 - Do not infer extra requirements unless strongly supported by the files.

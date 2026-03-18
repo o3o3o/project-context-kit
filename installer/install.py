@@ -107,8 +107,8 @@ def main():
 
     # ── 1. Create governance directory structure ───────────────────────────
     log("Step 1: Creating directory structure...")
-    ensure_dir(os.path.join(target_repo, ".ai-governance/.agents/rules"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/.agents/skills"))
+    ensure_dir(os.path.join(target_repo, ".agents/rules"))
+    ensure_dir(os.path.join(target_repo, ".agents/skills"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/project"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/active/branches/main/commits"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/archive"))
@@ -130,22 +130,31 @@ def main():
         )
     print()
 
-    # ── 3. Copy Antigravity rules & skills ────────────────────────────────
-    log("Step 3: Installing Antigravity rules and skills...")
+    # ── 3. Copy Agent rules & skills (Root .agents/) ──────────────────────
+    log("Step 3: Installing agent rules and skills to .agents/...")
     copy_template(
         os.path.join(source_kit, "templates/.agents/rules"),
-        os.path.join(target_repo, ".ai-governance/.agents/rules"),
+        os.path.join(target_repo, ".agents/rules"),
         overwrite=True
     )
     copy_template(
         os.path.join(source_kit, "templates/.agents/skills"),
-        os.path.join(target_repo, ".ai-governance/.agents/skills"),
+        os.path.join(target_repo, ".agents/skills"),
         overwrite=True
     )
     print()
 
-    # ── 4. Copy project doc templates (non-destructive) ───────────────────
-    log("Step 4: Installing .ai-governance/docs/project templates (non-destructive)...")
+    # ── 4. Copy agent-specific command directories ────────────────────────
+    log("Step 4: Installing agent-specific command directories...")
+    agent_dirs = [".claude", ".codex", ".opencode", ".gemini"]
+    for d in agent_dirs:
+        src_d = os.path.join(source_kit, "templates", d)
+        if os.path.exists(src_d):
+            copy_template(src_d, os.path.join(target_repo, d), overwrite=True)
+    print()
+
+    # ── 5. Copy project doc templates (non-destructive) ───────────────────
+    log("Step 5: Installing .ai-governance/docs/project templates (non-destructive)...")
     docs_proj_src = os.path.join(source_kit, "templates/governance/docs/project")
     docs_proj_dst = os.path.join(target_repo, ".ai-governance/docs/project")
     for item in os.listdir(docs_proj_src):
@@ -156,8 +165,8 @@ def main():
         )
     print()
 
-    # ── 5. Copy task templates (overwrite OK, these are just starters) ────
-    log("Step 5: Installing .ai-governance/docs/task/_template files...")
+    # ── 6. Copy task templates (overwrite OK, these are just starters) ────
+    log("Step 6: Installing .ai-governance/docs/task/_template files...")
     docs_task_src = os.path.join(source_kit, "templates/governance/docs/task/_template")
     docs_task_dst = os.path.join(target_repo, ".ai-governance/docs/task/_template")
     copy_template(
@@ -167,8 +176,8 @@ def main():
     )
     print()
 
-    # ── 6. Merge entry files (AGENTS.md, CLAUDE.md, GEMINI.md) ───────────
-    log("Step 6: Merging agent entry files...")
+    # ── 7. Merge entry files (AGENTS.md, CLAUDE.md, GEMINI.md) ───────────
+    log("Step 7: Merging agent entry files...")
     templates_root = os.path.join(source_kit, "templates/root")
     merge_file(
         os.path.join(target_repo, "AGENTS.md"),
@@ -184,8 +193,8 @@ def main():
     )
     print()
 
-    # ── 7. Generate install manifest ──────────────────────────────────────
-    log("Step 7: Generating install manifest...")
+    # ── 8. Generate install manifest ──────────────────────────────────────
+    log("Step 8: Generating install manifest...")
     manifest_src = os.path.join(source_kit, "templates/governance/install-manifest.yaml")
     manifest_dst = os.path.join(target_repo, ".ai-governance/install-manifest.yaml")
 

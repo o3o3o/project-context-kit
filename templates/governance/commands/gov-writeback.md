@@ -36,6 +36,7 @@ Write `summary.md` using exactly this structure:
 
 ## Rules
 
+- **Gemini CLI**: Call `activate_skill(name="task-commit")` if a milestone was reached.
 - Overwrite the file; do not append logs.
 - Keep it concise.
 - Prefer concrete implementation state over narrative.
