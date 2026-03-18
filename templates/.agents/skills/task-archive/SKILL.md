@@ -6,27 +6,27 @@ description: Archive the current active task and clear docs/task/active/ for a n
 # task-archive Skill
 
 ## Purpose
-When a task is complete (or is being put on hold), move it from `docs/task/active/` to
-`docs/task/archive/<name>/` so the workspace is clean for the next task.
+When a task is complete (or is being put on hold), move it from `.ai-governance/docs/task/active/` to
+`.ai-governance/docs/task/archive/<name>/` so the workspace is clean for the next task.
 
 ## Instructions
 
-1. **Read `docs/task/active/task.md`** to get the task name.
+1. **Read `.ai-governance/docs/task/active/task.md`** to get the task name.
 
 2. **Ask the user to confirm** the archive name (suggest: `YYYY-MM-DD-<task-slug>`).
 
-3. **Create the archive directory**: `docs/task/archive/<archive-name>/`
+3. **Create the archive directory**: `.ai-governance/docs/task/archive/<archive-name>/`
 
-4. **Move all files** from `docs/task/active/` to `docs/task/archive/<archive-name>/`.
+4. **Move all files** from `.ai-governance/docs/task/active/` to `.ai-governance/docs/task/archive/<archive-name>/`.
 
-5. **Write a final summary** to `docs/task/archive/<archive-name>/handoff.md`:
+5. **Write a final summary** to `.ai-governance/docs/task/archive/<archive-name>/handoff.md`:
    - Final status (completed / on hold / cancelled)
    - Brief outcome summary
    - Date archived
 
-6. **Clear `docs/task/active/`** (delete it or leave it empty).
+6. **Clear `.ai-governance/docs/task/active/`** (delete it or leave it empty).
 
-7. **Confirm** to the user: *"Task archived at docs/task/archive/<archive-name>/. Active task cleared. Run `task-bootstrap` to start a new task."*
+7. **Confirm** to the user: *"Task archived at .ai-governance/docs/task/archive/<archive-name>/. Active task cleared. Run `task-bootstrap` to start a new task."*
 
 ## Constraints
 - Never delete the archive — only move files.

@@ -1,12 +1,12 @@
-version: "1.0.0"
+version: "1.2.0"
 package_name: "repo-governance-kit"
 description: "Multi-Agent / multi-IDE collaboration governance layer"
 canonical_source: "https://github.com/example/repo-governance-kit"
 
 structure:
   governance_dir: ".ai-governance"
-  project_docs_dir: "docs/project"
-  task_docs_dir: "docs/task"
+  project_docs_dir: ".ai-governance/docs/project"
+  task_docs_dir: ".ai-governance/docs/task"
 
 injection_targets:
   - file: "AGENTS.md"
@@ -15,11 +15,15 @@ injection_targets:
   - file: "CLAUDE.md"
     marker: "AI-GOVERNANCE"
     append_template: "templates/root/CLAUDE.append.md"
+  - file: "GEMINI.md"
+    marker: "AI-GOVERNANCE"
+    append_template: "templates/root/GEMINI.append.md"
 
 assets:
   governance:
     - templates/governance/AGENTS.shared.md
     - templates/governance/CLAUDE.shared.md
+    - templates/governance/GEMINI.shared.md
     - templates/governance/repo-contract.md
     - templates/governance/install-manifest.yaml
   rules:
@@ -27,15 +31,16 @@ assets:
   skills:
     - templates/.agents/skills/task-bootstrap
     - templates/.agents/skills/task-resume
+    - templates/.agents/skills/task-archive
     - templates/.agents/skills/verify-change
   docs_project:
-    - templates/docs/project/context.md
-    - templates/docs/project/architecture.md
-    - templates/docs/project/coding-standards.md
-    - templates/docs/project/verify-runbook.md
+    - templates/governance/docs/project/context.md
+    - templates/governance/docs/project/architecture.md
+    - templates/governance/docs/project/coding-standards.md
+    - templates/governance/docs/project/verify-runbook.md
   docs_task_template:
-    - templates/docs/task/_template/task.md
-    - templates/docs/task/_template/plan.md
-    - templates/docs/task/_template/progress.md
-    - templates/docs/task/_template/handoff.md
-    - templates/docs/task/_template/verification.md
+    - templates/governance/docs/task/_template/task.md
+    - templates/governance/docs/task/_template/plan.md
+    - templates/governance/docs/task/_template/progress.md
+    - templates/governance/docs/task/_template/handoff.md
+    - templates/governance/docs/task/_template/verification.md

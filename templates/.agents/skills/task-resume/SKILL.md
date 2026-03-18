@@ -11,15 +11,15 @@ Use this at the start of every session.
 
 ## Instructions
 
-1. **Check if `docs/task/active/` exists.**
+1. **Check if `.ai-governance/docs/task/active/` exists.**
    - If it does NOT exist, tell the user: *"No active task found. Please create one with `task-bootstrap`."*
    - Then stop.
 
 2. **Read these files in order:**
-   - `docs/project/context.md` — project background
-   - `docs/task/active/task.md` — task definition
-   - `docs/task/active/progress.md` — what has been done
-   - `docs/task/active/handoff.md` — what the previous agent left for you
+   - `.ai-governance/docs/project/context.md` — project background
+   - `.ai-governance/docs/task/active/task.md` — task definition
+   - `.ai-governance/docs/task/active/progress.md` — what has been done
+   - `.ai-governance/docs/task/active/handoff.md` — what the previous agent left for you
 
 3. **Output a summary** in this format:
 

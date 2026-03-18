@@ -109,10 +109,10 @@ def main():
     log("Step 1: Creating directory structure...")
     ensure_dir(os.path.join(target_repo, ".ai-governance/.agents/rules"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/.agents/skills"))
-    ensure_dir(os.path.join(target_repo, "docs/project"))
-    ensure_dir(os.path.join(target_repo, "docs/task/active"))
-    ensure_dir(os.path.join(target_repo, "docs/task/archive"))
-    ensure_dir(os.path.join(target_repo, "docs/task/_template"))
+    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/project"))
+    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/active"))
+    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/archive"))
+    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/_template"))
     print()
 
     # ── 2. Copy shared governance files ───────────────────────────────────
@@ -120,7 +120,7 @@ def main():
     gov_src = os.path.join(source_kit, "templates/governance")
     gov_dst = os.path.join(target_repo, ".ai-governance")
     for item in os.listdir(gov_src):
-        if item == "install-manifest.yaml":
+        if item in ["install-manifest.yaml", "docs"]:
             continue  # handled separately
         copy_template(
             os.path.join(gov_src, item),
@@ -144,9 +144,9 @@ def main():
     print()
 
     # ── 4. Copy project doc templates (non-destructive) ───────────────────
-    log("Step 4: Installing docs/project templates (non-destructive)...")
-    docs_proj_src = os.path.join(source_kit, "templates/docs/project")
-    docs_proj_dst = os.path.join(target_repo, "docs/project")
+    log("Step 4: Installing .ai-governance/docs/project templates (non-destructive)...")
+    docs_proj_src = os.path.join(source_kit, "templates/governance/docs/project")
+    docs_proj_dst = os.path.join(target_repo, ".ai-governance/docs/project")
     for item in os.listdir(docs_proj_src):
         copy_template(
             os.path.join(docs_proj_src, item),
@@ -156,10 +156,12 @@ def main():
     print()
 
     # ── 5. Copy task templates (overwrite OK, these are just starters) ────
-    log("Step 5: Installing docs/task/_template files...")
+    log("Step 5: Installing .ai-governance/docs/task/_template files...")
+    docs_task_src = os.path.join(source_kit, "templates/governance/docs/task/_template")
+    docs_task_dst = os.path.join(target_repo, ".ai-governance/docs/task/_template")
     copy_template(
-        os.path.join(source_kit, "templates/docs/task/_template"),
-        os.path.join(target_repo, "docs/task/_template"),
+        docs_task_src,
+        docs_task_dst,
         overwrite=True
     )
     print()
@@ -199,7 +201,7 @@ def main():
 
     log("✅ Installation complete!")
     log("Next steps:")
-    log("  1. Fill in docs/project/context.md with your project details")
+    log("  1. Fill in .ai-governance/docs/project/context.md with your project details")
     log("  2. Run 'task-bootstrap' skill in your AI agent to create the first active task")
 
 

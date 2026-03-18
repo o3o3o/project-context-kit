@@ -9,12 +9,12 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 > These are mandatory, not optional. Do them before doing anything else.
 
-1. **Read project context**: Open and read `docs/project/context.md`. This is your grounding document.
-2. **Read active task**: Open and read `docs/task/active/task.md` and `docs/task/active/progress.md`.
+1. **Read project context**: Open and read `.ai-governance/docs/project/context.md`. This is your grounding document.
+2. **Read active task**: Open and read `.ai-governance/docs/task/active/task.md` and `.ai-governance/docs/task/active/progress.md`.
 3. **Announce your understanding**: Briefly tell the user what the current task is and where work left off.
-4. **Check for blockers**: Read `docs/task/active/handoff.md` to see if the previous agent left any critical notes.
+4. **Check for blockers**: Read `.ai-governance/docs/task/active/handoff.md` to see if the previous agent left any critical notes.
 
-> If `docs/task/active/` does not exist, tell the user: "No active task found. Please create one by running the `task-bootstrap` skill or creating `docs/task/active/`."
+> If `.ai-governance/docs/task/active/` does not exist, tell the user: "No active task found. Please create one by running the `task-bootstrap` skill or creating `.ai-governance/docs/task/active/`."
 
 ---
 
@@ -22,8 +22,8 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 > These are mandatory. A handoff without written state is a broken handoff.
 
-1. **Update progress**: Append what you completed this session to `docs/task/active/progress.md`.
-2. **Update handoff**: Rewrite `docs/task/active/handoff.md` so the next agent knows exactly where to continue.
+1. **Update progress**: Append what you completed this session to `.ai-governance/docs/task/active/progress.md`.
+2. **Update handoff**: Rewrite `.ai-governance/docs/task/active/handoff.md` so the next agent knows exactly where to continue.
    - What was accomplished
    - Where we are now
    - What to do next
@@ -36,13 +36,13 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 | Where | What goes here |
 |-------|---------------|
-| `docs/project/` | Long-term project memory: architecture, standards, verify runbook |
-| `docs/task/active/` | Current active task: plan, progress, handoff, verification |
-| `docs/task/archive/` | Completed tasks (moved here when a task closes) |
+| `.ai-governance/docs/project/` | Long-term project memory: architecture, standards, verify runbook |
+| `.ai-governance/docs/task/active/` | Current active task: plan, progress, handoff, verification |
+| `.ai-governance/docs/task/archive/` | Completed tasks (moved here when a task closes) |
 
 - **AGENTS.md / CLAUDE.md / GEMINI.md** = entry points only, not state
 - **IDE artifacts / scratchpads / chat history** = ephemeral drafts only, **not canonical**
-- If you discover something important about the project architecture, write it to `docs/project/architecture.md`
+- If you discover something important about the project architecture, write it to `.ai-governance/docs/project/architecture.md`
 
 ---
 
