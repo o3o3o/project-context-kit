@@ -75,19 +75,23 @@ def merge_file(target_path, template_path):
 
 
 def copy_template(src, dst, overwrite=False):
-    """Copy a file or directory. Skips if dst exists and overwrite=False."""
-    if os.path.exists(dst) and not overwrite:
-        log(f"  Skipping (already exists): {dst}")
-        return
-
+    """
+    Copy a file or directory.
+    - If it's a file: copy if overwrite=True or dst doesn't exist.
+    - If it's a directory: merge contents instead of deleting dst.
+    """
     if os.path.isdir(src):
-        if os.path.exists(dst):
-            shutil.rmtree(dst)
-        shutil.copytree(src, dst)
-        log(f"  Copied directory: {os.path.basename(src)} -> {dst}")
+        ensure_dir(dst)
+        for item in os.listdir(src):
+            s = os.path.join(src, item)
+            d = os.path.join(dst, item)
+            copy_template(s, d, overwrite=overwrite)
     else:
+        if os.path.exists(dst) and not overwrite:
+            # log(f"  Skipping file (already exists): {dst}")
+            return
         shutil.copy2(src, dst)
-        log(f"  Copied: {os.path.basename(src)}")
+        # log(f"  Copied: {os.path.basename(src)}")
 
 
 def main():
