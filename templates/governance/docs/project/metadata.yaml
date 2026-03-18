@@ -1,0 +1,21 @@
+# Project Structural & Execution Metadata
+# This file provides a structured baseline for agents to understand the project architecture and environment.
+
+repo_structure:
+  - path: src/
+    purpose: core logic
+    # Add other key directories here
+
+commands:
+  run: npm run dev # Replace with your run command
+  test: npm test   # Replace with your test command
+  # install: npm install
+
+env:
+  node: 18+        # e.g., Python 3.10+, Go 1.21+
+
+architecture:
+  style: modular   # e.g., microservices, monolith, serverless
+  constraints:
+    - no global state
+    # Add project-specific technical constraints here

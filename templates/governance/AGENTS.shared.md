@@ -1,7 +1,10 @@
-# Shared Agent Governance Rules (v1.1)
+# Shared Agent Governance Rules (v2.0 - GCC Memory Model)
 
 This file is the single governing instruction for all agents operating in this repository.
 Codex, Antigravity, Claude, and geminicli all follow the same protocol.
+
+We use a **Git-Context-Controller (GCC) Model**. 
+There is no linear `progress.md` or `handoff.md`. We use `commits/` and `branches/`.
 
 ---
 
@@ -9,26 +12,24 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 > These are mandatory, not optional. Do them before doing anything else.
 
-1. **Read project context**: Open and read `.ai-governance/docs/project/context.md`. This is your grounding document.
-2. **Read active task**: Open and read `.ai-governance/docs/task/active/task.md` and `.ai-governance/docs/task/active/progress.md`.
-3. **Announce your understanding**: Briefly tell the user what the current task is and where work left off.
-4. **Check for blockers**: Read `.ai-governance/docs/task/active/handoff.md` to see if the previous agent left any critical notes.
+1. **Read project context**: Open `.ai-governance/docs/project/context.md` and `.ai-governance/docs/project/metadata.yaml`.
+2. **Read active task state**: Run the `task-context` skill to get an aggregated view of the current task, active branch, and latest commits.
+3. **Announce your understanding**: Briefly tell the user:
+   - What the active branch is.
+   - What the latest commit achieved.
+   - What your next action is based on `summary.md`.
 
-> If `.ai-governance/docs/task/active/` does not exist, tell the user: "No active task found. Please create one by running the `task-bootstrap` skill or creating `.ai-governance/docs/task/active/`."
+> If `.ai-governance/docs/task/active/` does not exist, tell the user to run `task-bootstrap`.
 
 ---
 
 ## 🛑 SHUTDOWN INSTRUCTIONS — Execute Before Every Session End or Agent Switch
 
-> These are mandatory. A handoff without written state is a broken handoff.
+> These are mandatory. A session without a commit is lost context.
 
-1. **Update progress**: Append what you completed this session to `.ai-governance/docs/task/active/progress.md`.
-2. **Update handoff**: Rewrite `.ai-governance/docs/task/active/handoff.md` so the next agent knows exactly where to continue.
-   - What was accomplished
-   - Where we are now
-   - What to do next
-   - Any blockers or risks
-3. **Do NOT leave an empty handoff.md**. Even "no changes made" is useful.
+1. **Create a Commit**: Always run the `task-commit` skill to summarize your work into a structured commit file under `.ai-governance/docs/task/active/branches/<branch-name>/commits/`.
+2. **Do Not Append**: Do not write to linear log files. Commit your context.
+3. **Branching**: If you are trying a new experimental approach, run `task-branch` to create an isolated context before modifying code.
 
 ---
 
@@ -36,19 +37,9 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 | Where | What goes here |
 |-------|---------------|
-| `.ai-governance/docs/project/` | Long-term project memory: architecture, standards, verify runbook |
-| `.ai-governance/docs/task/active/` | Current active task: plan, progress, handoff, verification |
-| `.ai-governance/docs/task/archive/` | Completed tasks (moved here when a task closes) |
+| `.ai-governance/docs/project/` | Global context: architecture, metadata, standards |
+| `.ai-governance/docs/task/active/` | Current active task tree |
+| `../branches/<name>/commits/` | Granular intelligence: reasoning, changes made, blockers |
+| `../branches/<name>/summary.md` | The current active status of that branch |
 
-- **AGENTS.md / CLAUDE.md / GEMINI.md** = entry points only, not state
-- **IDE artifacts / scratchpads / chat history** = ephemeral drafts only, **not canonical**
-- If you discover something important about the project architecture, write it to `.ai-governance/docs/project/architecture.md`
-
----
-
-## 🤝 Multi-Agent Handoff Protocol
-
-When switching from one agent to another (e.g., Codex → geminicli, or geminicli → Antigravity):
-1. The **outgoing agent** must complete the Shutdown Instructions above.
-2. The **incoming agent** must complete the Startup Instructions above.
-3. The handoff file is the contract between them. Treat it seriously.
+- **IDE artifacts / chat history** = ephemeral drafts only, **not canonical**.

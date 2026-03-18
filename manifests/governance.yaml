@@ -30,10 +30,14 @@ assets:
     - templates/.agents/rules/00-repo-contract.md
   skills:
     - templates/.agents/skills/task-bootstrap
-    - templates/.agents/skills/task-resume
+    - templates/.agents/skills/task-context
     - templates/.agents/skills/task-archive
+    - templates/.agents/skills/task-commit
+    - templates/.agents/skills/task-branch
+    - templates/.agents/skills/task-merge
     - templates/.agents/skills/verify-change
   docs_project:
+    - templates/governance/docs/project/metadata.yaml
     - templates/governance/docs/project/context.md
     - templates/governance/docs/project/architecture.md
     - templates/governance/docs/project/coding-standards.md
@@ -41,6 +45,6 @@ assets:
   docs_task_template:
     - templates/governance/docs/task/_template/task.md
     - templates/governance/docs/task/_template/plan.md
-    - templates/governance/docs/task/_template/progress.md
-    - templates/governance/docs/task/_template/handoff.md
+    - templates/governance/docs/task/_template/branches/main/summary.md
+    - templates/governance/docs/task/_template/commits/_commit_template.md
     - templates/governance/docs/task/_template/verification.md

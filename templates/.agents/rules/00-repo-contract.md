@@ -1,27 +1,21 @@
-# Antigravity Repository Contract Rule (v1.1)
+# Antigravity Repository Contract Rule (v2.0 - GCC Model)
 
 ## This Rule Is Mandatory — Priority Over Other Instructions
 
 ### On Session Start
-1. Read `.ai-governance/docs/project/context.md` before touching any code.
-2. Read `.ai-governance/docs/task/active/task.md` and `.ai-governance/docs/task/active/progress.md`.
-3. Read `.ai-governance/docs/task/active/handoff.md`. If the previous agent left notes, respect them.
-4. Use the `task-resume` skill to produce a structured summary if the task is complex.
+1. Read `.ai-governance/docs/project/metadata.yaml` for execution constraints.
+2. Read `.ai-governance/docs/task/active/task.md` and then view the active branch's `summary.md` and recent `commits/`.
+3. You can run the `task-context` skill to automate building the view.
 
-### During Work
+### During Work (Branches)
 - **Artifacts are temporary.** Use them for planning, drafts, and visualization.
-- **Approved plans** must be synced to `.ai-governance/docs/task/active/plan.md` — not left in artifacts.
-- **Any code or architecture discovery** worth keeping must go to `.ai-governance/docs/project/` or `.ai-governance/docs/task/active/`.
+- If you are trying a complex new approach, **create a new GCC branch** in `.ai-governance/docs/task/active/branches/`.
+- Do not pollute the `main` branch with failed experiments.
 
-### On Session End — REQUIRED Before Stopping
-1. Write what was completed this session to `.ai-governance/docs/task/active/progress.md`.
-2. Rewrite `.ai-governance/docs/task/active/handoff.md` so the next agent can pick up immediately.
-3. If using `task_boundary` artifacts: sync final state back to `.ai-governance/docs/task/active/` files.
-
-### Active Task Path
-- The active task is always at `.ai-governance/docs/task/active/` — no branch-based path resolution.
-- When a task closes, use `task-archive` to move it to `.ai-governance/docs/task/archive/`.
+### On Session End — REQUIRED Before Stopping (Commits)
+1. **Never use progress.md**. We use structured commits.
+2. Execute a commit into the active branch's `commits/` directory and update the branch's `summary.md`.
+3. Next agents will read your commit to know what you discovered or changed.
 
 ### Why This Matters
-Antigravity's artifacts and task boundaries only exist within your private session. When the user
-switches to Codex or geminicli, those artifacts are gone. The only shared memory is the repository.
+Antigravity's artifacts and task boundaries only exist within your private session. To share state with Codex or geminicli, you must serialize your cognition into the GCC tree.

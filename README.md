@@ -8,18 +8,26 @@ When you switch AI tools mid-task — say from Codex to Claude, or to `geminicli
 - Conflicting decisions made by different agents
 - Lost work from forgotten handoffs
 
-## The Solution: Repository as Shared Memory
-This kit installs a lightweight governance layer that makes your **Git repository** the sole durable memory. Every agent reads from and writes to the same directory structure.
+## The Solution: Git-Context-Controller (GCC) Model
+This kit installs a **Git-Context-Controller (GCC)** memory layer that makes your Git repository the sole durable memory for all agents. 
 
-## Core Concept: Active Task
-There is always one active task in `.ai-governance/docs/task/active/`. No branch mapping, no ticket IDs in paths. Every agent reads from the same place:
+We don't use simple linear prompt histories or a long appended `progress.md`. We use a structured, tree-like approach mirroring Git itself:
+- **Commits**: Discrete milestones of work (Intent, Changes, Decisions).
+- **Branches**: Isolated paths for experimental exploration.
+
+## Core Concept: The Active GCC Tree
+There is always one active task in `.ai-governance/docs/task/active/`. Before touching code, agents read the root `metadata.yaml` to understand execution constraints. 
 ```
-.ai-governance/docs/task/active/
-  task.md          ← What we're trying to do
-  plan.md          ← How we plan to do it
-  progress.md      ← Running log of what's been done
-  handoff.md       ← State and next steps for the incoming agent
-  verification.md  ← Test evidence
+.ai-governance/docs/
+  ├── project/            ← Global context (metadata, architecture)
+  └── task/active/
+      ├── task.md         ← Main objective
+      └── branches/
+          └── main/
+              ├── summary.md        ← Current branch status (replaces handoff)
+              └── commits/          ← Discrete structured commits of work
+                  ├── 2026-03-A.md
+                  └── 2026-03-B.md
 ```
 When a task closes, run `task-archive` to move it to `.ai-governance/docs/task/archive/<date-name>/`.
 
@@ -69,18 +77,25 @@ Just re-run the installer. It will update the `.ai-governance/` layer including 
 When switching from Codex to geminicli (or any combination):
 
 **Outgoing agent (Codex) must:**
-1. Append to `.ai-governance/docs/task/active/progress.md` — what it completed
-2. Rewrite `.ai-governance/docs/task/active/handoff.md` — where things stand and what to do next
+1. Run `task-commit` to document its completed work in the active branch.
+2. The skill automatically updates the `summary.md`.
 
 **Incoming agent (geminicli) must:**
-1. Run `task-resume` skill (or manually read `progress.md` and `handoff.md`)
-2. Announce to you what state it sees before doing anything
+1. Run `task-context` skill to build a dynamic view of the current GCC state.
+2. Announce to you what context it sees before doing anything.
+
+## Workflow: Exploring Branches
+
+If you're unsure of an approach and want to prototype:
+1. Run `task-branch` and name it (e.g., `explore-db`).
+2. Make your commits there.
+3. If it works, run `task-merge` to merge the findings back into `main`.
 
 ## Workflow: Closing a Task
 
 Tell your agent: *"Run task-archive"*. It will:
-1. Move `.ai-governance/docs/task/active/` to `.ai-governance/docs/task/archive/<date-name>/`
-2. Write a final status to the archived `handoff.md`
+1. Move the entire GCC tree to `.ai-governance/docs/task/archive/<date-name>/`
+2. Write a final status to the archived `summary.md`
 3. Clear `.ai-governance/docs/task/active/` for the next task
 
 ---
@@ -90,9 +105,12 @@ Tell your agent: *"Run task-archive"*. It will:
 | Skill | What it does |
 |-------|-------------|
 | `task-bootstrap` | Initialize `.ai-governance/docs/task/active/` for a new task |
-| `task-resume` | Read and summarize the current active task |
+| `task-context` | Synthesize current GCC state (Replaces `task-resume`) |
 | `task-archive` | Archive the completed task and clear active/ |
-| `verify-change` | Run verification and write results to verification.md |
+| `task-commit` | Create a structured context commit |
+| `task-branch` | Fork into an isolated exploration branch |
+| `task-merge` | Merge an exploration branch back to main |
+| `verify-change` | Run verification and write results |
 
 ---
 
@@ -118,24 +136,29 @@ your-repo/
 │   │       └── verify-change/
 │   └── docs/              ← Consolidated governance documentation
 │       ├── project/
+│       │   ├── metadata.yaml
 │       │   ├── context.md
 │       │   ├── architecture.md
 │       │   ├── coding-standards.md
 │       │   └── verify-runbook.md
 │       └── task/
-│           ├── active/    ← Current task (always here, no branch mapping)
-│           ├── archive/   ← Completed tasks
-│           └── _template/ ← Templates for new tasks
+│           ├── active/    ← Local GCC tree
+│           │   ├── task.md
+│           │   └── branches/
+│           │       └── main/
+│           │           ├── summary.md
+│           │           └── commits/
+│           └── archive/   ← Completed tasks
 ```
 
 ---
 
 ## The "Write-Back" Contract
 
-Every agent **must** update these two files before ending a session:
+Every agent **must** create a commit before ending a session.
 
-1. **`.ai-governance/docs/task/active/progress.md`** — Append what you did (be specific: file names, what changed)
-2. **`.ai-governance/docs/task/active/handoff.md`** — Rewrite to reflect current state and what to do next
+1. **Commit**: Summarize your changes, intents, and decisions.
+2. **Update Summary**: The CLI skill will update `summary.md` with the next action.
 
-This is how the next agent (or tomorrow's you) picks up exactly where things left off.
+This is how the next agent (or tomorrow's you) parses exactly how we arrived at the current state, without navigating an infinitely long progress log.
 # repo-governance-kit

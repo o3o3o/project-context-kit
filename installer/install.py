@@ -110,10 +110,11 @@ def main():
     ensure_dir(os.path.join(target_repo, ".ai-governance/.agents/rules"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/.agents/skills"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/project"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/active"))
+    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/active/branches/main/commits"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/archive"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/_template"))
+    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/_template/branches/main/commits"))
     print()
+
 
     # ── 2. Copy shared governance files ───────────────────────────────────
     log("Step 2: Copying shared governance files...")

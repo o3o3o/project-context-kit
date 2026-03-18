@@ -1,11 +1,11 @@
-## Shared Governance
-This project uses a multi-agent- **Project Context**: .ai-governance/docs/project/context.md
+## Shared Governance (GCC Model)
+- **Project Structure**: .ai-governance/docs/project/metadata.yaml
 - **Active Task**: .ai-governance/docs/task/active/
 
 Also follow: `.ai-governance/CLAUDE.shared.md`
 
 ### Required every session
-**START**: Read `.ai-governance/docs/project/context.md`, `.ai-governance/docs/task/active/task.md`, `.ai-governance/docs/task/active/progress.md`, and `.ai-governance/docs/task/active/handoff.md` before writing any code.
-**END**: Update `.ai-governance/docs/task/active/progress.md` and `.ai-governance/docs/task/active/handoff.md`.
+**START**: Understand the objective from `task.md`. Read the latest commits and the branch `summary.md`.
+**END**: Generate a structured commit file in the active branch's `commits/` directory, and update `summary.md`.
 
-Do not treat chat history as canonical state. Active task is always at `.ai-governance/docs/task/active/`.
+Do not rely on chat history. We use commits to pass context.

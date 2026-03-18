@@ -1,53 +1,39 @@
-# Repository Collaboration Contract (v1.1)
+# Repository Collaboration Contract (v2.0 - GCC Model)
 
-This contract defines how multiple AI agents collaborate in this repository: Antigravity, Codex, Claude, and geminicli.
+This contract defines how multiple AI agents collaborate in this repository using a **Git-Context-Controller (GCC)** memory model.
 
 ---
 
 ## 1. The Single Source of Truth
 
-- The **Git repository** is the only durable memory.
-- IDE chat history, scratchpads, and artifacts are **ephemeral** — they will not survive an agent switch.
-- Every piece of information the next agent needs **must be written to the repository before you stop**.
+- The **GCC Memory Tree** in `.ai-governance/docs/task/active/` is the only durable memory.
+- Ephemeral logs, chat history, and IDE artifacts are NOT canonical.
 
-## 2. Active Task: One at a Time
+## 2. Active Task: The GCC Tree
 
-- There is always one "active task" in `.ai-governance/docs/task/active/`.
-- No branch mapping. No ticket IDs in paths. All agents read from the same `.ai-governance/docs/task/active/`.
-- When a task ends, it is moved to `.ai-governance/docs/task/archive/<date-name>/` via the `task-archive` skill.
+- We don't use linear progress tracking. We use **commits** and **branches**.
+- When you achieve a distinct milestone or finish a session, you MUST write a **commit**.
+- When you want to explore a new approach, you MUST create a **branch**.
 
-## 3. Document Hierarchy
+## 3. GCC Document Hierarchy
 
 | Path | Purpose |
 |------|---------|
-| `.ai-governance/docs/project/context.md` | Long-term: What the project is, tech stack, commands |
-| `.ai-governance/docs/project/architecture.md` | Long-term: How the code is structured |
-| `.ai-governance/docs/project/coding-standards.md` | Long-term: How code should be written |
-| `.ai-governance/docs/project/verify-runbook.md` | Long-term: How to verify changes |
-| `.ai-governance/docs/task/active/task.md` | Current: Task objective and success criteria |
-| `.ai-governance/docs/task/active/plan.md` | Current: How we plan to do it |
-| `.ai-governance/docs/task/active/progress.md` | Current: Running log of what's been done |
-| `.ai-governance/docs/task/active/handoff.md` | Current: State and next steps for the incoming agent |
-| `.ai-governance/docs/task/active/verification.md` | Current: Test results and evidence |
+| `.ai-governance/docs/project/metadata.yaml` | Essential execution constraints (env, structure, build cmds) |
+| `.ai-governance/docs/project/context.md` | Background and domain logic |
+| `.ai-governance/docs/task/active/task.md` | The core objective |
+| `../branches/main/summary.md` | The aggregated current state of the main branch |
+| `../branches/main/commits/` | The structured reasoning/execution chain |
 
-## 4. Mandatory Write-Back
+## 4. Mandatory Write-Back (Commit Protocol)
 
-Before ending any session:
-1. **Append** to `.ai-governance/docs/task/active/progress.md` — what you did this session
-2. **Rewrite** `.ai-governance/docs/task/active/handoff.md` — where we are and what to do next
+At the end of a session, do NOT just append text somewhere:
+1. **Create a Commit File**: Using the commit template, summarize *Intent*, *Changes Made*, *Decisions*, and *Next Steps*. Save it to `commits/YYYY-MM-DD-00X.md`.
+2. **Update Branch Summary**: Ensure the `summary.md` in the current branch reflects reality.
 
-This is **non-negotiable**. A session that ends without updating these two files is an incomplete session.
+## 5. Agent Skills for GCC
 
-## 5. Agent Entry Points
-
-| Agent | Entry File | Shared Rules |
-|-------|------------|-------------|
-| Antigravity | `AGENTS.md` | `.ai-governance/AGENTS.shared.md` |
-| Claude | `CLAUDE.md` | `.ai-governance/CLAUDE.shared.md` |
-| geminicli | `GEMINI.md` | `.ai-governance/GEMINI.shared.md` |
-| Codex | `AGENTS.md` | `.ai-governance/AGENTS.shared.md` |
-
-## 6. Anti-Regression
-
-- All changes must be verified per `docs/project/verify-runbook.md`.
-- Verification evidence goes to `docs/task/active/verification.md`.
+We provide CLI skills to manage this memory tree:
+- `task-commit`: Write a commit and update summary.
+- `task-branch`: Create an isolated exploration branch.
+- `task-context`: Synthesize current GCC state into a flat view.
