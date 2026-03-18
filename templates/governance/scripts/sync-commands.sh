@@ -23,13 +23,38 @@ sync_cmd() {
     fi
 }
 
-# Cleanup existing commands before sync to maintain 2-command UI
-echo "Cleaning up old commands..."
-[ -d "$CLAUDE_CMD_DIR" ] && find "$CLAUDE_CMD_DIR" -type f ! -name "gov-context.md" ! -name "gov-writeback.md" -delete
-[ -d "$OPENCODE_CMD_DIR" ] && find "$OPENCODE_CMD_DIR" -type f ! -name "gov-context.md" ! -name "gov-writeback.md" -delete
-[ -d "$CODEX_PRMPT_DIR" ] && find "$CODEX_PRMPT_DIR" -type f ! -name "gov-context.md" ! -name "gov-writeback.md" -delete
-[ -d "$GEMINI_CMD_DIR" ] && find "$GEMINI_CMD_DIR" -type f ! -name "gov-context.toml" ! -name "gov-writeback.toml" -delete
-[ -d "$AGENT_WF_DIR" ] && find "$AGENT_WF_DIR" -type f ! -name "gov-context.md" ! -name "gov-writeback.md" -delete
+# Legacy GCC commands to prune (from v2.1 and below)
+LEGACY_CMDS=(
+    "task-archive"
+    "task-bootstrap"
+    "task-branch"
+    "task-commit"
+    "task-context"
+    "task-merge"
+    "verify-change"
+)
+
+# Function to safely prune only legacy GCC files
+prune_legacy() {
+    local target_dir=$1
+    local ext=$2
+    if [ -d "$target_dir" ]; then
+        for cmd in "${LEGACY_CMDS[@]}"; do
+            if [ -f "$target_dir/$cmd.$ext" ]; then
+                echo "Pruning legacy command: $target_dir/$cmd.$ext"
+                rm "$target_dir/$cmd.$ext"
+            fi
+        done
+    fi
+}
+
+# Cleanup only specific legacy GCC files before sync
+echo "Cleaning up legacy GCC commands (v2.1 logic)..."
+prune_legacy "$CLAUDE_CMD_DIR" "md"
+prune_legacy "$OPENCODE_CMD_DIR" "md"
+prune_legacy "$CODEX_PRMPT_DIR" "md"
+prune_legacy "$GEMINI_CMD_DIR" "toml"
+prune_legacy "$AGENT_WF_DIR" "md"
 
 mkdir -p "$CLAUDE_CMD_DIR" "$OPENCODE_CMD_DIR" "$CODEX_PRMPT_DIR" "$GEMINI_CMD_DIR" "$AGENT_WF_DIR"
 
