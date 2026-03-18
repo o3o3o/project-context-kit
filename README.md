@@ -138,3 +138,4 @@ Every agent **must** update these two files before ending a session:
 2. **`.ai-governance/docs/task/active/handoff.md`** — Rewrite to reflect current state and what to do next
 
 This is how the next agent (or tomorrow's you) picks up exactly where things left off.
+# repo-governance-kit
