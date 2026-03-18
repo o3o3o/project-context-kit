@@ -152,7 +152,7 @@ def main():
 
     # ── 4. Copy agent-specific command directories ────────────────────────
     log("Step 4: Installing agent-specific command directories...")
-    agent_dirs = [".claude", ".codex", ".opencode", ".gemini"]
+    agent_dirs = [".claude", ".codex", ".opencode", ".gemini", ".agent"]
     for d in agent_dirs:
         src_d = os.path.join(source_kit, "templates", d)
         if os.path.exists(src_d):
