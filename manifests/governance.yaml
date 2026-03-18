@@ -1,4 +1,4 @@
-version: "1.2.0"
+version: "2.1.0"
 package_name: "repo-governance-kit"
 description: "Multi-Agent / multi-IDE collaboration governance layer"
 canonical_source: "https://github.com/example/repo-governance-kit"

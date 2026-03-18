@@ -1,41 +1,33 @@
-# Claude Shared Governance (v2.0 - GCC Memory Model)
+# Claude Shared Governance (v2.1 - GCC Memory Model)
 
 You are operating in a multi-agent repository using a **Git-Context-Controller (GCC)** memory model.
-Instead of a simple progress file, we use `commits/` and `branches/` to structure agent memory.
+
+> [!NOTE]
+> GCC records are focus on "Cognitive History" (why/how). They are separate from the Git repository's version history, though you should strive to keep them synchronized when making code changes.
 
 ---
 
 ## 🚀 SESSION START — Do This First
 
-Before writing any code or making any suggestions:
-
-1. **Read Context**: Read `.ai-governance/docs/project/metadata.yaml` and `.ai-governance/docs/project/context.md`.
-2. **Execute `task-context`**: Run the `task-context` skill (or manually view `.ai-governance/docs/task/active/task.md` + `.ai-governance/docs/task/active/branches/main/summary.md` + the latest file in `commits/`).
-3. Tell the user: *"I've read the GCC context. Active branch: [name]. Latest commit was: [summary]. I'll continue from there."*
-
-> **Do not skip this.** Skipping means you are working from your conversation history, not the repository GCC state.
+1. **Read Metadata**: Load `.ai-governance/docs/project/metadata.yaml`. It contains the commands you need to build and test.
+2. **Execute `task-context`**: Run this skill to reconstruct the task state.
+3. **Sync with User**: Tell the user: *"I've read the GCC context. Branch: [name]. Status: [status]. Proceeding with [Action]."*
 
 ---
 
 ## 🛑 SESSION END — Do This Before Stopping
 
-Before finishing or before the user closes the conversation:
+You must leave the repository in a state where another agent can pick up your work without reading the chat history.
 
-1. **Always Commit**: Run the `task-commit` skill (or manually create a markdown file in `.ai-governance/docs/task/active/branches/[active-branch]/commits/` following the `_commit_template.md`).
-2. **Content of Commit**: Document the *Intent*, *Changes Made*, *Decisions*, and *Next Steps*. 
-3. **Update Summary**: Ensure `.ai-governance/docs/task/active/branches/[active-branch]/summary.md` is updated so the next agent knows what is blocking or what is next.
-
----
-
-## ❌ What You Must NOT Do
-
-- Do not attempt to append to `progress.md` (it is deprecated).
-- Do not rely on chat history. If you explore an alternative idea, create a new branch directory in `branches/`.
-- Do not write task state into `CLAUDE.md`.
+1. **Milestone Reached?**: If you completed a feature, fix, or hypothesis test, run `task-commit`.
+2. **Small Session?**: If you only did research or minor edits, update `.ai-governance/docs/task/active/branches/[branch]/summary.md` directly. Update `Current State` and `Next Action`.
+3. **Evidence**: Write any validation results into the commit or the global `verification.md`.
 
 ---
 
-## ✅ Verification
+## ❌ Rules
 
-Use `.ai-governance/docs/project/verify-runbook.md` as your checklist.
-Write verification results into your commit.
+- **No `progress.md`**: It is deprecated.
+- **No `handoff.md`**: Use `summary.md`.
+- **Metadata First**: Always check `metadata.yaml` before guessing directory structures or build commands.
+- **Durable State**: Only files in `.ai-governance/docs/` are shared context. Your internal thoughts/artifacts are private to this session.

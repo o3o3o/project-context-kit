@@ -1,46 +1,37 @@
 ---
 name: task-context
-description: Load and summarize the current active GCC state (Replaces task-resume).
+description: Load and synthesize the current GCC state (v2.1).
 ---
 
 # task-context Skill
 
 ## Purpose
-Synthesize the current GCC execution state by reading the repository metadata, task files, and the active branch's latest commits.
-Use this at the start of every session.
+Reconstruct the project and task state by reading the GCC tree. Must be run at the start of every session.
 
 ## Instructions
 
-1. **Check for Active Task**:
-   - If `.ai-governance/docs/task/active/` does not exist, tell the user: *"No active task found. Please run `task-bootstrap`."* Stop.
+1. **Safety Check**:
+   - Verify `.ai-governance/docs/project/metadata.yaml` exists. Read it to understand the `repo_structure` and `execution_context` (commands).
+   - If not found, warn the user.
 
-2. **Read Structural Metadata**:
-   - `.ai-governance/docs/project/metadata.yaml` (Project constraints and paths).
+2. **Core Context**:
+   - Read `.ai-governance/docs/task/active/task.md` (Objective).
+   - Read `.ai-governance/docs/task/active/verification.md` (Success status).
 
-3. **Read Task Definition**:
-   - `.ai-governance/docs/task/active/task.md` (The goal).
+3. **Active Branch State**:
+   - Identify the active branch (default: `main`).
+   - Read `branches/<branch>/summary.md`. **Verify it contains: Branch Intent, Current State, Known Risks, Next Action.**
+   - Read the 2 most recent commits in `branches/<branch>/commits/`. **Focus on Decisions and Next Steps.**
 
-4. **Identify Active Branch**:
-   - Determine which branch in `branches/` you are working on (usually `main`).
-   - Read `branches/<active-branch>/summary.md`.
-   - Read the 1-2 most recent files in `branches/<active-branch>/commits/`.
-
-5. **Output a structured Context View**:
-
+4. **Output Structured View**:
    ```text
-   ## GCC Context View (Branch: <active-branch>)
-   
-   **Project Env**: [Key constraints from metadata.yaml]
-   **Objective**: [From task.md]
-   
-   **Branch Status**: [From summary.md]
-   
-   **Latest Commits**:
-   - [Summarize the last commit's Changes and Decisions]
-   
-   **Open Problems / Blockers**: [From summary.md or last commit]
-   
-   **Next Action**: [What should happen now]
+   ## GCC v2.1 CONTEXT VIEW
+   - **Env**: [Runtime from metadata]
+   - **Commands**: [Run/Test cmds from metadata]
+   - **Goal**: [Objective from task.md]
+   - **State**: [Current State from summary.md]
+   - **Recent Decisions**: [Key notes from latest commits]
+   - **Next Action**: [From summary.md]
    ```
 
-6. **Ask the user**: *"Shall I proceed with [Next Action]?"*
+5. **Ask**: *"Shall I proceed with [Next Action] or do you have a different direction?"*

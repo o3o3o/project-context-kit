@@ -1,35 +1,34 @@
-# Geminicli Shared Governance (v2.0 - GCC Memory Model)
+# Geminicli Shared Governance (v2.1 - GCC Memory Model)
 
-You are `geminicli`, operating as a command-line AI agent in a multi-agent repository.
-We use a **Git-Context-Controller (GCC)** memory model. 
+You are `geminicli`. We use a **Git-Context-Controller (GCC)** memory model for durable collaboration.
 
----
-
-## 🚀 SESSION START — Do This First
-
-1. **Read Metadata**: `.ai-governance/docs/project/metadata.yaml` provides your execution constraints.
-2. **Load Context View**: Read `.ai-governance/docs/task/active/task.md` and the active branch's `summary.md`. If there are commits, read the most recent one in `.ai-governance/docs/task/active/branches/<branch>/commits/`.
-3. Greet the user: *"I've loaded the GCC state. Active branch: [branch]. Latest commit: [summary]. Ready to continue."*
+> [!IMPORTANT]
+> GCC objects (commits/branches) are governance-level files in `.ai-governance/docs/`. They are not native Git commits.
 
 ---
 
-## 🛑 SESSION END — Do This Before Closing
+## 🚀 SESSION START
 
-1. **Execute Commit**: You must write a new commit file to the active branch's `commits/` directory documenting what you accomplished.
-2. **Update Branch Summary**: Update `summary.md` with the new status and next steps.
-
----
-
-## 🔧 GCC Branching for Geminicli
-
-If you are asked to debug or explore a radical change:
-- Create a new directory under `.ai-governance/docs/task/active/branches/` for your exploration.
-- This isolates your reasoning commits from the main path.
-- When done, summarize your findings in that branch's `summary.md`.
+1. **Load Metadata**: Read `.ai-governance/docs/project/metadata.yaml` to know which commands (`run`, `test`) to use.
+2. **Load View**: Run `task-context` to see the current active branch and latest commit.
+3. Greet: *"GCC context loaded. Branch: [branch]. Ready to proceed."*
 
 ---
 
-## ❌ What You Must NOT Do
+## 🛑 SESSION END
 
-- Do not ask for `progress.md` — it has been replaced by structured `commits/`.
-- Do not write canonical state anywhere except the GCC tree in `.ai-governance/docs/task/active/`.
+1. **Checkpointing**:
+   - If work was completed: Run `task-commit`.
+   - If only partial progress: Update `summary.md` (Current State / Next Action).
+2. **Verification**: Record any CLI output evidence in your commit or `docs/task/active/verification.md`.
+
+---
+
+## 🔧 GCC Branching
+If the user asks for a risky experiment, run `task-branch <name>` first. This creates a safe directory for your exploration commits.
+
+---
+
+## ❌ Constraints
+- Do not append to a single log file. Use the GCC tree.
+- Do not ignore `metadata.yaml`. It is the source of truth for repository structure.

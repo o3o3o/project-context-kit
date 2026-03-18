@@ -1,39 +1,34 @@
-# Repository Collaboration Contract (v2.0 - GCC Model)
+# Repository Collaboration Contract (v2.1 - GCC Model)
 
-This contract defines how multiple AI agents collaborate in this repository using a **Git-Context-Controller (GCC)** memory model.
+This contract defines how multiple AI agents (Codex, Antigravity, Claude, geminicli) collaborate using a **Git-Context-Controller (GCC)** memory model.
+
+> [!WARNING]
+> **GCC is Governance, not VCS**: GCC commits/branches are local files in `.ai-governance/docs/`. They track "Cognitive State" (Intent/Decisions). They do **not** replace project source control (Git), but should be updated alongside it.
 
 ---
 
-## 1. The Single Source of Truth
+## 1. The GCC Memory Tree
 
-- The **GCC Memory Tree** in `.ai-governance/docs/task/active/` is the only durable memory.
-- Ephemeral logs, chat history, and IDE artifacts are NOT canonical.
+The only durable memory for this project is the GCC tree under `.ai-governance/docs/task/active/`. 
 
-## 2. Active Task: The GCC Tree
+| Object | Path | Purpose |
+|--------|------|---------|
+| **Metadata** | `docs/project/metadata.yaml` | **READ FIRST**. Env, commands, and repo structure. |
+| **Task** | `docs/task/active/task.md` | The current overall objective. |
+| **Verification** | `docs/task/active/verification.md` | Final validation evidence. |
+| **Summary** | `branches/<name>/summary.md` | The current status/risk/action for a branch. |
+| **Commits** | `branches/<name>/commits/` | The history of intent and decisions. |
 
-- We don't use linear progress tracking. We use **commits** and **branches**.
-- When you achieve a distinct milestone or finish a session, you MUST write a **commit**.
-- When you want to explore a new approach, you MUST create a **branch**.
+## 2. Interaction Protocol
 
-## 3. GCC Document Hierarchy
+### session Start
+1. Read `metadata.yaml` first.
+2. Run `task-context` to build a mental model of the active branch and recent milestones.
 
-| Path | Purpose |
-|------|---------|
-| `.ai-governance/docs/project/metadata.yaml` | Essential execution constraints (env, structure, build cmds) |
-| `.ai-governance/docs/project/context.md` | Background and domain logic |
-| `.ai-governance/docs/task/active/task.md` | The core objective |
-| `../branches/main/summary.md` | The aggregated current state of the main branch |
-| `../branches/main/commits/` | The structured reasoning/execution chain |
+### Session End (The Write-Back Contract)
+- **Milestone Reached**: Run `task-commit`. This creates a structured file and updates the summary.
+- **Partial Progress**: Directly update the branch's `summary.md` (Current State / Next Action).
+- **Evidence**: Ensure verification data is recorded in the commit or `verification.md`.
 
-## 4. Mandatory Write-Back (Commit Protocol)
-
-At the end of a session, do NOT just append text somewhere:
-1. **Create a Commit File**: Using the commit template, summarize *Intent*, *Changes Made*, *Decisions*, and *Next Steps*. Save it to `commits/YYYY-MM-DD-00X.md`.
-2. **Update Branch Summary**: Ensure the `summary.md` in the current branch reflects reality.
-
-## 5. Agent Skills for GCC
-
-We provide CLI skills to manage this memory tree:
-- `task-commit`: Write a commit and update summary.
-- `task-branch`: Create an isolated exploration branch.
-- `task-context`: Synthesize current GCC state into a flat view.
+## 3. Branching for Exploration
+Do not pollute the `main` branch with failed experiments. Use `task-branch` to create an isolated reasoning folder for radical changes or hypothesis tests.

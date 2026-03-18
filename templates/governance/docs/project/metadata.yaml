@@ -1,21 +1,32 @@
-# Project Structural & Execution Metadata
-# This file provides a structured baseline for agents to understand the project architecture and environment.
+# Project Structural & Execution Metadata (GCC v2.1)
+# This file provides repository-wide execution constraints for AI agents.
 
+# 1. Repository Structure
 repo_structure:
   - path: src/
     purpose: core logic
-    # Add other key directories here
+  - path: tests/
+    purpose: unit and integration tests
 
-commands:
-  run: npm run dev # Replace with your run command
-  test: npm test   # Replace with your test command
-  # install: npm install
+# 2. Execution Context (The "How-To" for Agents)
+execution_context:
+  runtime: "node 18+" # e.g., "python 3.10", "go 1.21"
+  commands:
+    install: "npm install"
+    build: "npm run build"
+    test: "npm test"
+    run: "npm run dev"
 
-env:
-  node: 18+        # e.g., Python 3.10+, Go 1.21+
+# 3. Governance Rules
+governance_rules:
+  branch_prefix: "task-"
+  enforcement:
+    mandatory_commit_on_milestone: true
+    allow_summary_only_for_minor_sessions: true
 
+# 4. Architecture Constraints
 architecture:
-  style: modular   # e.g., microservices, monolith, serverless
+  style: "modular"
   constraints:
-    - no global state
-    # Add project-specific technical constraints here
+    - "no global state"
+    - "all public APIs must be documented in code"

@@ -1,24 +1,18 @@
 ---
 name: verify-change
-description: Execute verification steps and record results in the repository.
+description: Validate changes and record evidence in the GCC tree (v2.1).
 ---
 
 # verify-change Skill
 
 ## Purpose
-Ensure all changes are validated against the project's standards and that evidence of this validation is persisted in the repository.
+This skill is used to execute test suites and record their output in the canonical `verification.md` or a `commit`.
 
 ## Instructions
-1. Read `docs/project/verify-runbook.md` to understand the required verification steps.
-2. Execute the verification steps (e.g., run tests, build the project, manual checks).
-3. Record the results in `docs/task/<ticket-id>/verification.md`.
-4. The record must include:
-   - **Timestamp**
-   - **Command run** (if applicable)
-   - **Outcome** (Pass/Fail)
-   - **Evidence** (Logs, screenshots, or summaries)
-5. Update `docs/task/<ticket-id>/handoff.md` to reflect the verification status.
 
-## Constraints
-- Do not skip verification steps unless explicitly authorized.
-- Evidence must be clear enough for another agent to trust the result.
+1. **Read Metadata**: Check `.ai-governance/docs/project/metadata.yaml` for the `test_cmd`.
+2. **Execute Tests**: Run the command. Capture the output.
+3. **Record Evidence**:
+   - Append a timestamped entry to `.ai-governance/docs/task/active/verification.md`.
+   - Or, include the output in the `Verification` block of your next `task-commit`.
+4. **Status**: Report to the user whether the validation was successful or identifying failures.

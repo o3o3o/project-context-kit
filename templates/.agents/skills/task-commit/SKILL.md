@@ -1,31 +1,27 @@
 ---
 name: task-commit
-description: Create a structured commit file to serialize cognition and progress.
+description: Create a structured cognitive checkpoint (v2.1).
 ---
 
 # task-commit Skill
 
 ## Purpose
-In the GCC model, we do not continuously append to a linear log. We create distinct "commits" to summarize reasoning, changes, and next steps for the incoming agent. Use this before ending a session.
+Serialize current progress, reasoning, and decisions into the GCC history. Use this when a meaningful milestone is achieved.
 
 ## Instructions
 
-1. **Determine Active Branch**: Ask the user or infer from `task-context` which branch you are on.
-2. **Generate Commit ID**: Use the format `YYYY-MM-DD-HHMM-xxx.md` (e.g., `2026-03-18-1030-auth-fix.md`).
-3. **Write the Commit File**:
-   Create the file in `.ai-governance/docs/task/active/branches/<branch>/commits/<id>.md`.
-   Use this template:
-   ```markdown
-   # Commit: <id>
-   ## Intent
-   [What problem were you solving in this session?]
-   ## Changes Made
-   [List modified files and core logic changes]
-   ## Decisions
-   [Why did you choose this approach?]
-   ## Risks / Next Steps
-   [What is pending or might break?]
-   ```
-4. **Update Branch Summary**:
-   Rewrite `.ai-governance/docs/task/active/branches/<branch>/summary.md` to update the active status, append the `<id>` to the "Latest Commits" list, and update the "Next Action".
-5. **Confirm**: *"Commit `<id>` created on branch `<branch>`. Summary updated."*
+1. **Verify Mandatory Fields**: Your commit MUST include:
+   - **Intent**: What did you set out to solve?
+   - **Previous Context**: What state did you start from?
+   - **Changes Made**: Specific files and logic changes.
+   - **Decisions**: **WHY** did you choose this path? (Critical for cross-agent alignment).
+   - **Verification**: Evidence (test output, logs).
+
+2. **Generate Commit**:
+   - Create `branches/<branch>/commits/YYYY-MM-DD-HHMM-[slug].md`.
+
+3. **Update Summary**:
+   - Update `branches/<branch>/summary.md`. 
+   - Refresh the `Current State`, append the new commit to `Latest Commits`, and update the `Next Action`.
+
+4. **Final Check**: Ensure you didn't just summarize code; summarize the **cognitive decisions** that influenced the code.

@@ -1,11 +1,10 @@
-## Shared Governance Layer (GCC Model)
-This repository uses a Git-Context-Controller (GCC) shared governance layer for multi-agent collaboration.
+## Shared Governance Layer (GCC Model v2.1)
+This repository uses a Git-Context-Controller (GCC) shared governance layer.
 
-**Shared rules**: `.ai-governance/AGENTS.shared.md`
-**Repository contract**: `.ai-governance/repo-contract.md`
+**Rules**: `.ai-governance/AGENTS.shared.md` | **Contract**: `.ai-governance/repo-contract.md`
 
-### Required every session
-**START**: Read `.ai-governance/docs/project/metadata.yaml` and `.ai-governance/docs/task/active/task.md`. Check active branch (`summary.md` and `commits/`).
-**END**: Execute a commit into the active branch's `commits/` dir and update `summary.md`.
+### Required Every Session
+**START**: Read `metadata.yaml` (env/commands) and `task.md`. Run `task-context` to load the active branch state.
+**END**: Run `task-commit` for milestones, OR update `summary.md` (State/Next Action) for partial progress.
 
-Do not treat IDE memory, artifacts, or chat history as canonical state. All context is built from the GCC tree.
+GCC records context/decisions in `.ai-governance/docs/`. Do not treat IDE memory or chat history as durable state.

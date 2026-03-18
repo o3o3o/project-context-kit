@@ -1,16 +1,16 @@
-# Branch Summary: main
+# Branch Summary: {{branch_name}}
 
-## Intent
-[Overall intent of this branch — e.g., the primary task objective]
+## Branch Intent
+[What is the specific sub-goal or hypothesis being explored in this branch?]
 
-## Status
-[Brief summary of current state]
+## Current State
+[The actual technical status of the code in this branch right now. E.g., "Feature X is 50% done, but tests are failing in Y."]
 
 ## Latest Commits
-- `[Date-ID]`: [Commit summary]
+- `{{latest_commit_id}}`: {{latest_commit_summary}}
 
-## Open Problems / Blockers
-- [none]
+## Known Risks / Blockers
+- [List any technical debt, missing dependencies, or blockers here]
 
 ## Next Action
-[What the next incoming agent should do]
+[A clear, actionable instruction for the next agent session or human collaborator]

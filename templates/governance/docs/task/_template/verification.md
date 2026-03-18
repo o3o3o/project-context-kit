@@ -1,17 +1,19 @@
-# Verification Report - [Ticket ID]
+# Task Verification Report
 
-## Summary
-- **Status**: [PASS | FAIL]
-- **Verified At**: [ISO Timestamp]
+This document tracks the final validation evidence for the overall task.
+Agents should record final proof-of-work here before archiving.
 
-## Test Run Results
-| Test Category | Command | Result | Notes |
-|---------------|---------|--------|-------|
-| Lint | `npm run lint` | PASS | |
-| Unit | `npm run test:unit` | PASS | All 5 tests passed |
+## Success Criteria Checklist
+- [ ] [Criterion 1]
+- [ ] [Criterion 2]
+
+## Automated Test Results
+[Paste final green test output here]
 
 ## Manual Verification Evidence
-[Description or links to evidence of manual checks]
+[Describe manual UI checks or final API responses]
 
-## Residual Issues
-[Any minor issues that don't block the DOD but are worth noting]
+## Final Status
+- **Status**: [Complete / Partially Complete / Blocked]
+- **Environment**: [Local / Staging / Prod]
+- **Date**: {{date}}

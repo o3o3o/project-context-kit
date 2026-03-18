@@ -1,21 +1,22 @@
 ---
 name: task-merge
-description: Merge an experimental branch back into the main GCC context.
+description: Consolidate exploration findings back into the main GCC context (v2.1).
 ---
 
 # task-merge Skill
 
 ## Purpose
-When an experimental branch succeeds or fails, merge its findings back into the `main` branch and summarize the outcome.
+Summarize the successful outcomes of an exploration branch and integrate them into the `main` reasoning chain.
 
 ## Instructions
 
-1. **Ask for Source Branch**: Request the name of the branch to merge (e.g., `feature-auth`).
-2. **Read Branch Commits**: Summarize the final decisions and outcomes from the branch's `commits/` directory and `summary.md`.
-3. **Write a Merge Commit on Main**:
-   - Run the `task-commit` logic.
-   - Point the commit to `.ai-governance/docs/task/active/branches/main/commits/<id>.md`.
-   - In the "Changes Made" and "Decisions" sections, summarize the outcomes of the merged branch.
-4. **Update Main Summary**: Update `.ai-governance/docs/task/active/branches/main/summary.md` with the new aggregated status and next steps.
-5. **Close Branch**: Optionally rename the merged branch to `_merged_<branch-name>` or ask the user if they'd like to delete the branch directory entirely to clean the workspace.
-6. **Confirm**: *"Branch `<branch-name>` merged into `main`. The `main` context is updated."*
+1. **Summarize Source Branch**:
+   - Read `branches/<source>/summary.md` and the final commits.
+2. **Create Merge Commit on Main**:
+   - Run `task-commit` logic targeting `branches/main/commits/`.
+   - **Intent**: Merge branch `<source>`.
+   - **Decisions**: Summarize WHY the findings of `<source>` were accepted and what was learned.
+3. **Update Main Summary**:
+   - Refresh `Current State` on `main` to reflect the newly integrated functionality.
+   - Update `Next Action`.
+4. **Cleanup**: Ask the user if the `<source>` directory should be deleted or kept as an archived reference.

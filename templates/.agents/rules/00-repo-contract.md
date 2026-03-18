@@ -1,21 +1,17 @@
-# Antigravity Repository Contract Rule (v2.0 - GCC Model)
+# Antigravity Repository Contract Rule (v2.1 - GCC Model)
 
-## This Rule Is Mandatory — Priority Over Other Instructions
+## MANDATORY: Priority Instructions
 
-### On Session Start
-1. Read `.ai-governance/docs/project/metadata.yaml` for execution constraints.
-2. Read `.ai-governance/docs/task/active/task.md` and then view the active branch's `summary.md` and recent `commits/`.
-3. You can run the `task-context` skill to automate building the view.
+### GCC Hierarchy & Metadata
+- **Read `metadata.yaml` before guessing**: Never assume build commands or directory structures. Always consult `.ai-governance/docs/project/metadata.yaml` first.
+- **Cognitive Isolation**: Use `task-branch` for exploration. This isolates your reasoning from the `main` branch.
 
-### During Work (Branches)
-- **Artifacts are temporary.** Use them for planning, drafts, and visualization.
-- If you are trying a complex new approach, **create a new GCC branch** in `.ai-governance/docs/task/active/branches/`.
-- Do not pollute the `main` branch with failed experiments.
+### Write-Back Requirements (Resumability)
+You must leave the repository in a state where another agent (or yourself in a new session) can resume immediately using `task-context`.
 
-### On Session End — REQUIRED Before Stopping (Commits)
-1. **Never use progress.md**. We use structured commits.
-2. Execute a commit into the active branch's `commits/` directory and update the branch's `summary.md`.
-3. Next agents will read your commit to know what you discovered or changed.
+1. **Commit on Success**: If you achieve a milestone (logical fix, feature, test green), run `task-commit`.
+2. **Update Summary on Exit**: If you stop without a milestone, you MUST update the active branch's `summary.md`. Update `Current State` and `Next Action`.
+3. **Record Evidence**: Log test outputs into your commit or the global `verification.md`.
 
-### Why This Matters
-Antigravity's artifacts and task boundaries only exist within your private session. To share state with Codex or geminicli, you must serialize your cognition into the GCC tree.
+> [!NOTE]
+> GCC commits are focused on **Decisions** and **Rationals**. We care *why* you did something as much as *what* you changed.

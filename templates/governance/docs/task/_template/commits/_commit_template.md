@@ -1,19 +1,22 @@
-# Commit: <id>
+# Commit: {{commit_id}}
 
 ## Intent
-[本阶段要解决的问题]
+[What specific part of the goal were you trying to solve in this session?]
 
 ## Previous Context
-[之前进展的摘要]
+[Summary of what you read/assumed from the previous state before starting.]
 
 ## Changes Made
-[这次做了什么（文件 + 逻辑）]
+- **File**: `path/to/file`
+  - Logic: [Briefly explain what changed]
 
 ## Decisions
-[做出的关键决策]
+- [Decision X]: [Rationale - why this way and not another?]
 
 ## Verification
-[如何验证]
+- [X] [Test A passed]
+- [X] [Manual check B confirmed]
+- Evidence: [CLI output or screenshot path]
 
 ## Risks / Next Steps
-[风险 & 下一步]
+- [Remaining gaps or risks introducted]

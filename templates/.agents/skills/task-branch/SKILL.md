@@ -1,18 +1,20 @@
 ---
 name: task-branch
-description: Fork the current active context into a new experimental branch.
+description: Fork the GCC reasoning tree into an isolated exploration path (v2.1).
 ---
 
 # task-branch Skill
 
 ## Purpose
-Create an isolated reasoning/exploration path within the active GCC task without polluting the `main` branch.
+Isolate an experimental context within the active task to avoid polluting the `main` branch with failed reasoning or hypothesis tests.
 
 ## Instructions
 
-1. **Ask for Branch Name**: Request a simple, descriptive name (e.g., `feature-auth`, `refactor-db`, `explore-api`).
-2. **Create Branch Directories**: Create `.ai-governance/docs/task/active/branches/<branch-name>/commits/`.
-3. **Copy Main Summary**: Duplicate the `summary.md` from `main` to the new branch as a starting point.
-4. **Update New Branch Summary**: Open `.ai-governance/docs/task/active/branches/<branch-name>/summary.md`. Add a note or prefix indicating this is an experimental branch and update the "Intent".
-5. **Switch Context**: Tell the user you have moved focus to the new branch. All subsequent `task-commit` actions should explicitly point to this branch's `commits/` directory until `task-merge` is invoked.
-6. **Confirm**: *"Switched to branch `<branch-name>`. You are now exploring an isolated context."*
+1. **Ask for Branch Name**: e.g., `experiment-db-v2`.
+2. **Create Tree**: `.ai-governance/docs/task/active/branches/<name>/commits/`.
+3. **Initialize Summary**:
+   - Copy `branches/main/summary.md` to `branches/<name>/summary.md`.
+   - Update `Branch Intent`: "Exploring [specific hypothesis]".
+   - Update `Current State`: "Forked from main at [commit ID]".
+   - Update `Next Action`: "Validating first prototype".
+4. **Confirm**: *"Switched focused to GCC branch `<name>`. Commits will be isolated here until you run `task-merge`."*

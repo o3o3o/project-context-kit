@@ -1,45 +1,43 @@
-# Shared Agent Governance Rules (v2.0 - GCC Memory Model)
+# Shared Agent Governance Rules (v2.1 - GCC Memory Model)
 
 This file is the single governing instruction for all agents operating in this repository.
 Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
-We use a **Git-Context-Controller (GCC) Model**. 
-There is no linear `progress.md` or `handoff.md`. We use `commits/` and `branches/`.
+> [!IMPORTANT]
+> **Governance != VCS**: GCC commits and branches are governance-level records stored in files. They do **not** replace Git's native commit/branch history, although they should ideally align with them. GCC records the "Why" (intent/decisions), whereas Git records the "What" (code changes).
 
 ---
 
 ## 🚀 STARTUP INSTRUCTIONS — Execute on Every Session Start
 
-> These are mandatory, not optional. Do them before doing anything else.
-
-1. **Read project context**: Open `.ai-governance/docs/project/context.md` and `.ai-governance/docs/project/metadata.yaml`.
-2. **Read active task state**: Run the `task-context` skill to get an aggregated view of the current task, active branch, and latest commits.
-3. **Announce your understanding**: Briefly tell the user:
-   - What the active branch is.
-   - What the latest commit achieved.
-   - What your next action is based on `summary.md`.
-
-> If `.ai-governance/docs/task/active/` does not exist, tell the user to run `task-bootstrap`.
+1. **Read Metadata**: Open `.ai-governance/docs/project/metadata.yaml` to understand repository-wide execution constraints (commands, build system, structure).
+2. **Read Project Context**: Read `.ai-governance/docs/project/context.md`.
+3. **Load GCC Context**: Run the `task-context` skill to get an aggregated view of:
+   - The active branch objective.
+   - The current code state and latest milestones.
+   - Any open risks or blockers.
+4. **Announce**: Briefly tell the user: *"GCC Context loaded. Active branch: [name]. Latest milestone: [summary]. Next action: [action]."*
 
 ---
 
-## 🛑 SHUTDOWN INSTRUCTIONS — Execute Before Every Session End or Agent Switch
+## 🛑 SHUTDOWN INSTRUCTIONS — Execute Before Every Session End
 
-> These are mandatory. A session without a commit is lost context.
+Every agent **must** leave the active task in a resumable state.
 
-1. **Create a Commit**: Always run the `task-commit` skill to summarize your work into a structured commit file under `.ai-governance/docs/task/active/branches/<branch-name>/commits/`.
-2. **Do Not Append**: Do not write to linear log files. Commit your context.
-3. **Branching**: If you are trying a new experimental approach, run `task-branch` to create an isolated context before modifying code.
+1. **If a milestone was reached**: Run the `task-commit` skill to serialize your reasoning, decisions, and evidence into a structured commit file.
+2. **If no milestone was reached**: Update the current branch's `summary.md` directly. Ensure the `Current State` and `Next Action` fields accurately reflect your progress or failure.
+3. **Branches**: If you explore an alternative idea, run `task-branch` first to create an isolated context.
 
 ---
 
 ## 📋 Canonical State Rules
 
-| Where | What goes here |
-|-------|---------------|
-| `.ai-governance/docs/project/` | Global context: architecture, metadata, standards |
-| `.ai-governance/docs/task/active/` | Current active task tree |
-| `../branches/<name>/commits/` | Granular intelligence: reasoning, changes made, blockers |
-| `../branches/<name>/summary.md` | The current active status of that branch |
+| Path | Contents |
+|------|----------|
+| `docs/project/metadata.yaml` | Execution constraints (env, commands, structure). |
+| `docs/task/active/task.md` | High-level objective. |
+| `docs/task/active/verification.md` | Final proof-of-work evidence for the entire task. |
+| `branches/<name>/summary.md` | The "memory image" of the branch (state, risks, next action). |
+| `branches/<name>/commits/` | The structured chain of cognition and decisions. |
 
-- **IDE artifacts / chat history** = ephemeral drafts only, **not canonical**.
+- IDE artifacts / chat history are **ephemeral drafts**. The GCC tree is the **only durable memory**.
