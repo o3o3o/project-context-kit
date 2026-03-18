@@ -115,29 +115,18 @@ def main():
     log("Step 1: Creating directory structure...")
     ensure_dir(os.path.join(target_repo, ".agents/rules"))
     ensure_dir(os.path.join(target_repo, ".agents/skills"))
+    ensure_dir(os.path.join(target_repo, ".agents/workflows"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/project"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/active/branches/main/commits"))
+    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/active/assets"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/archive"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/_template/branches/main/commits"))
+    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/_template/assets"))
     print()
 
 
-    # ── 2. Copy shared governance files ───────────────────────────────────
-    log("Step 2: Copying shared governance files...")
-    gov_src = os.path.join(source_kit, "templates/governance")
-    gov_dst = os.path.join(target_repo, ".ai-governance")
-    for item in os.listdir(gov_src):
-        if item in ["install-manifest.yaml", "docs"]:
-            continue  # handled separately
-        copy_template(
-            os.path.join(gov_src, item),
-            os.path.join(gov_dst, item),
-            overwrite=True
-        )
-    print()
-
-    # ── 3. Copy Agent rules & skills (Root .agents/) ──────────────────────
-    log("Step 3: Installing agent rules and skills to .agents/...")
+    # ── 2. Copy Agent rules, skills & workflows (Root .agents/) ───────────
+    log("Step 2: Installing agent logic to .agents/...")
     copy_template(
         os.path.join(source_kit, "templates/.agents/rules"),
         os.path.join(target_repo, ".agents/rules"),
@@ -148,15 +137,34 @@ def main():
         os.path.join(target_repo, ".agents/skills"),
         overwrite=True
     )
+    copy_template(
+        os.path.join(source_kit, "templates/.agents/workflows"),
+        os.path.join(target_repo, ".agents/workflows"),
+        overwrite=True
+    )
     print()
 
-    # ── 4. Copy agent-specific command directories ────────────────────────
-    log("Step 4: Installing agent-specific command directories...")
-    agent_dirs = [".claude", ".codex", ".opencode", ".gemini", ".agent"]
+    # ── 3. Copy agent-specific command directories (CLI Entry Points) ─────
+    log("Step 3: Installing agent-specific CLI commands...")
+    agent_dirs = [".claude", ".codex", ".opencode", ".gemini"]
     for d in agent_dirs:
         src_d = os.path.join(source_kit, "templates", d)
         if os.path.exists(src_d):
             copy_template(src_d, os.path.join(target_repo, d), overwrite=True)
+    print()
+
+    # ── 4. Copy shared governance files ───────────────────────────────────
+    log("Step 4: Copying shared governance files...")
+    gov_src = os.path.join(source_kit, "templates/governance")
+    gov_dst = os.path.join(target_repo, ".ai-governance")
+    for item in os.listdir(gov_src):
+        if item in ["install-manifest.yaml", "docs"]:
+            continue  # handled separately
+        copy_template(
+            os.path.join(gov_src, item),
+            os.path.join(gov_dst, item),
+            overwrite=True
+        )
     print()
 
     # ── 5. Copy project doc templates (non-destructive) ───────────────────

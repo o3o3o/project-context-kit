@@ -1,32 +1,33 @@
-# Shared Agent Governance Rules (v2.1 - GCC Memory Model)
+# Shared Agent Governance Rules (v2.1 - GCC Hermetic Model)
 
 This file is the single governing instruction for all agents operating in this repository.
 Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 > [!IMPORTANT]
-> **Governance != VCS**: GCC commits and branches are governance-level records stored in files. They do **not** replace Git's native commit/branch history, although they should ideally align with them. GCC records the "Why" (intent/decisions), whereas Git records the "What" (code changes).
+> **Hermeticity Rule**: You are a self-contained agent. NEVER link to files (logs, artifacts) outside `.ai-governance/`. 
+> - If evidence is important: Inline the text into `verification.md` or a commit.
+> - If data is large: Copy it to `.ai-governance/docs/task/active/assets/` before referencing it.
 
 ---
 
-## 🚀 STARTUP INSTRUCTIONS — Execute on Every Session Start
+## 🚀 STARTUP INSTRUCTIONS (/gov-context)
 
-1. **Read Metadata**: Open `.ai-governance/docs/project/metadata.yaml` to understand repository-wide execution constraints (commands, build system, structure).
-2. **Read Project Context**: Read `.ai-governance/docs/project/context.md`.
-3. **Load GCC Context**: Activate the `task-context` skill to get an aggregated view of:
-   - The active branch objective.
-   - The current code state and latest milestones.
-   - Any open risks or blockers.
-4. **Announce**: Briefly tell the user: *"GCC Context loaded. Active branch: [name]. Latest milestone: [summary]. Next action: [action]."*
+1. **Read Metadata**: Open `.ai-governance/docs/project/metadata.yaml` to understand repository-wide execution constraints.
+2. **Read Project Context**: Read `.ai-governance/docs/project/context.md` for架构, coding standards, and project history.
+3. **Load GCC Context**: Activate the `task-context` skill to synthesize current task state and risks.
+4. **Announce**: Briefly tell the user: *"GCC Context loaded. Architecture & Task state synchronized."*
 
 ---
 
-## 🛑 SHUTDOWN INSTRUCTIONS — Execute Before Every Session End
+## 🛑 SHUTDOWN INSTRUCTIONS (/gov-writeback)
 
-Every agent **must** leave the active task in a resumable state.
+Every agent **must** leave the active task in a resumable and hermetic state.
 
-1. **If a milestone was reached**: Activate the `task-commit` skill to serialize your reasoning, decisions, and evidence into a structured commit file.
-2. **If no milestone was reached**: Update the current branch's `summary.md` directly. Ensure the `Current State` and `Next Action` fields accurately reflect your progress or failure.
-3. **Branches**: If you explore an alternative idea, activate the `task-branch` skill first to create an isolated context.
+1. **Knowledge Extraction**: If you learned universal project patterns or fixes, update `docs/project/context.md`.
+2. **Checkpointing**:
+   - **Milestone Reached**: Activate the `task-commit` skill to serialize reasoning and evidence.
+   - **Partial Progress**: Update `summary.md` (Current State / Next Action) directly.
+3. **Hermetic Verification**: Ensure all references in your summaries are internal to `.ai-governance/`.
 
 ---
 
@@ -35,9 +36,11 @@ Every agent **must** leave the active task in a resumable state.
 | Path | Contents |
 |------|----------|
 | `docs/project/metadata.yaml` | Execution constraints (env, commands, structure). |
-| `docs/task/active/task.md` | High-level objective. |
+| `docs/project/context.md` | Architecture, Domain context, and Permanent Knowledge. |
+| `docs/task/active/task.md` | High-level objective for the current task. |
+| `docs/task/active/assets/` | Large artifacts (logs, screenshots) captured for this task. |
 | `docs/task/active/verification.md` | Final proof-of-work evidence for the entire task. |
-| `branches/<name>/summary.md` | The "memory image" of the branch (state, risks, next action). |
+| `branches/<name>/summary.md` | The "memory image" of the branch. |
 | `branches/<name>/commits/` | The structured chain of cognition and decisions. |
 
 - IDE artifacts / chat history are **ephemeral drafts**. The GCC tree is the **only durable memory**.

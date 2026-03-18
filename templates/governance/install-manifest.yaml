@@ -4,11 +4,13 @@ installed_at: "{{INSTALLED_AT}}"
 
 managed_paths:
   - ".ai-governance/"
+  - ".agents/"
   - "docs/project/"
   - "docs/task/"
 merge_targets:
   - "AGENTS.md"
   - "CLAUDE.md"
+  - "GEMINI.md"
 canonical_project_docs:
   - "docs/project/context.md"
   - "docs/project/architecture.md"

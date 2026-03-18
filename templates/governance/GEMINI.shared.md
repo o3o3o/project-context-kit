@@ -1,41 +1,40 @@
-# Geminicli Shared Governance (v2.1 - GCC Memory Model)
+# Geminicli Shared Governance (v2.1 - GCC Hermetic Model)
 
 You are `geminicli`. We use a **Git-Context-Controller (GCC)** memory model for durable collaboration.
 
 > [!IMPORTANT]
-> GCC objects (commits/branches) are governance-level files in `.ai-governance/docs/`. They are not native Git commits.
+> **Hermeticity Rule**: You are a self-contained agent. NEVER link to files (logs, artifacts) outside `.ai-governance/`. 
+> - If evidence is important: Inline the text into `verification.md` or a commit.
+> - If data is large: Copy it to `.ai-governance/docs/task/active/assets/` before referencing it.
 
 ---
 
-## 🛠 SKILLS & TOOLS
+## 🛠 MEMORY TIERS
 
-You have access to specialized governance skills in `.agents/skills/`. You MUST use the `activate_skill` tool to load them.
-
-- `task-context`: **Always run this first.** It reconstructs the project and task state from the GCC tree.
-- `task-commit`: Run this to create a milestone commit when you reach a valid change.
-- `task-bootstrap`: Run this to initialize a new GCC task tree.
-- `task-branch`: Create a new reasoning branch for risky experiments.
-- `task-merge`: Merge an exploration branch back to main.
+1.  **Project Tier (Permanent)**: Architecture, standards, and "lessons learned" in `docs/project/`.
+2.  **Task Tier (Ephemeral)**: Current objective, branch summary, and commits in `docs/task/`.
 
 ---
 
-## 🚀 SESSION START
+## 🚀 SESSION START (/gov-context)
 
-1. **Load Metadata**: Read `.ai-governance/docs/project/metadata.yaml` to know which commands (`run`, `test`) to use.
-2. **Load View**: Call `activate_skill(name="task-context")` to see the current active branch and latest commit.
-3. Greet: *"GCC context loaded. Branch: [branch]. Ready to proceed."*
+1.  **Read Worldview**: Read `docs/project/metadata.yaml` and `docs/project/context.md`.
+2.  **Activate Skill**: Call `activate_skill(name="task-context")` to reconstruct the task state.
+3.  **Greet**: *"GCC Context loaded. Tier 1 (Project) & Tier 2 (Task) synchronized. Ready."*
 
 ---
 
-## 🛑 SESSION END
+## 🛑 SESSION END (/gov-writeback)
 
-1. **Checkpointing**:
-   - If work was completed: Call `activate_skill(name="task-commit")`.
-   - If only partial progress: Update `summary.md` (Current State / Next Action) directly.
-2. **Verification**: Record any CLI output evidence in your commit or `docs/task/active/verification.md`.
+1.  **Knowledge Extraction**: Did you learn something universal (e.g., a bug pattern or new dependency)?
+    - **IF YES**: Update `docs/project/context.md` (Lessons Learned) or `metadata.yaml`.
+2.  **Checkpointing**:
+    - If a milestone was reached: Call `activate_skill(name="task-commit")`.
+    - If partial progress: Update `summary.md` (Current State / Next Action) directly.
+3.  **Hermetic Check**: Ensure all references in your write-back are internal to `.ai-governance/`.
 
 ---
 
 ## ❌ Constraints
 - Do not append to a single log file. Use the GCC tree.
-- Do not ignore `metadata.yaml`. It is the source of truth for repository structure.
+- Do not create "knowledge debt" by leaving evidence in external `/tmp` or `artifacts/` folders.

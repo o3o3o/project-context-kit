@@ -1,34 +1,35 @@
-# Repository Collaboration Contract (v2.1 - GCC Model)
+# Repository Collaboration Contract (v3.0 - GCC Hermetic Model)
 
-This contract defines how multiple AI agents (Codex, Antigravity, Claude, geminicli) collaborate using a **Git-Context-Controller (GCC)** memory model.
+This contract defines how multiple AI agents (Codex, Antigravity, Claude, geminicli) collaborate using a **Git-Context-Controller (GCC)** memory layer.
 
-> [!WARNING]
-> **GCC is Governance, not VCS**: GCC commits/branches are local files in `.ai-governance/docs/`. They track "Cognitive State" (Intent/Decisions). They do **not** replace project source control (Git), but should be updated alongside it.
+> [!IMPORTANT]
+> **Hermetic Rule**: All governance records must be self-contained within `.ai-governance/`. Never link to ephemeral artifacts outside this directory.
 
 ---
 
-## 1. The GCC Memory Tree
+## 1. The Tiered Memory Tree
 
-The only durable memory for this project is the GCC tree under `.ai-governance/docs/task/active/`. 
+The only durable memory for this project is the GCC tree.
 
-| Object | Path | Purpose |
-|--------|------|---------|
-| **Metadata** | `docs/project/metadata.yaml` | **READ FIRST**. Env, commands, and repo structure. |
-| **Task** | `docs/task/active/task.md` | The current overall objective. |
-| **Verification** | `docs/task/active/verification.md` | Final validation evidence. |
-| **Summary** | `branches/<name>/summary.md` | The current status/risk/action for a branch. |
-| **Commits** | `branches/<name>/commits/` | The history of intent and decisions. |
+| Tier | Object | Path | Purpose |
+|------|--------|------|---------|
+| **Project** | **Metadata** | `docs/project/metadata.yaml` | **READ FIRST**. Env, commands, and repo structure. |
+| **Project** | **Context** | `docs/project/context.md` | Long-term brain: Architecture, Standards, and History. |
+| **Task** | **Task** | `docs/task/active/task.md` | The current overall objective. |
+| **Task** | **Assets** | `docs/task/active/assets/` | Captured evidence (logs/artifacts) for this task. |
+| **Task** | **Summary** | `branches/<name>/summary.md` | The "resumable image" of the current state. |
+| **Task** | **Commits** | `branches/<name>/commits/` | The history of intent and decisions. |
 
 ## 2. Interaction Protocol
 
-### session Start
-1. Read `metadata.yaml` first.
-2. Run `task-context` to build a mental model of the active branch and recent milestones.
+### Session Start (/gov-context)
+1. Read Metadata and Project Context first to establish a "worldview."
+2. Synthesize the Task state to build a mental model of current progress and risks.
 
-### Session End (The Write-Back Contract)
-- **Milestone Reached**: Run `task-commit`. This creates a structured file and updates the summary.
-- **Partial Progress**: Directly update the branch's `summary.md` (Current State / Next Action).
-- **Evidence**: Ensure verification data is recorded in the commit or `verification.md`.
+### Session End (/gov-writeback)
+- **Knowledge Promotion**: If a Session produces universal knowledge (bug fixes, infra patterns), the agent MUST update the **Project Tier** (`context.md`).
+- **Hermetic Reference**: Move critical logs/evidence to the `assets/` folder before referencing them in your summary or commit.
+- **Checkpointing**: Decide whether to create a structured **Commit** or just update the **Summary** based on work achieved.
 
-## 3. Branching for Exploration
-Do not pollute the `main` branch with failed experiments. Use `task-branch` to create an isolated reasoning folder for radical changes or hypothesis tests.
+## 3. Reasoning Integrity
+Do not pollute the `main` branch with failed experiments. Use **Task Branches** (isolated reasoning folders) for exploration or radical changes.
