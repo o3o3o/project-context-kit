@@ -1,10 +1,10 @@
-
 ## Shared Governance
-This project follows a multi-IDE governance protocol. 
-Please sync with the shared rules and durable state:
+This project uses a multi-agent governance layer.
 
-- **Claude Rules**: @.ai-governance/CLAUDE.shared.md
-- **Project Context**: docs/project/context.md
-- **Active Task**: docs/task/ (Identify by current branch)
+Also follow: `.ai-governance/CLAUDE.shared.md`
 
-Ensure all handoffs and verification results are written back to the `docs/task/` directory before ending your session.
+### Required every session
+**START**: Read `docs/project/context.md`, `docs/task/active/task.md`, `docs/task/active/progress.md`, and `docs/task/active/handoff.md` before writing any code.
+**END**: Update `docs/task/active/progress.md` and `docs/task/active/handoff.md`.
+
+Do not treat chat history as canonical state. Active task is always at `docs/task/active/`.

@@ -1,26 +1,44 @@
 ---
 name: task-resume
-description: Read the current task state from the repository and summarize it.
+description: Load and summarize the current active task from the repository.
 ---
 
 # task-resume Skill
 
 ## Purpose
-Provide a concise summary of the active task state by reading the canonical files in the repository, ensuring the agent is fully synced with the work done by previous agents.
+Sync yourself with the current active task state by reading the repository files.
+Use this at the start of every session.
 
 ## Instructions
-1. Identify the active ticket ID from the current Git branch.
-2. Locate the task directory: `docs/task/<ticket-id>/`.
-3. Read the following files:
-   - `docs/project/context.md`: For overall project grounding.
-   - `docs/task/<ticket-id>/task.md`: For task definition.
-   - `docs/task/<ticket-id>/progress.md`: For what has been done.
-   - `docs/task/<ticket-id>/handoff.md`: For the last status and next steps.
-4. Output a summary to the user including:
-   - **Task Objective**
-   - **Current Status** (Completed vs. Remaining)
-   - **Last Handoff Notes**
-   - **Next Action Items**
+
+1. **Check if `docs/task/active/` exists.**
+   - If it does NOT exist, tell the user: *"No active task found. Please create one with `task-bootstrap`."*
+   - Then stop.
+
+2. **Read these files in order:**
+   - `docs/project/context.md` — project background
+   - `docs/task/active/task.md` — task definition
+   - `docs/task/active/progress.md` — what has been done
+   - `docs/task/active/handoff.md` — what the previous agent left for you
+
+3. **Output a summary** in this format:
+
+   ```
+   ## Active Task Summary
+   **Task**: [task name from task.md]
+   **Objective**: [objective from task.md]
+
+   **Completed so far**:
+   - [bullet points from progress.md]
+
+   **Last handoff notes**:
+   [key content from handoff.md]
+
+   **Next action**: [what should happen next]
+   ```
+
+4. Ask the user: *"Want me to continue with [next action]?"*
 
 ## Constraints
-- If the directory does not exist, suggest running `task-bootstrap`.
+- Read from files, not from conversation history.
+- If any file is missing, name it specifically and ask the user to create it.

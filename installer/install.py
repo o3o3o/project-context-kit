@@ -1,122 +1,207 @@
 #!/usr/bin/env python3
+"""
+Repo Governance Kit Installer (v1.1)
+Installs the multi-agent governance layer into any target repository.
+Supports non-destructive merge for AGENTS.md, CLAUDE.md, and GEMINI.md.
+"""
 import os
 import shutil
 import datetime
 import re
 import argparse
 
-# Configuration
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 MARKER_START = "<!-- BEGIN AI-GOVERNANCE -->"
 MARKER_END = "<!-- END AI-GOVERNANCE -->"
 
+
 def log(msg):
     print(f"[*] {msg}")
+
+
+def warn(msg):
+    print(f"[!] {msg}")
+
 
 def ensure_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
         log(f"Created directory: {path}")
 
+
 def merge_file(target_path, template_path):
-    log(f"Merging governance block into {target_path}...")
-    
+    """
+    Non-destructively inject a governance block into a target file.
+    - If the file is missing: create it with the governance block.
+    - If the block already exists: replace only the block content.
+    - If no block: append the block at the end.
+    """
+    log(f"Merging governance block into: {target_path}")
+
     with open(template_path, 'r') as f:
         template_content = f.read().strip()
-    
+
     new_block = f"{MARKER_START}\n{template_content}\n{MARKER_END}"
-    
+
     if not os.path.exists(target_path):
         with open(target_path, 'w') as f:
             f.write(f"# AI Agent Instructions\n\n{new_block}\n")
-        log(f"Created new file: {target_path}")
+        log(f"  Created new file with governance block.")
         return
 
     with open(target_path, 'r') as f:
         content = f.read()
 
-    pattern = re.compile(f"{re.escape(MARKER_START)}.*?{re.escape(MARKER_END)}", re.DOTALL)
-    
+    # Check for marker and replace or append
+    pattern = re.compile(
+        re.escape(MARKER_START) + r".*?" + re.escape(MARKER_END),
+        re.DOTALL
+    )
     if pattern.search(content):
         new_content = pattern.sub(new_block, content)
-        log(f"Updated existing governance block in {target_path}")
+        log(f"  Updated existing governance block.")
     else:
         new_content = content.rstrip() + "\n\n" + new_block + "\n"
-        log(f"Appended governance block to {target_path}")
+        log(f"  Appended governance block.")
 
     with open(target_path, 'w') as f:
         f.write(new_content)
 
+
 def copy_template(src, dst, overwrite=False):
+    """Copy a file or directory. Skips if dst exists and overwrite=False."""
     if os.path.exists(dst) and not overwrite:
-        log(f"Skipping existing file: {dst}")
+        log(f"  Skipping (already exists): {dst}")
         return
-    
+
     if os.path.isdir(src):
         if os.path.exists(dst):
             shutil.rmtree(dst)
         shutil.copytree(src, dst)
-        log(f"Copied directory: {src} -> {dst}")
+        log(f"  Copied directory: {os.path.basename(src)} -> {dst}")
     else:
         shutil.copy2(src, dst)
-        log(f"Copied file: {src} -> {dst}")
+        log(f"  Copied: {os.path.basename(src)}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Install Repo Governance Kit")
-    parser.add_argument("--target", default=".", help="Target repository path")
-    parser.add_argument("--source", default=os.path.dirname(os.path.dirname(os.path.abspath(__file__))), help="Source kit path")
+    parser.add_argument(
+        "--target", default=".",
+        help="Path to the target repository (default: current directory)"
+    )
+    parser.add_argument(
+        "--source",
+        default=os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        help="Path to the repo-governance-kit source"
+    )
     args = parser.parse_args()
 
     target_repo = os.path.abspath(args.target)
     source_kit = os.path.abspath(args.source)
 
-    log(f"Installing Repo Governance Kit v{VERSION}")
+    log(f"Repo Governance Kit v{VERSION}")
     log(f"Target: {target_repo}")
+    log(f"Source: {source_kit}")
+    print()
 
-    # 1. Create structure
+    # ── 1. Create governance directory structure ───────────────────────────
+    log("Step 1: Creating directory structure...")
     ensure_dir(os.path.join(target_repo, ".ai-governance/.agents/rules"))
     ensure_dir(os.path.join(target_repo, ".ai-governance/.agents/skills"))
     ensure_dir(os.path.join(target_repo, "docs/project"))
+    ensure_dir(os.path.join(target_repo, "docs/task/active"))
+    ensure_dir(os.path.join(target_repo, "docs/task/archive"))
     ensure_dir(os.path.join(target_repo, "docs/task/_template"))
+    print()
 
-    # 2. Copy shared governance files
+    # ── 2. Copy shared governance files ───────────────────────────────────
+    log("Step 2: Copying shared governance files...")
     gov_src = os.path.join(source_kit, "templates/governance")
     gov_dst = os.path.join(target_repo, ".ai-governance")
     for item in os.listdir(gov_src):
-        if item == "install-manifest.yaml": continue
-        copy_template(os.path.join(gov_src, item), os.path.join(gov_dst, item), overwrite=True)
+        if item == "install-manifest.yaml":
+            continue  # handled separately
+        copy_template(
+            os.path.join(gov_src, item),
+            os.path.join(gov_dst, item),
+            overwrite=True
+        )
+    print()
 
-    # 3. Copy Antigravity rules & skills
-    copy_template(os.path.join(source_kit, "templates/.agents/rules"), os.path.join(target_repo, ".ai-governance/.agents/rules"), overwrite=True)
-    copy_template(os.path.join(source_kit, "templates/.agents/skills"), os.path.join(target_repo, ".ai-governance/.agents/skills"), overwrite=True)
+    # ── 3. Copy Antigravity rules & skills ────────────────────────────────
+    log("Step 3: Installing Antigravity rules and skills...")
+    copy_template(
+        os.path.join(source_kit, "templates/.agents/rules"),
+        os.path.join(target_repo, ".ai-governance/.agents/rules"),
+        overwrite=True
+    )
+    copy_template(
+        os.path.join(source_kit, "templates/.agents/skills"),
+        os.path.join(target_repo, ".ai-governance/.agents/skills"),
+        overwrite=True
+    )
+    print()
 
-    # 4. Copy Documentation Templates (Non-destructive for root docs/project)
+    # ── 4. Copy project doc templates (non-destructive) ───────────────────
+    log("Step 4: Installing docs/project templates (non-destructive)...")
     docs_proj_src = os.path.join(source_kit, "templates/docs/project")
     docs_proj_dst = os.path.join(target_repo, "docs/project")
     for item in os.listdir(docs_proj_src):
-        copy_template(os.path.join(docs_proj_src, item), os.path.join(docs_proj_dst, item), overwrite=False)
+        copy_template(
+            os.path.join(docs_proj_src, item),
+            os.path.join(docs_proj_dst, item),
+            overwrite=False  # Never overwrite project docs
+        )
+    print()
 
-    # Copy task templates (Overwrite OK as they are templates)
-    copy_template(os.path.join(source_kit, "templates/docs/task/_template"), os.path.join(target_repo, "docs/task/_template"), overwrite=True)
+    # ── 5. Copy task templates (overwrite OK, these are just starters) ────
+    log("Step 5: Installing docs/task/_template files...")
+    copy_template(
+        os.path.join(source_kit, "templates/docs/task/_template"),
+        os.path.join(target_repo, "docs/task/_template"),
+        overwrite=True
+    )
+    print()
 
-    # 5. Merge AGENTS.md and CLAUDE.md
-    merge_file(os.path.join(target_repo, "AGENTS.md"), os.path.join(source_kit, "templates/root/AGENTS.append.md"))
-    merge_file(os.path.join(target_repo, "CLAUDE.md"), os.path.join(source_kit, "templates/root/CLAUDE.append.md"))
+    # ── 6. Merge entry files (AGENTS.md, CLAUDE.md, GEMINI.md) ───────────
+    log("Step 6: Merging agent entry files...")
+    templates_root = os.path.join(source_kit, "templates/root")
+    merge_file(
+        os.path.join(target_repo, "AGENTS.md"),
+        os.path.join(templates_root, "AGENTS.append.md")
+    )
+    merge_file(
+        os.path.join(target_repo, "CLAUDE.md"),
+        os.path.join(templates_root, "CLAUDE.append.md")
+    )
+    merge_file(
+        os.path.join(target_repo, "GEMINI.md"),
+        os.path.join(templates_root, "GEMINI.append.md")
+    )
+    print()
 
-    # 6. Generate Manifest
+    # ── 7. Generate install manifest ──────────────────────────────────────
+    log("Step 7: Generating install manifest...")
     manifest_src = os.path.join(source_kit, "templates/governance/install-manifest.yaml")
     manifest_dst = os.path.join(target_repo, ".ai-governance/install-manifest.yaml")
-    
+
     with open(manifest_src, 'r') as f:
         manifest_content = f.read()
-    
+
     manifest_content = manifest_content.replace("{{INSTALLED_AT}}", datetime.datetime.now().isoformat())
-    
+    manifest_content = manifest_content.replace("{{VERSION}}", VERSION)
+
     with open(manifest_dst, 'w') as f:
         f.write(manifest_content)
-    log(f"Generated manifest: {manifest_dst}")
+    log(f"  Generated: {manifest_dst}")
+    print()
 
-    log("Installation successful!")
+    log("✅ Installation complete!")
+    log("Next steps:")
+    log("  1. Fill in docs/project/context.md with your project details")
+    log("  2. Run 'task-bootstrap' skill in your AI agent to create the first active task")
+
 
 if __name__ == "__main__":
     main()

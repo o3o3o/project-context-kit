@@ -1,22 +1,32 @@
 ---
 name: task-bootstrap
-description: Initialize a new task directory based on the current Git branch.
+description: Initialize the active task directory with all required template files.
 ---
 
 # task-bootstrap Skill
 
 ## Purpose
-Automate the creation of a task directory and its required files (`task.md`, `plan.md`, `progress.md`, `handoff.md`, `verification.md`) based on the current Git branch name.
+Create a fresh `docs/task/active/` directory with all required state files.
+Use this when starting a new task from scratch.
 
 ## Instructions
-1. Get the current branch name using `git branch --show-current`.
-2. Extract the Ticket ID from the branch name (e.g., from `feat/T-123-login`, extract `T-123`).
-3. If no Ticket ID is found, ask the user for one.
-4. Check if `docs/task/<ticket-id>/` exists.
-5. If it doesn't exist, create it and copy templates from `.ai-governance/docs/task/_template/` (if available) or create default empty files.
-6. Initialize `task.md` with the ticket ID and a brief summary from the branch name.
-7. Notify the user once the task directory is ready.
+
+1. **Check if `docs/task/active/` already exists.**
+   - If it exists and has content, ask the user: *"An active task already exists. Do you want to archive it and start a new one, or continue the existing task?"*
+   - If the user wants to archive: run the `task-archive` skill first, then proceed.
+   - If the user wants to continue: stop here and suggest running `task-resume` instead.
+
+2. **Create the directory** `docs/task/active/`.
+
+3. **Create the following files** by copying from `docs/task/_template/` if it exists, otherwise create from scratch:
+   - `task.md` — ask the user for: Task name, objective, success criteria
+   - `plan.md` — ask the user for or draft: key implementation steps
+   - `progress.md` — initialize with: `## Session Log\n_No progress yet._`
+   - `handoff.md` — initialize with: `## Status\nTask just started. See task.md for objective.`
+   - `verification.md` — initialize with: `## Verification Log\n_No verification yet._`
+
+4. **Confirm** to the user: *"Active task created at docs/task/active/. I've read the task and I'm ready to start work."*
 
 ## Constraints
-- Do not overwrite existing files with valid content.
-- Always use the `docs/task/` root as specified in the repository contract.
+- Do not overwrite `docs/task/active/` without explicit user confirmation.
+- Always create all 5 files — never leave the directory partially initialized.

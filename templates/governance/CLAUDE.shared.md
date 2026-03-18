@@ -1,14 +1,54 @@
-# Claude Shared Governance
+# Claude Shared Governance (v1.1)
 
-## multi-IDE Coordination
-You are working in a shared environment with other AI agents (Antigravity, Codex).
-To ensure consistency, follow these guidelines:
+You are operating in a multi-agent repository. Other agents (Codex, Antigravity, geminicli) may also work on this same codebase. The Git repository is the **only** shared state between you.
 
-1. **Read-First Policy**: Always check `docs/project/` for coding standards and architecture before suggesting changes.
-2. **Task Directory**: Your task context is located in `docs/task/<ticket-id>/`. Determine the ticket ID from the current Git branch.
-3. **Drafting vs. Committing**: If you create a plan, ensure it is saved in `docs/task/<ticket-id>/plan.md`.
-4. **No Hidden State**: Do not assume the next session will have access to this chat history. Write everything important to the repo.
+---
 
-## Verification
-- Use `docs/project/verify-runbook.md` as the standard for verifying your work.
-- Output your verification results to `docs/task/<ticket-id>/verification.md`.
+## 🚀 SESSION START — Do This First
+
+Before writing any code or making any suggestions:
+
+1. **Read `docs/project/context.md`** — understand the project's tech stack and goals.
+2. **Read `docs/task/active/task.md`** — understand what the current task is.
+3. **Read `docs/task/active/progress.md`** — understand what has already been done.
+4. **Read `docs/task/active/handoff.md`** — understand what the previous agent left for you.
+5. Tell the user: *"I've read the active task. We are working on [task name]. The last status was: [summary from progress.md]. I'll continue from there."*
+
+> **Do not skip this.** Skipping means you are working from your conversation history, not the repository state — which is wrong.
+
+---
+
+## 🛑 SESSION END — Do This Before Stopping
+
+Before finishing or before the user closes the conversation:
+
+1. **Write to `docs/task/active/progress.md`** — append what you did this session with specifics (not "reviewed code", but "fixed bug in `auth.py:L45` where token was not refreshed on 401").
+2. **Rewrite `docs/task/active/handoff.md`** — make it clear for whoever picks this up next:
+   ```
+   ## Status
+   [brief state summary]
+   ## Accomplished this session
+   - ...
+   ## Next steps
+   - ...
+   ## Blockers
+   - ...
+   ```
+3. If you found a bug you didn't fix, note it in handoff under "Blockers".
+4. If you made architectural discoveries, update `docs/project/architecture.md`.
+
+---
+
+## ❌ What You Must NOT Do
+
+- Do not treat chat history as canonical state
+- Do not tell the user to "check what we discussed earlier" — they may have switched agents
+- Do not skip handoff updates because you think the human will remember
+- Do not write task state into `CLAUDE.md` — only write it to `docs/task/active/`
+
+---
+
+## ✅ Verification
+
+Use `docs/project/verify-runbook.md` as your verification checklist.
+Write all verification results to `docs/task/active/verification.md`.

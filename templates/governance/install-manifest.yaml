@@ -1,6 +1,7 @@
-version: "1.0.0"
+version: "{{VERSION}}"
 kit_source: "https://github.com/example/repo-governance-kit"
 installed_at: "{{INSTALLED_AT}}"
+
 managed_paths:
   - ".ai-governance/"
   - "docs/project/"

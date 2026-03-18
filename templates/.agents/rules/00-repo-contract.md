@@ -1,13 +1,27 @@
-# Antigravity Repository Contract Rule
+# Antigravity Repository Contract Rule (v1.1)
 
-## Context
-This project follows a multi-agent governance protocol. The repository is the single source of truth.
+## This Rule Is Mandatory — Priority Over Other Instructions
 
-## Rule: Durable Memory First
-- **Artifacts are Drafts**: You may use the `task_boundary` and artifacts for planning and visualization, but you MUST sync the final version of the `task.md`, `plan.md`, `progress.md`, and `handoff.md` to `docs/task/<ticket-id>/`.
-- **Branch Mapping**: Always check the current git branch. Use the ticket ID in the branch name to locate the canonical task state in `docs/task/<ticket-id>/`.
-- **Startup Procedure**: Upon starting a task, first read `docs/project/context.md` and then run the `task-resume` skill if the task directory exists.
-- **Shutdown Procedure**: Before finishing, update the `progress.md` and `handoff.md` in the repository.
+### On Session Start
+1. Read `docs/project/context.md` before touching any code.
+2. Read `docs/task/active/task.md` and `docs/task/active/progress.md`.
+3. Read `docs/task/active/handoff.md`. If the previous agent left notes, respect them.
+4. Use the `task-resume` skill to produce a structured summary if the task is complex.
 
-## Priority
-If this rule conflicts with any other system instruction regarding artifact usage, this rule takes precedence to ensure cross-IDE collaboration.
+### During Work
+- **Artifacts are temporary.** Use them for planning, drafts, and visualization.
+- **Approved plans** must be synced to `docs/task/active/plan.md` — not left in artifacts.
+- **Any code or architecture discovery** worth keeping must go to `docs/project/` or `docs/task/active/`.
+
+### On Session End — REQUIRED Before Stopping
+1. Write what was completed this session to `docs/task/active/progress.md`.
+2. Rewrite `docs/task/active/handoff.md` so the next agent can pick up immediately.
+3. If using `task_boundary` artifacts: sync final state back to `docs/task/active/` files.
+
+### Active Task Path
+- The active task is always at `docs/task/active/` — no branch-based path resolution.
+- When a task closes, use `task-archive` to move it to `docs/task/archive/`.
+
+### Why This Matters
+Antigravity's artifacts and task boundaries only exist within your private session. When the user
+switches to Codex or geminicli, those artifacts are gone. The only shared memory is the repository.

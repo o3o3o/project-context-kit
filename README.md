@@ -1,56 +1,140 @@
 # Repo Governance Kit
 
-A standardized governance layer for multi-agent and multi-IDE collaboration.
+A plug-in governance layer that enables **Antigravity, Codex, Claude, and geminicli** to collaborate on the same project without losing context between sessions or agent switches.
 
-## Overview
-This kit solves the "fragmented memory" problem in AI-driven development. Instead of project context being trapped in private IDE sessions, chat histories, or temporary artifacts, this kit enforces a **Repository-as-Truth** model.
+## The Problem
+When you switch AI tools mid-task — say from Codex to Claude, or to `geminicli` — all the context from your previous session is gone. Each agent starts fresh from its own chat history. This creates:
+- Repetitive re-explanations of the codebase
+- Conflicting decisions made by different agents
+- Lost work from forgotten handoffs
 
-By installing this kit, you enable different agents (Antigravity, Codex, Claude) to work on the same task across different platforms while maintaining a perfect, durable record of plans, progress, and handoffs.
+## The Solution: Repository as Shared Memory
+This kit installs a lightweight governance layer that makes your **Git repository** the sole durable memory. Every agent reads from and writes to the same directory structure.
 
-## Core Philosophy
-1. **Durable over Ephemeral**: Git is the only source of truth.
-2. **Standardized Context**: All agents look at the same `docs/project/` and `docs/task/` folders.
-3. **Atomic Task States**: Every branch maps to a specific task directory.
-4. **Non-Destructive Integration**: Works alongside existing `AGENTS.md` and `CLAUDE.md` files.
+## Core Concept: Active Task
+There is always one active task in `docs/task/active/`. No branch mapping, no ticket IDs in paths. Every agent reads from the same place:
+```
+docs/task/active/
+  task.md          ← What we're trying to do
+  plan.md          ← How we plan to do it
+  progress.md      ← Running log of what's been done
+  handoff.md       ← State and next steps for the incoming agent
+  verification.md  ← Test evidence
+```
+When a task closes, run `task-archive` to move it to `docs/task/archive/<date-name>/`.
+
+---
 
 ## Installation
-To install the governance kit into your current project:
 
 ```bash
-# Clone the kit (or point to the local path)
+# Install into current directory
 path/to/repo-governance-kit/installer/install.sh .
+
+# Or with Python directly
+python3 path/to/repo-governance-kit/installer/install.py --target .
 ```
 
-## How to Collaborate
-
-### Recommended Agent Roles
-- **Antigravity**: Strategy, repo research, planning, and final diff review.
-- **Codex**: Rapid implementation and boilerplate generation.
-- **Claude**: Review, debugging, code hardening, and verification.
-
-### Workflow
-1. **New Task**: Create a branch `feat/T-123-auth`.
-2. **Bootstrap**: Run the `task-bootstrap` skill to create `docs/task/T-123/`.
-3. **Plan**: Write your approach to `docs/task/T-123/plan.md`.
-4. **Implement**: Code as usual.
-5. **Handoff**: If switching agents (e.g., from VS Code to Claude.ai), update `docs/task/T-123/handoff.md`.
-6. **Verify**: Use the `verify-change` skill to record test results in `docs/task/T-123/verification.md`.
-
-## Directory Structure (Post-Installation)
-```text
-target-repo/
-  .ai-governance/        # Shared rules and Antigravity skills
-  docs/
-    project/             # Long-term project memory
-    task/                # Canonical state per task
-  AGENTS.md              # Antigravity entry point (merged)
-  CLAUDE.md              # Claude entry point (merged)
-```
-
-## Branch Naming & Task Mapping
-Task directories are derived from the branch name using the pattern: `[type]/[T-]<id>[-description]`.
-- `feat/T-123-ui-refresh` -> `docs/task/T-123/`
-- `fix/456-bug` -> `docs/task/456/`
+This will:
+- Install `.ai-governance/` with shared rules and skills
+- Copy `docs/project/` templates (non-destructive — won't overwrite if you've customized)
+- Create `docs/task/active/` and `docs/task/archive/`
+- Merge governance blocks into `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md`
 
 ## Upgrading
-Just re-run the `install.sh` script. It will update the governance block in `AGENTS.md` / `CLAUDE.md` and sync the `.ai-governance/` folder while preserving your custom modifications in `docs/project/`.
+Just re-run the installer. It will update the `.ai-governance/` layer and the governance block within entry files, without touching your custom content.
+
+---
+
+## Recommended Agent Roles
+
+| Agent | Best For |
+|-------|---------|
+| **Codex** | Main implementation — write code, run tests |
+| **geminicli** | Pick up where Codex left off, debug, code review |
+| **Claude** | Code review, hardening, complex debugging |
+| **Antigravity** | Architecture planning, repo research, final diff review |
+
+---
+
+## Workflow: Starting a New Task
+
+1. Tell your agent (any of them): *"Run task-bootstrap"*
+2. The agent creates `docs/task/active/` with all 5 template files
+3. Fill in `task.md` with the objective
+4. Start working — the agent will read from and write to this directory
+
+## Workflow: Switching Agents
+
+When switching from Codex to geminicli (or any combination):
+
+**Outgoing agent (Codex) must:**
+1. Append to `docs/task/active/progress.md` — what it completed
+2. Rewrite `docs/task/active/handoff.md` — where things stand and what to do next
+
+**Incoming agent (geminicli) must:**
+1. Run `task-resume` skill (or manually read `progress.md` and `handoff.md`)
+2. Announce to you what state it sees before doing anything
+
+## Workflow: Closing a Task
+
+Tell your agent: *"Run task-archive"*. It will:
+1. Move `docs/task/active/` to `docs/task/archive/<date-name>/`
+2. Write a final status to the archived `handoff.md`
+3. Clear `docs/task/active/` for the next task
+
+---
+
+## Available Skills
+
+| Skill | What it does |
+|-------|-------------|
+| `task-bootstrap` | Initialize `docs/task/active/` for a new task |
+| `task-resume` | Read and summarize the current active task |
+| `task-archive` | Archive the completed task and clear active/ |
+| `verify-change` | Run verification and write results to verification.md |
+
+---
+
+## Post-Installation Structure
+
+```
+your-repo/
+├── AGENTS.md              ← Antigravity/Codex entry (governance block appended)
+├── CLAUDE.md              ← Claude entry (governance block appended)
+├── GEMINI.md              ← geminicli entry (governance block appended)
+├── .ai-governance/
+│   ├── AGENTS.shared.md   ← Startup/shutdown protocol for all agents
+│   ├── CLAUDE.shared.md   ← Claude-specific instructions
+│   ├── GEMINI.shared.md   ← geminicli-specific instructions
+│   ├── repo-contract.md   ← Cross-agent rules
+│   └── .agents/
+│       ├── rules/
+│       │   └── 00-repo-contract.md
+│       └── skills/
+│           ├── task-bootstrap/
+│           ├── task-resume/
+│           ├── task-archive/
+│           └── verify-change/
+├── docs/
+│   ├── project/
+│   │   ├── context.md
+│   │   ├── architecture.md
+│   │   ├── coding-standards.md
+│   │   └── verify-runbook.md
+│   └── task/
+│       ├── active/        ← Current task (always here, no branch mapping)
+│       ├── archive/       ← Completed tasks
+│       └── _template/     ← Templates for new tasks
+```
+
+---
+
+## The "Write-Back" Contract
+
+Every agent **must** update these two files before ending a session:
+
+1. **`docs/task/active/progress.md`** — Append what you did (be specific: file names, what changed)
+2. **`docs/task/active/handoff.md`** — Rewrite to reflect current state and what to do next
+
+This is how the next agent (or tomorrow's you) picks up exactly where things left off.
