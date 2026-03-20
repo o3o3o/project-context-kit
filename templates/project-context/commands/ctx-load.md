@@ -24,6 +24,5 @@ Restore the current working context for a new agent session from repo-native pro
 
 - **Gemini CLI / Antigravity**: Call `activate_skill(name="context-load")` after reading these files to synthesize the session brief.
 - Prefer `index.md` and `summary.md` as the single active-task source of truth.
-- If `index.md` or `summary.md` are missing, fall back to legacy branch-based summaries before declaring the repo uninitialized.
 - If files are missing, offer to run `activate_skill(name="context-bootstrap")`.
 - Keep output brief and execution-oriented.

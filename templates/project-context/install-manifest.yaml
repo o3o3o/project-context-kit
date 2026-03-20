@@ -1,5 +1,5 @@
 version: "{{VERSION}}"
-kit_source: "https://github.com/example/repo-governance-kit"
+kit_source: "https://github.com/o3o3o/project-context-kit"
 installed_at: "{{INSTALLED_AT}}"
 
 managed_paths:

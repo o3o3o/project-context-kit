@@ -32,4 +32,3 @@ You must leave the repository in a state where another agent can pick up your wo
 - **No `handoff.md`**: Use `summary.md`.
 - **Metadata First**: Always check `metadata.yaml` before guessing directory structures or build commands.
 - **Durable State**: Only files in `.project-context/docs/` are shared context. Your internal thoughts/artifacts are private to this session.
-- **Compatibility**: If `active/index.md` or `active/summary.md` are missing, old `branches/<name>/summary.md` files may be read as a fallback.

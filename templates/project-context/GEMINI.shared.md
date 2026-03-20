@@ -21,7 +21,7 @@ You are `geminicli`. We use a **Project Context** memory model for durable colla
 1.  **Read Worldview**: Read `docs/project/metadata.yaml` and `docs/project/context.md`.
 2.  **Read Fast Task View**: Read `docs/task/active/index.md`.
 3.  **Activate Skill**: Call `activate_skill(name="context-load")` to reconstruct the task state.
-4.  **Greet**: *"GCC Context loaded. Tier 1 (Project) & Tier 2 (Task) synchronized. Ready."*
+4.  **Greet**: *"Project Context loaded. Tier 1 (Project) and Tier 2 (Task) synchronized. Ready."*
 
 ---
 
@@ -39,4 +39,3 @@ You are `geminicli`. We use a **Project Context** memory model for durable colla
 ## ❌ Constraints
 - Do not append to a single log file. Use the Project Context tree.
 - Do not create "knowledge debt" by leaving evidence in external `/tmp` or `artifacts/` folders.
-- If the active-task files are missing, older branch-based summaries may be read as a compatibility fallback.

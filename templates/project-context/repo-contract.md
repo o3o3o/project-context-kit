@@ -37,8 +37,3 @@ The only durable memory for this project is the Project Context tree.
 
 ## 3. Reasoning Integrity
 Do not pollute the active task summary with failed experiments. Use optional **Workstreams** only for exploration, risky prototypes, or genuinely parallel lines of investigation.
-
-## 4. Compatibility
-- Preferred read order: `active/index.md` -> `active/summary.md` -> legacy branch-based summaries.
-- New installs generate only the v3.1 active-task structure.
-- Older repositories may still contain `branches/<name>/summary.md`; treat that as a fallback compatibility layer, not the default source of truth.

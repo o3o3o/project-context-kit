@@ -47,4 +47,3 @@ Every agent **must** leave the active task in a resumable and hermetic state.
 | `docs/task/active/workstreams/<name>/` | Optional advanced-mode parallel exploration lanes. |
 
 - IDE artifacts / chat history are **ephemeral drafts**. The Project Context tree is the **only durable memory**.
-- Compatibility fallback: if `index.md` or `summary.md` do not exist, older branch-based layouts may be read, but they are not the preferred source of truth.
