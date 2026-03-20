@@ -215,7 +215,7 @@ def main():
 
     # ── 4. Copy shared governance files ───────────────────────────────────
     log("Step 4: Copying shared governance files...")
-    gov_src = os.path.join(source_kit, "templates/governance")
+    gov_src = os.path.join(source_kit, "templates/project-context")
     gov_dst = os.path.join(target_repo, ".project-context")
     for item in os.listdir(gov_src):
         if item in ["install-manifest.yaml", "docs"]:
@@ -229,7 +229,7 @@ def main():
 
     # ── 5. Copy project doc templates (non-destructive) ───────────────────
     log("Step 5: Installing .project-context/docs/project templates (non-destructive)...")
-    docs_proj_src = os.path.join(source_kit, "templates/governance/docs/project")
+    docs_proj_src = os.path.join(source_kit, "templates/project-context/docs/project")
     docs_proj_dst = os.path.join(target_repo, ".project-context/docs/project")
     for item in os.listdir(docs_proj_src):
         copy_template(
@@ -241,7 +241,7 @@ def main():
 
     # ── 6. Copy task templates (overwrite OK, these are just starters) ────
     log("Step 6: Installing .project-context/docs/task/_template files...")
-    docs_task_src = os.path.join(source_kit, "templates/governance/docs/task/_template")
+    docs_task_src = os.path.join(source_kit, "templates/project-context/docs/task/_template")
     docs_task_dst = os.path.join(target_repo, ".project-context/docs/task/_template")
     copy_template(
         docs_task_src,
@@ -272,7 +272,7 @@ def main():
 
     # ── 8. Generate install manifest ──────────────────────────────────────
     log("Step 8: Generating install manifest...")
-    manifest_src = os.path.join(source_kit, "templates/governance/install-manifest.yaml")
+    manifest_src = os.path.join(source_kit, "templates/project-context/install-manifest.yaml")
     manifest_dst = os.path.join(target_repo, ".project-context/install-manifest.yaml")
 
     with open(manifest_src, 'r') as f:
