@@ -25,7 +25,6 @@ sync_cmd() {
 
 # Legacy GCC commands to prune (from v2.1 and below)
 LEGACY_CMDS=(
-    "task-archive"
     "task-bootstrap"
     "task-branch"
     "task-commit"
@@ -34,7 +33,6 @@ LEGACY_CMDS=(
     "context-bootstrap"
     "context-checkpoint"
     "context-load"
-    "verify-change"
 )
 
 # Function to safely prune only legacy GCC files
