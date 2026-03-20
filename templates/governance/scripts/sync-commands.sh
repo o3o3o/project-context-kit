@@ -31,6 +31,9 @@ LEGACY_CMDS=(
     "task-commit"
     "task-context"
     "task-merge"
+    "context-bootstrap"
+    "context-checkpoint"
+    "context-load"
     "verify-change"
 )
 

@@ -1,12 +1,12 @@
 ---
-name: task-context
+name: context-load
 description: Load and synthesize the current Project Context state (v3.2).
 ---
 
-# task-context Skill
+# context-load Skill
 
 ## Purpose
-Reconstruct the project and task state by reading the GCC tree. Must be run at the start of every session.
+Reconstruct the project and task state by reading the Project Context tree. Must be run at the start of every session.
 
 ## Instructions
 
@@ -15,10 +15,10 @@ Reconstruct the project and task state by reading the GCC tree. Must be run at t
    - If not found, warn the user.
 
 2. **Core Context**:
-   - Read `.project-context/docs/task/active/index.md` first (fast status view).
-   - Read `.project-context/docs/task/active/task.md` (Objective) if it exists.
-   - Read `.project-context/docs/task/active/summary.md` (Current state) if it exists.
-   - Read `.project-context/docs/task/active/verification.md` (Success status) if it exists.
+   - Read `.project-context/docs/task/active/index.md` first.
+   - Read `.project-context/docs/task/active/task.md` if it exists.
+   - Read `.project-context/docs/task/active/summary.md` if it exists.
+   - Read `.project-context/docs/task/active/verification.md` if it exists.
 
 3. **Compatibility Fallback**:
    - If `index.md` or `summary.md` are missing, look for a legacy branch-based summary under `.project-context/docs/task/active/branches/main/summary.md`, or in older repos under `.ai-governance/docs/task/active/branches/main/summary.md`.

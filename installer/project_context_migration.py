@@ -20,6 +20,13 @@ LEGACY_COMMAND_PATHS = [
     ".project-context/commands/gov-context.md",
     ".project-context/commands/gov-writeback.md",
 ]
+LEGACY_SKILL_PATHS = [
+    ".agents/skills/task-bootstrap",
+    ".agents/skills/task-branch",
+    ".agents/skills/task-commit",
+    ".agents/skills/task-context",
+    ".agents/skills/task-merge",
+]
 
 
 def ensure_dir(path, log=None):
@@ -186,6 +193,9 @@ def rewrite_legacy_root_references(target_repo, log=None):
         (".ai-governance/", ".project-context/"),
         ("/gov-context", "/ctx-load"),
         ("/gov-writeback", "/ctx-save"),
+        ("task-context", "context-load"),
+        ("task-bootstrap", "context-bootstrap"),
+        ("task-commit", "context-checkpoint"),
     ]
     for path in [
         os.path.join(target_repo, "AGENTS.md"),
@@ -223,6 +233,12 @@ def prune_legacy_command_files(target_repo, log=None):
         remove_path(os.path.join(target_repo, rel_path), log=log)
 
 
+def prune_legacy_skill_files(target_repo, log=None):
+    for rel_path in LEGACY_SKILL_PATHS:
+        remove_path(os.path.join(target_repo, rel_path), log=log)
+
+
 def cleanup_legacy_after_migration(target_repo, log=None):
     prune_legacy_command_files(target_repo, log=log)
+    prune_legacy_skill_files(target_repo, log=log)
     remove_path(os.path.join(target_repo, OLD_DIR), log=log)

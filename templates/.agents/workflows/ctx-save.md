@@ -15,7 +15,7 @@ Write back the current execution state before ending the session so the next age
 3. **Refresh Fast Index**: Update `.project-context/docs/task/active/index.md`.
 4. **Finalize State**:
    - Default path -> Overwrite `.project-context/docs/task/active/summary.md`.
-   - Milestone reached -> Call `activate_skill(name="task-commit")`.
+   - Milestone reached -> Call `activate_skill(name="context-checkpoint")`.
 
 ## Rules
 

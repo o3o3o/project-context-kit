@@ -1,9 +1,9 @@
 ---
-name: task-bootstrap
+name: context-bootstrap
 description: Initialize the Project Context structure (v3.2).
 ---
 
-# task-bootstrap Skill
+# context-bootstrap Skill
 
 ## Purpose
 Initialize a new active task tree using the Project Context v3.2 schema.
@@ -21,7 +21,7 @@ Initialize a new active task tree using the Project Context v3.2 schema.
    - `.project-context/docs/task/active/commits/`
    - `.project-context/docs/task/active/workstreams/`
 
-3. **Initialize Summary**: Ensure `summary.md` has the mandatory sections:
+3. **Initialize Summary**: Ensure `summary.md` has:
    - Current State: "Initialized"
    - Known Risks: "None"
    - Next Action: "Drafting implementation plan"

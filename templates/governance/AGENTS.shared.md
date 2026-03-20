@@ -15,7 +15,7 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 1. **Read Metadata**: Open `.project-context/docs/project/metadata.yaml` to understand repository-wide execution constraints.
 2. **Read Project Context**: Read `.project-context/docs/project/context.md` for架构, coding standards, and project history.
 3. **Read Fast Task View**: Open `.project-context/docs/task/active/index.md` first.
-4. **Load GCC Context**: Activate the `task-context` skill to synthesize current task state and risks.
+4. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks.
 5. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."*
 
 ---
@@ -27,7 +27,7 @@ Every agent **must** leave the active task in a resumable and hermetic state.
 1. **Knowledge Extraction**: If you learned universal project patterns or fixes, update `docs/project/context.md`.
 2. **Checkpointing**:
    - **Always**: Refresh `index.md` and `summary.md`.
-   - **Milestone Reached**: Activate the `task-commit` skill to serialize reasoning and evidence.
+   - **Milestone Reached**: Activate the `context-checkpoint` skill to serialize reasoning and evidence.
 3. **Hermetic Verification**: Ensure all references in your summaries are internal to `.project-context/`.
 
 ---

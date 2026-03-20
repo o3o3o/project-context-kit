@@ -11,7 +11,7 @@ You are operating in a multi-agent repository using a **Project Context** memory
 
 1. **Read Metadata**: Load `.project-context/docs/project/metadata.yaml`. It contains the commands you need to build and test.
 2. **Read Active Index**: Load `.project-context/docs/task/active/index.md` for the fastest current-state view.
-3. **Execute `task-context`**: Run this skill to reconstruct the task state.
+3. **Execute `context-load`**: Run this skill to reconstruct the task state.
 4. **Sync with User**: Tell the user: *"I've read the project context. Status: [status]. Proceeding with [Action]."*
 
 ---
@@ -21,7 +21,7 @@ You are operating in a multi-agent repository using a **Project Context** memory
 You must leave the repository in a state where another agent can pick up your work without reading the chat history.
 
 1. **Always Refresh Active State**: Update `.project-context/docs/task/active/index.md` and `.project-context/docs/task/active/summary.md`.
-2. **Milestone Reached?**: If you completed a feature, fix, or hypothesis test, run `task-commit`.
+2. **Milestone Reached?**: If you completed a feature, fix, or hypothesis test, run `context-checkpoint`.
 3. **Evidence**: Write any validation results into the commit or `.project-context/docs/task/active/verification.md`.
 
 ---

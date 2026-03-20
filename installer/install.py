@@ -305,7 +305,7 @@ def main():
     log("✅ Installation complete!")
     log("Next steps:")
     log("  1. Fill in .project-context/docs/project/context.md with your project details")
-    log("  2. Run 'task-bootstrap' skill in your AI agent to create the first active task")
+    log("  2. Run 'context-bootstrap' in your AI agent to create the first active task")
     log("  3. Use workstreams only when you need isolated parallel exploration")
     if args.migrate and not args.yes:
         log("  4. Review the preserved .ai-governance directory and delete it after confirming the migration")

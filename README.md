@@ -2,7 +2,11 @@
 
 Project Context Kit adds a durable, repo-local context layer for multi-session and multi-agent work. It stores project memory and active task state in files, so the next agent can resume quickly without depending on chat history or IDE memory.
 
+Its main pain point is practical context recovery across tools and sessions: in Codex, Antigravity, OpenCode, Gemini, and similar IDE or TUI editors, `/ctx-load` and `/ctx-save` make it easier to preserve project progress, switch tools, and quickly restore working context in a new session.
+
 Project Context Kit 为仓库增加一层可持久化、可版本化的上下文。它把项目级知识和当前任务状态写入文件，让下一个 agent 或下一次会话可以快速接手，而不依赖聊天记录或 IDE 内存。
+
+它要解决的核心痛点很实际：在 Codex、Antigravity、OpenCode、Gemini 等 IDE / TUI 编辑器之间切换时，或者在不同 session 之间继续工作时，可以通过 `/ctx-load` 和 `/ctx-save` 保存项目进度，并快速把上下文拿回来。
 
 > [!IMPORTANT]
 > Project Context v3.2 uses `.project-context/` as the primary storage path and `/ctx-load` plus `/ctx-save` as the default command pair.

@@ -20,7 +20,7 @@ You are `geminicli`. We use a **Project Context** memory model for durable colla
 
 1.  **Read Worldview**: Read `docs/project/metadata.yaml` and `docs/project/context.md`.
 2.  **Read Fast Task View**: Read `docs/task/active/index.md`.
-3.  **Activate Skill**: Call `activate_skill(name="task-context")` to reconstruct the task state.
+3.  **Activate Skill**: Call `activate_skill(name="context-load")` to reconstruct the task state.
 4.  **Greet**: *"GCC Context loaded. Tier 1 (Project) & Tier 2 (Task) synchronized. Ready."*
 
 ---
@@ -31,7 +31,7 @@ You are `geminicli`. We use a **Project Context** memory model for durable colla
     - **IF YES**: Update `docs/project/context.md` (Lessons Learned) or `metadata.yaml`.
 2.  **Checkpointing**:
     - Always refresh `index.md` and `summary.md`.
-    - If a milestone was reached: Call `activate_skill(name="task-commit")`.
+    - If a milestone was reached: Call `activate_skill(name="context-checkpoint")`.
 3.  **Hermetic Check**: Ensure all references in your write-back are internal to `.project-context/`.
 
 ---
