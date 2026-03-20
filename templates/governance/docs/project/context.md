@@ -13,7 +13,7 @@
 - `src/`: Source code
 - `tests/`: Test suites
 - `docs/`: Documentation (Project memory and Task states)
-- `.ai-governance/`: Multi-agent shared configuration
+- `.project-context/`: Multi-agent shared project context
 
 ## Common Commands
 - **Install**: `npm install` / `pip install -r requirements.txt`

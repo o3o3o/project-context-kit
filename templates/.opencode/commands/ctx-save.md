@@ -1,13 +1,13 @@
-# /gov-writeback
+# /ctx-save
 Write the current resumable task state to:
-`.ai-governance/docs/task/active/summary.md`
+`.project-context/docs/task/active/summary.md`
 
 Overwrite with:
-# Summary
+# Active Task Summary
 
-## Branch Intent
 ## Current State
-## Known Risks
+## What Changed Recently
+## Known Risks / Blockers
 ## Next Action
 
 Constraints:

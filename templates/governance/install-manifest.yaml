@@ -3,7 +3,7 @@ kit_source: "https://github.com/example/repo-governance-kit"
 installed_at: "{{INSTALLED_AT}}"
 
 managed_paths:
-  - ".ai-governance/"
+  - ".project-context/"
   - ".agents/"
   - "docs/project/"
   - "docs/task/"
@@ -17,8 +17,8 @@ canonical_project_docs:
   - "docs/project/coding-standards.md"
   - "docs/project/verify-runbook.md"
 canonical_task_docs:
+  - "index.md"
   - "task.md"
   - "plan.md"
-  - "progress.md"
-  - "handoff.md"
+  - "summary.md"
   - "verification.md"

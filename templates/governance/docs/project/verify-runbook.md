@@ -10,7 +10,7 @@ Before declaring a task finished, follow these steps in order:
 5. **Manual Check**: Perform a manual walkthrough of the changed UI/API.
 
 ## Recording Results
-Log all results in `docs/task/<ticket-id>/verification.md` using the following format:
+Log all results in `.project-context/docs/task/active/verification.md` using the following format:
 
 | Step | Method | Result | Logs/Notes |
 |------|--------|--------|------------|

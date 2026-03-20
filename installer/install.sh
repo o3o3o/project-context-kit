@@ -5,7 +5,20 @@ set -e
 # This script wraps the python installer to provide a convenient one-liner.
 
 SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
-TARGET_DIR="${1:-.}"
+TARGET_DIR="."
+EXTRA_ARGS=()
+
+for arg in "$@"; do
+    if [ "$arg" = "--migrate" ]; then
+        EXTRA_ARGS+=("--migrate")
+    elif [ "$arg" = "--yes" ]; then
+        EXTRA_ARGS+=("--yes")
+    elif [ "$TARGET_DIR" = "." ]; then
+        TARGET_DIR="$arg"
+    else
+        EXTRA_ARGS+=("$arg")
+    fi
+done
 
 echo "[*] Repo Governance Kit Installer"
 
@@ -15,4 +28,4 @@ then
     exit 1
 fi
 
-python3 "$SOURCE_DIR/installer/install.py" --target "$TARGET_DIR" --source "$SOURCE_DIR"
+python3 "$SOURCE_DIR/installer/install.py" --target "$TARGET_DIR" --source "$SOURCE_DIR" "${EXTRA_ARGS[@]}"

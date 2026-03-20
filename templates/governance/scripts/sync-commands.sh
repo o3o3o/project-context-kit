@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # sync-commands.sh
-# Syncs neutral command templates from .ai-governance/commands/ to host-specific directories.
+# Syncs neutral command templates from .project-context/commands/ to host-specific directories.
 
-GOV_CMD_DIR=".ai-governance/commands"
+GOV_CMD_DIR=".project-context/commands"
 CLAUDE_CMD_DIR=".claude/commands"
 OPENCODE_CMD_DIR=".opencode/commands"
 CODEX_PRMPT_DIR=".codex/prompts"
@@ -58,7 +58,7 @@ prune_legacy "$AGENT_WF_DIR" "md"
 
 mkdir -p "$CLAUDE_CMD_DIR" "$OPENCODE_CMD_DIR" "$CODEX_PRMPT_DIR" "$GEMINI_CMD_DIR" "$AGENT_WF_DIR"
 
-sync_cmd "gov-context"
-sync_cmd "gov-writeback"
+sync_cmd "ctx-load"
+sync_cmd "ctx-save"
 
 echo "Sync complete."

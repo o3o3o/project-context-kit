@@ -1,4 +1,4 @@
-# Merge Rules for AI Governance Kit
+# Merge Rules for Project Context Kit
 
 ## Principle 1: Non-Destructive
 - Never delete existing content in `AGENTS.md` or `CLAUDE.md`.
@@ -14,5 +14,5 @@
 - The installer should detect if a file is substantially different from the template before offering to update it.
 
 ## Principle 4: Manifest Tracking
-- Every installation or upgrade must update `.ai-governance/install-manifest.yaml`.
+- Every installation or upgrade must update `.project-context/install-manifest.yaml`.
 - Record the timestamp and the version installed.

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Repo Governance Kit Installer (v1.1)
+Repo Governance Kit Installer (v1.4)
 Installs the multi-agent governance layer into any target repository.
 Supports non-destructive merge for AGENTS.md, CLAUDE.md, and GEMINI.md.
 """
@@ -9,8 +9,15 @@ import shutil
 import datetime
 import re
 import argparse
+from project_context_migration import (
+    cleanup_legacy_after_migration,
+    has_migrated_project_context,
+    migrate_legacy_active_task,
+    migrate_legacy_root,
+    rewrite_legacy_root_references,
+)
 
-VERSION = "1.1.0"
+VERSION = "1.4.0"
 MARKER_START = "<!-- BEGIN AI-GOVERNANCE -->"
 MARKER_END = "<!-- END AI-GOVERNANCE -->"
 
@@ -94,6 +101,40 @@ def copy_template(src, dst, overwrite=False):
         # log(f"  Copied: {os.path.basename(src)}")
 
 
+def read_file(path):
+    with open(path, 'r') as f:
+        return f.read()
+
+
+def write_file(path, content):
+    parent = os.path.dirname(path)
+    if parent:
+        ensure_dir(parent)
+    with open(path, 'w') as f:
+        f.write(content)
+
+
+def extract_section(markdown, heading):
+    pattern = re.compile(
+        rf"^## {re.escape(heading)}\n(.*?)(?=^## |\Z)",
+        re.MULTILINE | re.DOTALL
+    )
+    match = pattern.search(markdown)
+    if not match:
+        return None
+    return match.group(1).strip()
+
+
+def first_nonempty_line(text):
+    if not text:
+        return None
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped:
+            return stripped
+    return None
+
+
 def main():
     parser = argparse.ArgumentParser(description="Install Repo Governance Kit")
     parser.add_argument(
@@ -104,6 +145,16 @@ def main():
         "--source",
         default=os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
         help="Path to the repo-governance-kit source"
+    )
+    parser.add_argument(
+        "--migrate",
+        action="store_true",
+        help="Migrate an older .ai-governance repository to .project-context during install"
+    )
+    parser.add_argument(
+        "--yes",
+        action="store_true",
+        help="Auto-confirm legacy cleanup after a successful migration"
     )
     args = parser.parse_args()
 
@@ -120,12 +171,17 @@ def main():
     ensure_dir(os.path.join(target_repo, ".agents/rules"))
     ensure_dir(os.path.join(target_repo, ".agents/skills"))
     ensure_dir(os.path.join(target_repo, ".agents/workflows"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/project"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/active/branches/main/commits"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/active/assets"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/archive"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/_template/branches/main/commits"))
-    ensure_dir(os.path.join(target_repo, ".ai-governance/docs/task/_template/assets"))
+    ensure_dir(os.path.join(target_repo, ".project-context/docs/project"))
+    ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/commits"))
+    ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/assets"))
+    ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/workstreams"))
+    ensure_dir(os.path.join(target_repo, ".project-context/docs/task/archive"))
+    ensure_dir(os.path.join(target_repo, ".project-context/docs/task/_template/workstreams/_template/commits"))
+    ensure_dir(os.path.join(target_repo, ".project-context/docs/task/_template/assets"))
+    print()
+
+    if args.migrate:
+        migrate_legacy_root(target_repo, log=log)
     print()
 
 
@@ -160,7 +216,7 @@ def main():
     # ── 4. Copy shared governance files ───────────────────────────────────
     log("Step 4: Copying shared governance files...")
     gov_src = os.path.join(source_kit, "templates/governance")
-    gov_dst = os.path.join(target_repo, ".ai-governance")
+    gov_dst = os.path.join(target_repo, ".project-context")
     for item in os.listdir(gov_src):
         if item in ["install-manifest.yaml", "docs"]:
             continue  # handled separately
@@ -172,9 +228,9 @@ def main():
     print()
 
     # ── 5. Copy project doc templates (non-destructive) ───────────────────
-    log("Step 5: Installing .ai-governance/docs/project templates (non-destructive)...")
+    log("Step 5: Installing .project-context/docs/project templates (non-destructive)...")
     docs_proj_src = os.path.join(source_kit, "templates/governance/docs/project")
-    docs_proj_dst = os.path.join(target_repo, ".ai-governance/docs/project")
+    docs_proj_dst = os.path.join(target_repo, ".project-context/docs/project")
     for item in os.listdir(docs_proj_src):
         copy_template(
             os.path.join(docs_proj_src, item),
@@ -184,14 +240,15 @@ def main():
     print()
 
     # ── 6. Copy task templates (overwrite OK, these are just starters) ────
-    log("Step 6: Installing .ai-governance/docs/task/_template files...")
+    log("Step 6: Installing .project-context/docs/task/_template files...")
     docs_task_src = os.path.join(source_kit, "templates/governance/docs/task/_template")
-    docs_task_dst = os.path.join(target_repo, ".ai-governance/docs/task/_template")
+    docs_task_dst = os.path.join(target_repo, ".project-context/docs/task/_template")
     copy_template(
         docs_task_src,
         docs_task_dst,
         overwrite=True
     )
+    migrate_legacy_active_task(target_repo, log=log)
     print()
 
     # ── 7. Merge entry files (AGENTS.md, CLAUDE.md, GEMINI.md) ───────────
@@ -209,12 +266,14 @@ def main():
         os.path.join(target_repo, "GEMINI.md"),
         os.path.join(templates_root, "GEMINI.append.md")
     )
+    if args.migrate:
+        rewrite_legacy_root_references(target_repo, log=log)
     print()
 
     # ── 8. Generate install manifest ──────────────────────────────────────
     log("Step 8: Generating install manifest...")
     manifest_src = os.path.join(source_kit, "templates/governance/install-manifest.yaml")
-    manifest_dst = os.path.join(target_repo, ".ai-governance/install-manifest.yaml")
+    manifest_dst = os.path.join(target_repo, ".project-context/install-manifest.yaml")
 
     with open(manifest_src, 'r') as f:
         manifest_content = f.read()
@@ -227,10 +286,29 @@ def main():
     log(f"  Generated: {manifest_dst}")
     print()
 
+    if args.migrate and has_migrated_project_context(target_repo):
+        should_cleanup = args.yes
+        if not should_cleanup:
+            reply = input(
+                "[?] Migration data is present under .project-context/. "
+                "Delete legacy .ai-governance and old gov-* command files now? [y/N]: "
+            ).strip().lower()
+            should_cleanup = reply in {"y", "yes"}
+        if should_cleanup:
+            log("Step 9: Cleaning up legacy migration artifacts...")
+            cleanup_legacy_after_migration(target_repo, log=log)
+            print()
+        else:
+            warn("Legacy .ai-governance and any old gov-* command files were left in place.")
+            warn("After you confirm the migration, rerun with --migrate --yes or delete them manually.")
+
     log("✅ Installation complete!")
     log("Next steps:")
-    log("  1. Fill in .ai-governance/docs/project/context.md with your project details")
+    log("  1. Fill in .project-context/docs/project/context.md with your project details")
     log("  2. Run 'task-bootstrap' skill in your AI agent to create the first active task")
+    log("  3. Use workstreams only when you need isolated parallel exploration")
+    if args.migrate and not args.yes:
+        log("  4. Review the preserved .ai-governance directory and delete it after confirming the migration")
 
 
 if __name__ == "__main__":

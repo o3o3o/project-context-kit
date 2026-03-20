@@ -1,28 +1,38 @@
 ---
 name: task-bootstrap
-description: Initialize the refined GCC structure (v2.1).
+description: Initialize the Project Context structure (v3.2).
 ---
 
 # task-bootstrap Skill
 
 ## Purpose
-Initialize a new active task tree using the refined GCC v2.1 schema.
+Initialize a new active task tree using the Project Context v3.2 schema.
 
 ## Instructions
 
-1. **Check Metadata**: Ensure `.ai-governance/docs/project/metadata.yaml` exists. If not, draft one based on the current repo structure and ask the user to verify.
+1. **Check Metadata**: Ensure `.project-context/docs/project/metadata.yaml` exists. If not, draft one based on the current repo structure and ask the user to verify.
 
 2. **Create Tree**:
-   - `.ai-governance/docs/task/active/`
-   - `.ai-governance/docs/task/active/task.md`
-   - `.ai-governance/docs/task/active/verification.md`
-   - `.ai-governance/docs/task/active/branches/main/commits/`
-   - `.ai-governance/docs/task/active/branches/main/summary.md`
+   - `.project-context/docs/task/active/`
+   - `.project-context/docs/task/active/index.md`
+   - `.project-context/docs/task/active/task.md`
+   - `.project-context/docs/task/active/summary.md`
+   - `.project-context/docs/task/active/verification.md`
+   - `.project-context/docs/task/active/commits/`
+   - `.project-context/docs/task/active/workstreams/`
 
 3. **Initialize Summary**: Ensure `summary.md` has the mandatory sections:
-   - Branch Intent
    - Current State: "Initialized"
    - Known Risks: "None"
    - Next Action: "Drafting implementation plan"
 
-4. **Ask for Objective**: Prompt the user for the `task.md` contents.
+4. **Initialize Index**: Ensure `index.md` contains:
+   - Current Goal
+   - Current Status: "Initialized"
+   - Next Step: "Drafting implementation plan"
+   - Latest Verification: "Not run yet"
+   - Latest Milestone: "None yet"
+
+5. **Compatibility Note**: Older `branches/main/summary.md` structures may still exist in previously installed repos, but do not create them in new installs.
+
+6. **Ask for Objective**: Prompt the user for the `task.md` contents.

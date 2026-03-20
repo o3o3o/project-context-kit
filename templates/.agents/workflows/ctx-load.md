@@ -1,18 +1,20 @@
 ---
-name: gov-context
+name: ctx-load
 description: Restore the current working context for a new agent session.
 ---
 
-# /gov-context
+# /ctx-load
 
 Purpose:
-Restore the current working context for a new agent session from repo-native governance files.
+Restore the current working context for a new agent session from repo-native project-context files.
 
 ## Read in order
 
-1. `.ai-governance/docs/task/active/task.md`
-2. `.ai-governance/docs/task/active/summary.md`
-3. If `summary.md` does not exist, fall back to any available handoff-style file (e.g., `handoff.md`) in the same folder.
+1. `.project-context/docs/project/metadata.yaml`
+2. `.project-context/docs/task/active/index.md`
+3. `.project-context/docs/task/active/task.md`
+4. `.project-context/docs/task/active/summary.md`
+5. If `summary.md` does not exist, fall back to any available compatibility file in the same folder.
 
 ## Output format
 
@@ -34,7 +36,7 @@ The single most important next step to take.
 
 - **Gemini CLI**: Call `activate_skill(name="task-context")` after reading these files to synthesize state.
 - Do not modify code.
-- Do not modify governance files.
+- Do not modify project-context files.
 - Do not infer extra requirements unless strongly supported by the files.
 - Prefer `summary.md` as the source of truth for current state.
 - Keep output brief and execution-oriented.

@@ -1,19 +1,19 @@
 Before ending the session, write back the resumable task state.
 
 Overwrite:
-`.ai-governance/docs/task/active/summary.md`
+`.project-context/docs/task/active/summary.md`
 
 Use:
 
-# Summary
-
-## Branch Intent
-<current task or phase goal>
+# Active Task Summary
 
 ## Current State
 <what is done and current implementation status>
 
-## Known Risks
+## What Changed Recently
+<recent meaningful changes>
+
+## Known Risks / Blockers
 <blockers, unresolved issues, fragile assumptions, missing checks>
 
 ## Next Action

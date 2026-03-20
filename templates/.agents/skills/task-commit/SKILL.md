@@ -1,6 +1,6 @@
 ---
 name: task-commit
-description: Create a structured cognitive checkpoint (v2.1).
+description: Create a structured project-context checkpoint (v3.2).
 ---
 
 # task-commit Skill
@@ -18,10 +18,12 @@ Serialize current progress, reasoning, and decisions into the GCC history. Use t
    - **Verification**: Evidence (test output, logs).
 
 2. **Generate Commit**:
-   - Create `branches/<branch>/commits/YYYY-MM-DD-HHMM-[slug].md`.
+   - Default target: `docs/task/active/commits/YYYY-MM-DD-HHMM-[slug].md`.
+   - Optional advanced target: `docs/task/active/workstreams/<name>/commits/YYYY-MM-DD-HHMM-[slug].md`.
 
 3. **Update Summary**:
-   - Update `branches/<branch>/summary.md`. 
-   - Refresh the `Current State`, append the new commit to `Latest Commits`, and update the `Next Action`.
+   - Update `docs/task/active/summary.md` by default.
+   - Refresh `docs/task/active/index.md` with the latest milestone and next step.
+   - If operating inside a named workstream, update that workstream summary as well.
 
 4. **Final Check**: Ensure you didn't just summarize code; summarize the **cognitive decisions** that influenced the code.

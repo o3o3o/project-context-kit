@@ -1,33 +1,34 @@
-# Shared Agent Governance Rules (v2.1 - GCC Hermetic Model)
+# Shared Agent Project Context Rules (v3.2)
 
 This file is the single governing instruction for all agents operating in this repository.
 Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 > [!IMPORTANT]
-> **Hermeticity Rule**: You are a self-contained agent. NEVER link to files (logs, artifacts) outside `.ai-governance/`. 
+> **Hermeticity Rule**: You are a self-contained agent. Never link to files (logs, artifacts) outside `.project-context/`. 
 > - If evidence is important: Inline the text into `verification.md` or a commit.
-> - If data is large: Copy it to `.ai-governance/docs/task/active/assets/` before referencing it.
+> - If data is large: Copy it to `.project-context/docs/task/active/assets/` before referencing it.
 
 ---
 
-## 🚀 STARTUP INSTRUCTIONS (/gov-context)
+## 🚀 STARTUP INSTRUCTIONS (/ctx-load)
 
-1. **Read Metadata**: Open `.ai-governance/docs/project/metadata.yaml` to understand repository-wide execution constraints.
-2. **Read Project Context**: Read `.ai-governance/docs/project/context.md` for架构, coding standards, and project history.
-3. **Load GCC Context**: Activate the `task-context` skill to synthesize current task state and risks.
-4. **Announce**: Briefly tell the user: *"GCC Context loaded. Architecture & Task state synchronized."*
+1. **Read Metadata**: Open `.project-context/docs/project/metadata.yaml` to understand repository-wide execution constraints.
+2. **Read Project Context**: Read `.project-context/docs/project/context.md` for架构, coding standards, and project history.
+3. **Read Fast Task View**: Open `.project-context/docs/task/active/index.md` first.
+4. **Load GCC Context**: Activate the `task-context` skill to synthesize current task state and risks.
+5. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."*
 
 ---
 
-## 🛑 SHUTDOWN INSTRUCTIONS (/gov-writeback)
+## 🛑 SHUTDOWN INSTRUCTIONS (/ctx-save)
 
 Every agent **must** leave the active task in a resumable and hermetic state.
 
 1. **Knowledge Extraction**: If you learned universal project patterns or fixes, update `docs/project/context.md`.
 2. **Checkpointing**:
+   - **Always**: Refresh `index.md` and `summary.md`.
    - **Milestone Reached**: Activate the `task-commit` skill to serialize reasoning and evidence.
-   - **Partial Progress**: Update `summary.md` (Current State / Next Action) directly.
-3. **Hermetic Verification**: Ensure all references in your summaries are internal to `.ai-governance/`.
+3. **Hermetic Verification**: Ensure all references in your summaries are internal to `.project-context/`.
 
 ---
 
@@ -37,10 +38,13 @@ Every agent **must** leave the active task in a resumable and hermetic state.
 |------|----------|
 | `docs/project/metadata.yaml` | Execution constraints (env, commands, structure). |
 | `docs/project/context.md` | Architecture, Domain context, and Permanent Knowledge. |
+| `docs/task/active/index.md` | Fast launch summary for the active task. |
 | `docs/task/active/task.md` | High-level objective for the current task. |
+| `docs/task/active/summary.md` | Default resumable image of the active task. |
 | `docs/task/active/assets/` | Large artifacts (logs, screenshots) captured for this task. |
 | `docs/task/active/verification.md` | Final proof-of-work evidence for the entire task. |
-| `branches/<name>/summary.md` | The "memory image" of the branch. |
-| `branches/<name>/commits/` | The structured chain of cognition and decisions. |
+| `docs/task/active/commits/` | Structured milestone checkpoints for the main task. |
+| `docs/task/active/workstreams/<name>/` | Optional advanced-mode parallel exploration lanes. |
 
-- IDE artifacts / chat history are **ephemeral drafts**. The GCC tree is the **only durable memory**.
+- IDE artifacts / chat history are **ephemeral drafts**. The Project Context tree is the **only durable memory**.
+- Compatibility fallback: if `index.md` or `summary.md` do not exist, older branch-based layouts may be read, but they are not the preferred source of truth.
