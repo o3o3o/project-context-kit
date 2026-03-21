@@ -1,0 +1,13 @@
+
+# Local install artifacts for developing this kit.
+# Ignore them here to avoid polluting the kit repository itself.
+# In actual project repositories, `.project-context/` should usually be committed to Git.
+.project-context/
+.agents/
+.claude/
+.codex/
+.opencode/
+.gemini/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
