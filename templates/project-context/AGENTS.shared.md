@@ -16,7 +16,8 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 2. **Read Project Context**: Read `.project-context/docs/project/context.md` for架构, coding standards, and project history.
 3. **Read Fast Task View**: Open `.project-context/docs/task/active/index.md` first.
 4. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks.
-5. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."*
+5. **Bootstrap If Needed**: If the active task files do not exist yet, initialize them from `.project-context/docs/task/_template/` or activate `context-bootstrap`.
+6. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."*
 
 ---
 

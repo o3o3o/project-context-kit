@@ -1,13 +1,16 @@
-# Task: [Ticket ID] - [Title]
+# Task: [Short ID] - [Title]
 
 ## Description
-[Detailed description of the task goals and requirements]
+[Describe the task in a few sentences. Include scope boundaries and the user-visible outcome.]
 
 ## Success Criteria
-- [ ] Criterion 1
-- [ ] Criterion 2
+- [ ] [What must be true for this task to be considered done?]
+- [ ] [What verification or evidence is required?]
 
 ## References
 - Branch: `current-branch-name`
-- Related Docs: [e.g., docs/project/architecture.md]
+- Related Docs: [e.g., `.project-context/docs/project/architecture.md`]
 - Optional Workstream: `none`
+
+## Session Starter
+- If this file still contains placeholder text, rewrite it before substantial work begins.

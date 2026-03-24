@@ -94,6 +94,25 @@ def copy_template(src, dst, overwrite=False):
         # log(f"  Copied: {os.path.basename(src)}")
 
 
+def seed_active_task_files(source_kit, target_repo):
+    """
+    Seed starter files for the active task tree on first install.
+    This keeps /ctx-load usable immediately while remaining non-destructive
+    for repositories that already contain active task state.
+    """
+    template_dir = os.path.join(
+        source_kit, "templates/project-context/docs/task/_template"
+    )
+    active_dir = os.path.join(target_repo, ".project-context/docs/task/active")
+
+    for name in ["index.md", "task.md", "summary.md", "verification.md"]:
+        copy_template(
+            os.path.join(template_dir, name),
+            os.path.join(active_dir, name),
+            overwrite=False
+        )
+
+
 def main():
     parser = argparse.ArgumentParser(description="Install project-context-kit")
     parser.add_argument(
@@ -193,6 +212,7 @@ def main():
         docs_task_dst,
         overwrite=True
     )
+    seed_active_task_files(source_kit, target_repo)
     print()
 
     # ── 7. Merge entry files (AGENTS.md, CLAUDE.md, GEMINI.md) ───────────
@@ -231,8 +251,9 @@ def main():
     log("✅ Installation complete!")
     log("Next steps:")
     log("  1. Fill in .project-context/docs/project/context.md with your project details")
-    log("  2. Run 'context-bootstrap' in your AI agent to create the first active task")
-    log("  3. Use workstreams only when you need isolated parallel exploration")
+    log("  2. Update the seeded active task files before or during your first real session")
+    log("  3. Use 'context-bootstrap' only if you want the agent to rewrite the active task from scratch")
+    log("  4. Use workstreams only when you need isolated parallel exploration")
 
 
 if __name__ == "__main__":

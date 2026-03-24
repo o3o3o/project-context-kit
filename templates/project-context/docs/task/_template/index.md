@@ -1,16 +1,20 @@
 # Active Task Index
 
 ## Current Goal
-[One sentence describing the active task objective]
+[State the active objective in one sentence. Prefer a verb-led goal.]
 
 ## Current Status
-[One sentence describing the current technical state]
+[State the current technical reality, not intent. Mention what is already true in the repo.]
 
 ## Next Step
-[The next concrete action to take]
+[Write one concrete next action that can be started immediately.]
 
 ## Latest Verification
-[Most recent verification result or "Not run yet"]
+[Record the latest meaningful validation result, or "Not run yet".]
 
 ## Latest Milestone
-[Latest milestone checkpoint or "None yet"]
+[Reference the latest checkpoint, decision, or "None yet".]
+
+## Working Notes
+- Keep this file short enough that `/ctx-load` can be useful at a glance.
+- If `summary.md` and `index.md` disagree, treat `summary.md` as the richer source and fix `index.md` during `/ctx-save`.

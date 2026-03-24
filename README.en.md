@@ -21,6 +21,8 @@ After installation, the target repository gets a standard structure like:
 - `.project-context/docs/task/active/summary.md`
 - `.project-context/docs/task/active/verification.md`
 
+The installer seeds these active task files so the first `/ctx-load` has something to read immediately.
+
 ## When To Use It
 
 Use this when:
@@ -61,12 +63,13 @@ At the start of a session:
 
 - run `/ctx-load`
 - read the active task state
+- rewrite placeholder starter content if this is the first real session
 - continue work
 
 Before ending a session:
 
 - run `/ctx-save`
-- update the active task summary
+- update `index.md`, `summary.md`, and `verification.md` as needed
 - leave the next step for the next agent or next session
 
 ## Model

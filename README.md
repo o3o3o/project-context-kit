@@ -33,6 +33,8 @@ This command modifies the target repository, not this kit repository.
 
 When you switch between Codex, Antigravity, OpenCode, Gemini, or different sessions, working context is often trapped in chat history or editor state. project-context-kit stores the important project and task state in repo files, so the next agent can resume with `/ctx-load` and leave state with `/ctx-save`.
 
+The installer seeds starter active-task files so the first `/ctx-load` works immediately, and the first real session can replace the placeholders with a concrete task brief.
+
 ## License
 
 This project is licensed under the MIT License. See [LICENSE](./LICENSE).
