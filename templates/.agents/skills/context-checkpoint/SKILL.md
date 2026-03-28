@@ -19,11 +19,9 @@ Serialize current progress, reasoning, and decisions into the Project Context hi
 
 2. **Generate Checkpoint**:
    - Default target: `docs/task/active/commits/YYYY-MM-DD-HHMM-[slug].md`.
-   - Optional advanced target: `docs/task/active/workstreams/<name>/commits/YYYY-MM-DD-HHMM-[slug].md`.
 
 3. **Update Summary**:
    - Update `docs/task/active/summary.md` by default.
    - Refresh `docs/task/active/index.md` with the latest milestone and next step.
-   - If operating inside a named workstream, update that workstream summary as well.
 
 4. **Final Check**: Summarize the cognitive decisions that influenced the code, not just the code itself.

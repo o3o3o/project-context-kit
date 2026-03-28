@@ -24,7 +24,8 @@ Restore the current working context for a new agent session from repo-native pro
 ## Rules
 
 - **Gemini CLI / Antigravity**: Call `activate_skill(name="context-load")` after reading these files to synthesize the session brief.
-- Prefer `index.md` and `summary.md` as the single active-task source of truth.
+- Prefer `active/index.md` as the source of truth for which tasks are currently in progress.
+- Treat `docs/task/archive/` as history, not startup context. Only read archived tasks when the user explicitly asks for historical context.
 - If the active task files are missing, initialize them from `.project-context/docs/task/_template/` or offer to run `activate_skill(name="context-bootstrap")`.
 - If recent milestone commits exist, read the latest 1-2 before acting.
 - Keep output brief and execution-oriented.

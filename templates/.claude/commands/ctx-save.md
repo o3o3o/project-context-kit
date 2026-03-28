@@ -1,27 +1,33 @@
 # /ctx-save
 Write back the current working state for the next agent.
 
-Target file:
-`.project-context/docs/task/active/summary.md`
+Update:
+- `.project-context/docs/task/active/index.md`
+- `.project-context/docs/task/active/summary.md`
+- `.project-context/docs/task/active/verification.md` when validation changed
 
-Overwrite the file using this template:
+If `verification.md` explicitly says `Status: Complete` or `Status: Done`, archive the completed task snapshot before ending the session.
 
-# Active Task Summary
+Move:
+- `index.md`
+- `task.md`
+- `summary.md`
+- `verification.md`
+- `commits/` if present
+- `assets/` if present
+- `workstreams/` if present
 
-## Current State
-<completed work and current implementation status>
+From:
+- `.project-context/docs/task/active/`
 
-## What Changed Recently
-<recent meaningful changes>
+Into:
+- `.project-context/docs/task/archive/YYYY-MM-DD-<slug>/`
 
-## Known Risks / Blockers
-<blockers, unresolved issues, weak assumptions, missing checks>
-
-## Next Action
-<single most important next step>
+Then recreate `.project-context/docs/task/active/` from `.project-context/docs/task/_template/`.
 
 Rules:
 - Overwrite instead of append
 - Keep it concise and recovery-oriented
 - Only include information useful for resuming work
 - Be explicit about uncertainty or incomplete validation
+- Do not leave completed task content in `active/`

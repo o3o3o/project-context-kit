@@ -19,7 +19,7 @@ Initialize a new active task tree using the Project Context v3.2 schema.
    - `.project-context/docs/task/active/summary.md`
    - `.project-context/docs/task/active/verification.md`
    - `.project-context/docs/task/active/commits/`
-   - `.project-context/docs/task/active/workstreams/`
+   - `.project-context/docs/task/active/assets/`
 
 3. **Initialize Summary**: Ensure `summary.md` has:
    - Current State: "Initialized"

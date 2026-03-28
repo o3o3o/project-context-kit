@@ -1,17 +1,19 @@
 # /ctx-save
 Write the current resumable task state to:
-`.project-context/docs/task/active/summary.md`
+- `.project-context/docs/task/active/index.md`
+- `.project-context/docs/task/active/summary.md`
+- `.project-context/docs/task/active/verification.md` when validation changed
 
-Overwrite with:
-# Active Task Summary
+If `verification.md` explicitly says `Status: Complete` or `Status: Done`, archive the completed task snapshot before ending the session.
 
-## Current State
-## What Changed Recently
-## Known Risks / Blockers
-## Next Action
+Move the current `.project-context/docs/task/active/` task snapshot into:
+- `.project-context/docs/task/archive/YYYY-MM-DD-<slug>/`
+
+Then recreate `.project-context/docs/task/active/` from `.project-context/docs/task/_template/`.
 
 Constraints:
 - overwrite, do not append
 - concise only
 - focus on resumability
 - clearly mark incomplete or unverified items
+- do not leave completed task content in `active/`

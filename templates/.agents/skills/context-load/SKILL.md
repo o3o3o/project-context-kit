@@ -26,7 +26,6 @@ Reconstruct the project and task state by reading the Project Context tree. Must
 
 4. **Milestone Context**:
    - Read the 2 most recent commits in `.project-context/docs/task/active/commits/` if present.
-   - If the user explicitly names a workstream, optionally read `.project-context/docs/task/active/workstreams/<name>/summary.md` and its recent commits.
 
 5. **Output Structured View**:
    ```text
@@ -34,7 +33,7 @@ Reconstruct the project and task state by reading the Project Context tree. Must
    - **Env**: [Runtime from metadata]
    - **Commands**: [Run/Test cmds from metadata]
    - **Goal**: [Objective from task.md]
-   - **State**: [Current State from index.md or summary.md]
+   - **State**: [Current state from index.md or summary.md]
    - **Recent Decisions**: [Key notes from latest commits]
    - **Next Action**: [From index.md or summary.md]
    ```
