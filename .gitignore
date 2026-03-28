@@ -1,13 +1,16 @@
 
 # Local install artifacts for developing this kit.
-# Ignore them here to avoid polluting the kit repository itself.
+# Ignore only the root-level artifacts created when this kit is installed into
+# this repository for dogfooding. Template source files under `templates/`
+# must remain trackable.
 # In actual project repositories, `.project-context/` should usually be committed to Git.
-.project-context/
-.agents/
-.claude/
-.codex/
-.opencode/
-.gemini/
-AGENTS.md
-CLAUDE.md
-GEMINI.md
+/__pycache__
+/.project-context/
+/.agents/
+/.claude/
+/.codex/
+/.opencode/
+/.gemini/
+/AGENTS.md
+/CLAUDE.md
+/GEMINI.md
