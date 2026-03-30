@@ -14,10 +14,11 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 1. **Read Metadata**: Open `.project-context/docs/project/metadata.yaml` to understand repository-wide execution constraints.
 2. **Read Project Context**: Read `.project-context/docs/project/context.md` for架构, coding standards, and project history.
-3. **Read Fast Task View**: Open `.project-context/docs/task/active/index.md` first.
-4. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks.
-5. **Bootstrap If Needed**: If the active task files do not exist yet, initialize them from `.project-context/docs/task/_template/` or activate `context-bootstrap`.
-6. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."*
+3. **Read Decisions If Relevant**: Read `.project-context/docs/decisions/` when the current task depends on prior long-lived design choices.
+4. **Read Fast Task View**: Open `.project-context/docs/task/active/index.md` first.
+5. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks.
+6. **Bootstrap If Needed**: If the active task files do not exist yet, initialize them from `.project-context/docs/task/_template/` or activate `context-bootstrap`.
+7. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."*
 
 ---
 
@@ -30,7 +31,8 @@ Every agent **must** leave the active task in a resumable and hermetic state.
    - **Always**: Refresh `docs/task/active/index.md`, `task.md`, `summary.md`, and `verification.md` as needed.
    - **Milestone Reached**: Activate the `context-checkpoint` skill to serialize reasoning and evidence.
    - **Task Completed**: If `verification.md` explicitly says `Status: Complete` or `Status: Done`, move the active task snapshot into `docs/task/archive/<YYYY-MM-DD>-<slug>/`, then recreate `active/` from the task templates.
-3. **Hermetic Verification**: Ensure all references in your summaries are internal to `.project-context/`.
+3. **Decision Capture**: If you reached a conclusion that should remain true across future tasks, add or update a file in `docs/decisions/` instead of leaving it only in `summary.md`.
+4. **Hermetic Verification**: Ensure all references in your summaries are internal to `.project-context/`.
 
 ---
 
@@ -40,6 +42,7 @@ Every agent **must** leave the active task in a resumable and hermetic state.
 |------|----------|
 | `docs/project/metadata.yaml` | Execution constraints (env, commands, structure). |
 | `docs/project/context.md` | Architecture, Domain context, and Permanent Knowledge. |
+| `docs/decisions/*.md` | Lightweight long-lived design decisions that should outlive the current task. |
 | `docs/task/active/index.md` | Fast launch summary for the current task. |
 | `docs/task/active/task.md` | High-level objective for the current task. |
 | `docs/task/active/summary.md` | Default resumable image of the current state. |

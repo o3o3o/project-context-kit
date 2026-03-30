@@ -16,6 +16,7 @@ After installation, the target repository gets a standard structure like:
 
 - `.project-context/docs/project/metadata.yaml`
 - `.project-context/docs/project/context.md`
+- `.project-context/docs/decisions/`
 - `.project-context/docs/task/active/index.md`
 - `.project-context/docs/task/active/task.md`
 - `.project-context/docs/task/active/summary.md`
@@ -77,6 +78,7 @@ Before ending a session:
 This kit uses a single active task by default.
 
 - **Project memory**: durable repo knowledge such as commands, architecture, standards, and long-lived lessons
+- **Project decisions**: lightweight design choices that should outlive the current task
 - **Task memory**: the current active goal, current progress, verification state, and next action
 
 Simple mode is the default:
@@ -105,6 +107,7 @@ With this kit:
 
 - `.project-context/` is the durable data layer
 - `.agents/` is the logic layer
+- `docs/decisions/` is for lightweight long-lived design choices
 - large evidence should go into `.project-context/docs/task/active/assets/`
 - important validation should be recorded in `verification.md`
 

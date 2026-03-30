@@ -140,6 +140,7 @@ def main():
     ensure_dir(os.path.join(target_repo, ".agents/skills"))
     ensure_dir(os.path.join(target_repo, ".agents/workflows"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/project"))
+    ensure_dir(os.path.join(target_repo, ".project-context/docs/decisions"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/commits"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/assets"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/workstreams"))
@@ -200,6 +201,18 @@ def main():
             os.path.join(docs_proj_src, item),
             os.path.join(docs_proj_dst, item),
             overwrite=False  # Never overwrite project docs
+        )
+    print()
+
+    # ── 5b. Copy decision doc templates (non-destructive) ─────────────────
+    log("Step 5b: Installing .project-context/docs/decisions templates (non-destructive)...")
+    docs_dec_src = os.path.join(source_kit, "templates/project-context/docs/decisions")
+    docs_dec_dst = os.path.join(target_repo, ".project-context/docs/decisions")
+    if os.path.exists(docs_dec_src):
+        copy_template(
+            docs_dec_src,
+            docs_dec_dst,
+            overwrite=False
         )
     print()
 

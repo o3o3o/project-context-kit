@@ -29,6 +29,8 @@ Example:
 
 This command modifies the target repository, not this kit repository.
 
+The installed context tree can also hold lightweight long-lived design decisions under `.project-context/docs/decisions/`, separate from the current active task handoff.
+
 ## What It Solves
 
 When you switch between Codex, Antigravity, OpenCode, Gemini, or different sessions, working context is often trapped in chat history or editor state. project-context-kit stores the important project and task state in repo files, so the next agent can resume with `/ctx-load` and leave state with `/ctx-save`.

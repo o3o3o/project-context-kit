@@ -18,6 +18,7 @@ The only durable memory for this project is the Project Context tree.
 |------|--------|------|---------|
 | **Project** | **Metadata** | `docs/project/metadata.yaml` | **READ FIRST**. Env, commands, and repo structure. |
 | **Project** | **Context** | `docs/project/context.md` | Long-term brain: Architecture, Standards, and History. |
+| **Project** | **Decisions** | `docs/decisions/*.md` | Lightweight long-lived design decisions that should outlive the current task. |
 | **Task** | **Index** | `docs/task/active/index.md` | Fast launch summary for the current task. |
 | **Task** | **Task** | `docs/task/active/task.md` | Scope and success criteria for the current task. |
 | **Task** | **Summary** | `docs/task/active/summary.md` | Resumable image of the current task. |
@@ -30,11 +31,13 @@ The only durable memory for this project is the Project Context tree.
 
 ### Session Start (/ctx-load)
 1. Read Metadata and Project Context first to establish a "worldview."
-2. Read `docs/task/active/index.md` for the fastest current-state view.
-3. Read `docs/task/active/task.md`, `summary.md`, and `verification.md` as needed.
+2. Read `docs/decisions/` when the current task depends on prior long-lived design choices.
+3. Read `docs/task/active/index.md` for the fastest current-state view.
+4. Read `docs/task/active/task.md`, `summary.md`, and `verification.md` as needed.
 
 ### Session End (/ctx-save)
 - **Knowledge Promotion**: If a Session produces universal knowledge (bug fixes, infra patterns), the agent MUST update the **Project Tier** (`context.md`).
+- **Decision Promotion**: If a Session produces a project-level design conclusion that should outlive the current task, the agent SHOULD add or update a file in `docs/decisions/`.
 - **Hermetic Reference**: Move critical logs/evidence into `docs/task/active/assets/` before referencing them.
 - **Checkpointing**: Update the active task files. Create a structured **Commit** only when a milestone is reached.
 - **Task Completion**: When the active task is explicitly complete, move its snapshot into `archive/<YYYY-MM-DD>-<slug>/` and recreate `active/` from the templates.

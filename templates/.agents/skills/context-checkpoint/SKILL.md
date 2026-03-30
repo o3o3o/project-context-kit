@@ -23,5 +23,6 @@ Serialize current progress, reasoning, and decisions into the Project Context hi
 3. **Update Summary**:
    - Update `docs/task/active/summary.md` by default.
    - Refresh `docs/task/active/index.md` with the latest milestone and next step.
+   - If a milestone changed long-lived project direction, also update or add a file in `docs/decisions/`.
 
 4. **Final Check**: Summarize the cognitive decisions that influenced the code, not just the code itself.

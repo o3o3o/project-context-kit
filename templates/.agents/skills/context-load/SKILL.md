@@ -12,9 +12,11 @@ Reconstruct the project and task state by reading the Project Context tree. Must
 
 1. **Safety Check**:
    - Verify `.project-context/docs/project/metadata.yaml` exists. Read it to understand the `repo_structure` and `execution_context` (commands).
+   - Read `.project-context/docs/project/context.md` to recover architecture, standards, and durable project knowledge.
    - If not found, warn the user.
 
 2. **Core Context**:
+   - Read relevant files in `.project-context/docs/decisions/` when the task depends on prior long-lived design choices.
    - Read `.project-context/docs/task/active/index.md` first.
    - Read `.project-context/docs/task/active/task.md` if it exists.
    - Read `.project-context/docs/task/active/summary.md` if it exists.
@@ -32,6 +34,7 @@ Reconstruct the project and task state by reading the Project Context tree. Must
    ## PROJECT CONTEXT v3.2 VIEW
    - **Env**: [Runtime from metadata]
    - **Commands**: [Run/Test cmds from metadata]
+   - **Decisions**: [Relevant long-lived design choices, if any]
    - **Goal**: [Objective from task.md]
    - **State**: [Current state from index.md or summary.md]
    - **Recent Decisions**: [Key notes from latest commits]
