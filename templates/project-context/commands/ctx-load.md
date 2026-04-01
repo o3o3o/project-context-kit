@@ -1,12 +1,12 @@
 ---
 name: ctx-load
-description: Restore the current working context for a new agent session.
+description: Reconstruct durable project and task context when `/ctx-load` is explicitly invoked.
 ---
 
 # /ctx-load
 
 Purpose:
-Restore the current working context for a new agent session from repo-native project-context files.
+Reconstruct durable project and task context from repo-native project-context files when `/ctx-load` is explicitly invoked.
 
 ## Read in order
 

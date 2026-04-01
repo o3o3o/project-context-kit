@@ -7,14 +7,16 @@ You are operating in a multi-agent repository using a **Project Context** memory
 
 ---
 
-## 🚀 SESSION START — Do This First
+## 🚀 CONTEXT SYNC
+
+Use `context-load` when you need to reconstruct durable task state or validate a handoff. It does not need to be the first action of every session.
 
 1. **Read Metadata**: Load `.project-context/docs/project/metadata.yaml`. It contains the commands you need to build and test.
 2. **Read Project Context**: Load `.project-context/docs/project/context.md` for architecture, standards, and durable project knowledge.
 3. **Read Active Index**: Load `.project-context/docs/task/active/index.md` for the fastest current-state view.
-4. **Execute `context-load`**: Run this skill to reconstruct the task state.
+4. **Execute `context-load` When Needed**: Run this skill when the session needs task reconstruction from durable context.
 5. **Bootstrap If Needed**: If the active task files do not exist yet, initialize them from `.project-context/docs/task/_template/` or run `context-bootstrap`.
-6. **Sync with User**: Tell the user: *"I've read the project context. Status: [status]. Proceeding with [Action]."*
+6. **Sync with User**: Tell the user: *"I've read the project context. Status: [status]. Proceeding with [Action]."* when you actually performed the load.
 
 ---
 

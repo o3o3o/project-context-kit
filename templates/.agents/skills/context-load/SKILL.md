@@ -6,7 +6,7 @@ description: Load and synthesize the current Project Context state (v3.2).
 # context-load Skill
 
 ## Purpose
-Reconstruct the project and task state by reading the Project Context tree. Must be run at the start of every session.
+Reconstruct the project and task state by reading the Project Context tree when durable context recovery is explicitly needed, such as a handoff, resume, or state validation.
 
 ## Instructions
 

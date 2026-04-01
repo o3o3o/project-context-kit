@@ -10,15 +10,17 @@ Codex, Antigravity, Claude, and geminicli all follow the same protocol.
 
 ---
 
-## 🚀 STARTUP INSTRUCTIONS (/ctx-load)
+## 🚀 CONTEXT SYNC INSTRUCTIONS (/ctx-load)
+
+Use `/ctx-load` when you need to reconstruct durable context, resume a task, or validate the current repository state against the shared context layer.
 
 1. **Read Metadata**: Open `.project-context/docs/project/metadata.yaml` to understand repository-wide execution constraints.
 2. **Read Project Context**: Read `.project-context/docs/project/context.md` for架构, coding standards, and project history.
 3. **Read Decisions If Relevant**: Read `.project-context/docs/decisions/` when the current task depends on prior long-lived design choices.
 4. **Read Fast Task View**: Open `.project-context/docs/task/active/index.md` first.
-5. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks.
+5. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks when the session needs that context.
 6. **Bootstrap If Needed**: If the active task files do not exist yet, initialize them from `.project-context/docs/task/_template/` or activate `context-bootstrap`.
-7. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."*
+7. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."* when `/ctx-load` was actually used.
 
 ---
 

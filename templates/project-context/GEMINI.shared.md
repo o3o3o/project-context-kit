@@ -16,13 +16,15 @@ You are `geminicli`. We use a **Project Context** memory model for durable colla
 
 ---
 
-## 🚀 SESSION START (/ctx-load)
+## 🚀 CONTEXT SYNC (/ctx-load)
+
+Use `/ctx-load` when you need to recover durable project or task context. It is not required as the first step of every session.
 
 1.  **Read Worldview**: Read `docs/project/metadata.yaml` and `docs/project/context.md`.
 2.  **Read Fast Task View**: Read `docs/task/active/index.md`.
-3.  **Activate Skill**: Call `activate_skill(name="context-load")` to reconstruct the task state.
+3.  **Activate Skill When Needed**: Call `activate_skill(name="context-load")` to reconstruct the task state when the current session needs it.
 4.  **Bootstrap If Needed**: If the active task files are missing, initialize them from `docs/task/_template/` or run `activate_skill(name="context-bootstrap")`.
-5.  **Greet**: *"Project Context loaded. Tier 1 (Project) and Tier 2 (Task) synchronized. Ready."*
+5.  **Greet**: *"Project Context loaded. Tier 1 (Project) and Tier 2 (Task) synchronized. Ready."* when a load actually happened.
 
 ---
 
