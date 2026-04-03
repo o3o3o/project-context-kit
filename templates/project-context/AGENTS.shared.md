@@ -2,6 +2,7 @@
 
 This file is the single governing instruction for all agents operating in this repository.
 Codex, Antigravity, Claude, and geminicli all follow the same protocol.
+Tool-specific root files should stay as thin adapters that point here rather than maintaining separate shared rule documents.
 
 > [!IMPORTANT]
 > **Hermeticity Rule**: You are a self-contained agent. Never link to files (logs, artifacts) outside `.project-context/`. 

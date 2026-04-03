@@ -1,8 +1,8 @@
 ## Project Context (v3.2)
 - **Execution Metadata**: .project-context/docs/project/metadata.yaml
 - **Active Task View**: Use the project-context agent command `ctx-load` when you need to recover durable task state. Do not execute it in bash.
-
-Follow: `.project-context/CLAUDE.shared.md`
+- **Shared Rules**: `.project-context/AGENTS.shared.md`
+- **Contract**: `.project-context/repo-contract.md`
 
 ### Session Lifecycle
 **LOAD WHEN NEEDED**: Invoke the project-context agent command `ctx-load` when task context, project state, or handoff details need to be reconstructed. Do not execute it in bash.

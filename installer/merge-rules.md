@@ -2,7 +2,8 @@
 
 ## Principle 1: Non-Destructive
 - Never delete existing content in `AGENTS.md` or `CLAUDE.md`.
-- Use boundary markers `<!-- BEGIN AI-GOVERNANCE -->` and `<!-- END AI-GOVERNANCE -->`.
+- Use boundary markers `<!-- BEGIN PROJECT-CONTEXT -->` and `<!-- END PROJECT-CONTEXT -->`.
+- Upgrades should continue to recognize legacy `AI-GOVERNANCE` markers so already-installed repositories are updated in place rather than duplicated.
 
 ## Principle 2: Idempotency
 - If markers exist, replace everything between them with the latest template.

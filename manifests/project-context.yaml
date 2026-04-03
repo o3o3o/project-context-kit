@@ -1,0 +1,57 @@
+version: "2.1.0"
+package_name: "project-context-kit"
+description: "Repo-local context layer for multi-agent and multi-IDE collaboration"
+canonical_source: "https://github.com/o3o3o/project-context-kit"
+
+structure:
+  context_dir: ".project-context"
+  project_docs_dir: ".project-context/docs/project"
+  task_docs_dir: ".project-context/docs/task"
+
+injection_targets:
+  - file: "AGENTS.md"
+    marker: "PROJECT-CONTEXT"
+    append_template: "templates/root/AGENTS.append.md"
+  - file: "CLAUDE.md"
+    marker: "PROJECT-CONTEXT"
+    append_template: "templates/root/CLAUDE.append.md"
+  - file: "GEMINI.md"
+    marker: "PROJECT-CONTEXT"
+    append_template: "templates/root/GEMINI.append.md"
+
+assets:
+  project_context:
+    - templates/project-context/AGENTS.shared.md
+    - templates/project-context/repo-contract.md
+    - templates/project-context/install-manifest.yaml
+  commands:
+    - templates/project-context/commands/ctx-load.md
+    - templates/project-context/commands/ctx-save.md
+  host_commands:
+    - templates/.claude/commands/ctx-load.md
+    - templates/.claude/commands/ctx-save.md
+    - templates/.opencode/commands/ctx-load.md
+    - templates/.opencode/commands/ctx-save.md
+    - templates/.codex/prompts/ctx-load.md
+    - templates/.codex/prompts/ctx-save.md
+  scripts:
+    - templates/project-context/scripts/sync-commands.sh
+  rules:
+    - templates/.agents/rules/00-repo-contract.md
+  skills:
+    - templates/.agents/skills/context-bootstrap
+    - templates/.agents/skills/context-load
+    - templates/.agents/skills/context-checkpoint
+  docs_project:
+    - templates/project-context/docs/project/metadata.yaml
+    - templates/project-context/docs/project/context.md
+    - templates/project-context/docs/project/architecture.md
+    - templates/project-context/docs/project/coding-standards.md
+    - templates/project-context/docs/project/verify-runbook.md
+  docs_task_template:
+    - templates/project-context/docs/task/_template/task.md
+    - templates/project-context/docs/task/_template/plan.md
+    - templates/project-context/docs/task/_template/index.md
+    - templates/project-context/docs/task/_template/summary.md
+    - templates/project-context/docs/task/_template/verification.md
+    - templates/project-context/docs/task/_template/commits/_commit_template.md

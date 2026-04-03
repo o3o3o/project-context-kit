@@ -11,8 +11,10 @@ import re
 import argparse
 
 VERSION = "1.4.0"
-MARKER_START = "<!-- BEGIN AI-GOVERNANCE -->"
-MARKER_END = "<!-- END AI-GOVERNANCE -->"
+MARKER_START = "<!-- BEGIN PROJECT-CONTEXT -->"
+MARKER_END = "<!-- END PROJECT-CONTEXT -->"
+LEGACY_MARKER_START = "<!-- BEGIN AI-GOVERNANCE -->"
+LEGACY_MARKER_END = "<!-- END AI-GOVERNANCE -->"
 
 
 def log(msg):
@@ -31,12 +33,12 @@ def ensure_dir(path):
 
 def merge_file(target_path, template_path):
     """
-    Non-destructively inject a governance block into a target file.
-    - If the file is missing: create it with the governance block.
+    Non-destructively inject a project-context block into a target file.
+    - If the file is missing: create it with the project-context block.
     - If the block already exists: replace only the block content.
     - If no block: append the block at the end.
     """
-    log(f"Merging governance block into: {target_path}")
+    log(f"Merging project-context block into: {target_path}")
 
     with open(template_path, 'r') as f:
         template_content = f.read().strip()
@@ -50,7 +52,7 @@ def merge_file(target_path, template_path):
     if not os.path.exists(target_path):
         with open(target_path, 'w') as f:
             f.write(f"# AI Agent Instructions\n\n{new_block}\n")
-        log(f"  Created new file with governance block.")
+        log(f"  Created new file with project-context block.")
         return
 
     with open(target_path, 'r') as f:
@@ -58,17 +60,21 @@ def merge_file(target_path, template_path):
 
     # Check for marker and replace or append
     pattern = re.compile(
-        re.escape(MARKER_START) + r".*?" + re.escape(MARKER_END),
+        "("
+        + re.escape(MARKER_START) + r".*?" + re.escape(MARKER_END)
+        + "|"
+        + re.escape(LEGACY_MARKER_START) + r".*?" + re.escape(LEGACY_MARKER_END)
+        + ")",
         re.DOTALL
     )
     if pattern.search(content):
         # REPLACE existing block
         new_content = pattern.sub(new_block, content)
-        log(f"  Updated existing governance block.")
+        log(f"  Updated existing project-context block.")
     else:
         # APPEND new block
         new_content = content.rstrip() + "\n\n" + new_block + "\n"
-        log(f"  Appended governance block.")
+        log(f"  Appended project-context block.")
 
     with open(target_path, 'w') as f:
         f.write(new_content)
@@ -134,7 +140,7 @@ def main():
     log(f"Source: {source_kit}")
     print()
 
-    # ── 1. Create governance directory structure ───────────────────────────
+    # ── 1. Create project-context directory structure ─────────────────────
     log("Step 1: Creating directory structure...")
     ensure_dir(os.path.join(target_repo, ".agents/rules"))
     ensure_dir(os.path.join(target_repo, ".agents/skills"))
@@ -178,8 +184,8 @@ def main():
             copy_template(src_d, os.path.join(target_repo, d), overwrite=True)
     print()
 
-    # ── 4. Copy shared governance files ───────────────────────────────────
-    log("Step 4: Copying shared governance files...")
+    # ── 4. Copy shared project-context files ──────────────────────────────
+    log("Step 4: Copying shared project-context files...")
     gov_src = os.path.join(source_kit, "templates/project-context")
     gov_dst = os.path.join(target_repo, ".project-context")
     for item in os.listdir(gov_src):
