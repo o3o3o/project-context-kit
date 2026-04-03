@@ -3,7 +3,7 @@
 ## MANDATORY: Priority Instructions
 
 ### GCC Hierarchy & Metadata
-- **Read `metadata.yaml` before guessing**: Never assume build commands or directory structures. Always consult `.ai-governance/docs/project/metadata.yaml` first.
+- **Read `metadata.yaml` before guessing**: Never assume build commands or directory structures. Always consult `.project-context/docs/project/metadata.yaml` first.
 - **Cognitive Isolation**: Use `task-branch` for exploration. This isolates your reasoning from the `main` branch.
 
 ### Write-Back Requirements (Resumability)

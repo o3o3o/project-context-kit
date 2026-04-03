@@ -17,8 +17,8 @@ execution_context:
     test: "npm test"
     run: "npm run dev"
 
-# 3. Governance Rules
-governance_rules:
+# 3. Collaboration Rules
+collaboration_rules:
   branch_prefix: "task-"
   enforcement:
     mandatory_commit_on_milestone: true

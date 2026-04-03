@@ -8,7 +8,7 @@
 ## Principle 2: Idempotency
 - If markers exist, replace everything between them with the latest template.
 - If markers don't exist, append to the end of the file.
-- If the file doesn't exist, create it with a minimal header + the governance block.
+- If the file doesn't exist, create it with a minimal header + the project-context block.
 
 ## Principle 3: Protection of Custom Docs
 - Do not overwrite `docs/project/*.md` if they already exist and have content other than the default template header.

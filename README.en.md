@@ -34,7 +34,7 @@ Use this when:
 - you want durable handoff state in files instead of chat logs
 - you want fast project resume with minimal startup cost
 
-Do not think of it as a heavy governance system. It is a practical project resume layer.
+Do not think of it as a heavy control framework. It is a practical project resume layer.
 
 ## Install
 

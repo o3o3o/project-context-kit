@@ -23,7 +23,7 @@ Reconstruct the project and task state by reading the Project Context tree when 
    - Read `.project-context/docs/task/active/verification.md` if it exists.
 
 3. **Compatibility Fallback**:
-   - If `index.md` or `summary.md` are missing, look for a legacy branch-based summary under `.project-context/docs/task/active/branches/main/summary.md`, or in older repos under `.ai-governance/docs/task/active/branches/main/summary.md`.
+   - If `index.md` or `summary.md` are missing, look for a legacy branch-based summary under `.project-context/docs/task/active/branches/main/summary.md`.
    - Treat any branch-based summary as compatibility input, not the preferred source of truth.
 
 4. **Milestone Context**:
