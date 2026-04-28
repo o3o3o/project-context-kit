@@ -7,6 +7,10 @@ repo_structure:
     purpose: core logic
   - path: tests/
     purpose: unit and integration tests
+  - path: .project-context/docs/project/
+    purpose: durable project map for agents
+  - path: .project-context/docs/task/active/
+    purpose: current task progress, handoff, and verification state
 
 # 2. Execution Context (The "How-To" for Agents)
 execution_context:
@@ -16,10 +20,17 @@ execution_context:
     build: "npm run build"
     test: "npm test"
     run: "npm run dev"
+  verification_order:
+    - "focused checks for changed code"
+    - "full test/build command when relevant"
+    - "manual check for UI/API behavior when needed"
 
 # 3. Collaboration Rules
 collaboration_rules:
   branch_prefix: "task-"
+  active_task_path: ".project-context/docs/task/active/"
+  decision_path: ".project-context/docs/decisions/"
+  proposal_path: ".project-context/docs/proposals/"
   enforcement:
     mandatory_commit_on_milestone: true
     allow_summary_only_for_minor_sessions: true

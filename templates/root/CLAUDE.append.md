@@ -8,4 +8,4 @@
 **LOAD WHEN NEEDED**: Invoke the project-context agent command `ctx-load` when task context, project state, or handoff details need to be reconstructed. Do not execute it in bash.
 **END**: Invoke the project-context agent command `ctx-save` before ending the session. Do not execute it in bash.
 
-Default mode uses the active task files in `.project-context/docs/task/active/`. Git records the "What"; Project Context records the resumable "Why" and "What next".
+Default mode uses the active task files in `.project-context/docs/task/active/`. `.project-context/` is the durable project memory layer. Git records the "What"; Project Context records the resumable "Why" and "What next".

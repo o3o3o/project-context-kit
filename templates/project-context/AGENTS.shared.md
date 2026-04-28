@@ -11,12 +11,26 @@ Tool-specific root files should stay as thin adapters that point here rather tha
 
 ---
 
+## Harness Map
+
+Use this map to choose the next project-context file without reading everything.
+
+- Starting or resuming a task: read `docs/task/active/index.md`, then `task.md`, `summary.md`, and `verification.md` as needed.
+- Changing architecture: read `docs/project/architecture.md`, then relevant `docs/decisions/`.
+- Changing commands or environment: update `docs/project/metadata.yaml`.
+- Changing style or coding conventions: read `docs/project/coding-standards.md`.
+- Verifying work: follow `docs/project/verify-runbook.md`, then update `docs/task/active/verification.md`.
+- Capturing durable conclusions: write `docs/decisions/`.
+- Exploring unsettled designs: write `docs/proposals/`.
+
+---
+
 ## 🚀 CONTEXT SYNC INSTRUCTIONS (/ctx-load)
 
 Use `/ctx-load` when you need to reconstruct durable context, resume a task, or validate the current repository state against the shared context layer.
 
 1. **Read Metadata**: Open `.project-context/docs/project/metadata.yaml` to understand repository-wide execution constraints.
-2. **Read Project Context**: Read `.project-context/docs/project/context.md` for架构, coding standards, and project history.
+2. **Read Project Context**: Read `.project-context/docs/project/context.md` for architecture, coding standards, and project history.
 3. **Read Decisions If Relevant**: Read `.project-context/docs/decisions/` when the current task depends on prior long-lived design choices.
 4. **Read Fast Task View**: Open `.project-context/docs/task/active/index.md` first.
 5. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks when the session needs that context.
@@ -46,6 +60,7 @@ Every agent **must** leave the active task in a resumable and hermetic state.
 | `docs/project/metadata.yaml` | Execution constraints (env, commands, structure). |
 | `docs/project/context.md` | Architecture, Domain context, and Permanent Knowledge. |
 | `docs/decisions/*.md` | Lightweight long-lived design decisions that should outlive the current task. |
+| `docs/proposals/*.md` | Unsettled designs and reviewable proposals. |
 | `docs/task/active/index.md` | Fast launch summary for the current task. |
 | `docs/task/active/task.md` | High-level objective for the current task. |
 | `docs/task/active/summary.md` | Default resumable image of the current state. |
