@@ -18,16 +18,19 @@ Reconstruct durable project and task context from repo-native project-context fi
 ## Expand only if needed
 
 5. `.project-context/docs/task/active/task.md` (Goal)
-6. `.project-context/docs/task/active/summary.md` (Progress)
-7. `.project-context/docs/task/active/verification.md` (Latest validation state)
-8. `.project-context/docs/task/active/commits/` (Recent milestone context, if present)
+6. `.project-context/docs/task/active/tasklist.md` (Optional module scope, ownership, and verification expectations)
+7. `.project-context/docs/task/active/summary.md` (Progress)
+8. `.project-context/docs/task/active/verification.md` (Latest validation state)
+9. `.project-context/docs/task/active/commits/` (Recent milestone context, if present)
 
 ## Rules
 
 - **Gemini CLI / Antigravity**: Call `activate_skill(name="context-load")` after reading these files to synthesize the session brief.
 - Prefer `active/index.md` as the source of truth for which tasks are currently in progress.
+- Reconstruct these six facts before acting: project constraints, active objective, current repo state, active module ownership if any, latest verification, and next executable action.
+- If `tasklist.md` exists, summarize Todo/In Progress/Blocked modules before claiming work.
 - Read `docs/decisions/` only when the current task depends on earlier project-level decisions.
 - Treat `docs/task/archive/` as history, not startup context. Only read archived tasks when the user explicitly asks for historical context.
 - If the active task files are missing, initialize them from `.project-context/docs/task/_template/` or offer to run `activate_skill(name="context-bootstrap")`.
 - If recent milestone commits exist, read the latest 1-2 before acting.
-- Keep output brief and execution-oriented.
+- Keep output brief and execution-oriented. Do not produce a task diary.

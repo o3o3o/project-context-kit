@@ -1,18 +1,25 @@
 # Active Task Summary
 
 ## Current State
-[Describe the actual technical state right now. Focus on facts in the repo, not aspirations.]
+[Describe the actual technical state right now. Focus on repo facts, not aspirations.]
 
-## What Changed Recently
-- [Meaningful change, decision, or observation from the latest session]
+## Completed Since Last Save
+- [Completed change or confirmed fact]
+
+## In Progress
+- [Work currently underway, or "None"]
 
 ## Known Risks / Blockers
 - [Blocker, risk, or unresolved question]
+
+## Task-local Decisions
+- [Decision that matters for this task but does not need a durable file in `docs/decisions/`, or "None"]
 
 ## Next Action
 [A clear instruction the next agent can execute without re-reading chat history]
 
 ## Writing Notes
-- Prefer 4-10 lines over long narratives.
-- Record why the current state matters, not every micro-step taken.
+- Prefer short factual bullets over narrative.
+- Record what survives a context reset: completed work, blockers, task-local decisions, and next action.
 - If verification changed, update `verification.md` in the same session.
+- Promote long-lived project decisions into `docs/decisions/` instead of leaving them here.

@@ -111,7 +111,7 @@ def seed_active_task_files(source_kit, target_repo):
     )
     active_dir = os.path.join(target_repo, ".project-context/docs/task/active")
 
-    for name in ["index.md", "task.md", "summary.md", "verification.md"]:
+    for name in ["index.md", "task.md", "tasklist.md", "summary.md", "verification.md"]:
         copy_template(
             os.path.join(template_dir, name),
             os.path.join(active_dir, name),
@@ -149,9 +149,7 @@ def main():
     ensure_dir(os.path.join(target_repo, ".project-context/docs/decisions"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/commits"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/assets"))
-    ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/workstreams"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/archive"))
-    ensure_dir(os.path.join(target_repo, ".project-context/docs/task/_template/workstreams/_template/commits"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/_template/assets"))
     print()
 
@@ -272,7 +270,7 @@ def main():
     log("  1. Fill in .project-context/docs/project/context.md with your project details")
     log("  2. Update the seeded active task files before or during your first real session")
     log("  3. Use 'context-bootstrap' only if you want the agent to rewrite the active task from scratch")
-    log("  4. Use workstreams only when you need isolated parallel exploration")
+    log("  4. Use tasklist.md for optional task splitting and handoff")
 
 
 if __name__ == "__main__":

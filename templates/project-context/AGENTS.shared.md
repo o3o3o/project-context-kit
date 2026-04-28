@@ -15,7 +15,8 @@ Tool-specific root files should stay as thin adapters that point here rather tha
 
 Use this map to choose the next project-context file without reading everything.
 
-- Starting or resuming a task: read `docs/task/active/index.md`, then `task.md`, `summary.md`, and `verification.md` as needed.
+- Starting or resuming a task: read `docs/task/active/index.md`, then `task.md`, `tasklist.md`, `summary.md`, and `verification.md` as needed.
+- Claiming module work: use `docs/task/active/tasklist.md`; update ownership, status, notes, and verification there.
 - Changing architecture: read `docs/project/architecture.md`, then relevant `docs/decisions/`.
 - Changing commands or environment: update `docs/project/metadata.yaml`.
 - Changing style or coding conventions: read `docs/project/coding-standards.md`.
@@ -33,9 +34,10 @@ Use `/ctx-load` when you need to reconstruct durable context, resume a task, or 
 2. **Read Project Context**: Read `.project-context/docs/project/context.md` for architecture, coding standards, and project history.
 3. **Read Decisions If Relevant**: Read `.project-context/docs/decisions/` when the current task depends on prior long-lived design choices.
 4. **Read Fast Task View**: Open `.project-context/docs/task/active/index.md` first.
-5. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks when the session needs that context.
-6. **Bootstrap If Needed**: If the active task files do not exist yet, initialize them from `.project-context/docs/task/_template/` or activate `context-bootstrap`.
-7. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."* when `/ctx-load` was actually used.
+5. **Read Task List If Present**: Open `.project-context/docs/task/active/tasklist.md` to see assignable modules, ownership, scope, and verification expectations.
+6. **Load Project Context**: Activate the `context-load` skill to synthesize current task state and risks when the session needs that context.
+7. **Bootstrap If Needed**: If the active task files do not exist yet, initialize them from `.project-context/docs/task/_template/` or activate `context-bootstrap`.
+8. **Announce**: Briefly tell the user: *"Project context loaded. Architecture and task state synchronized."* when `/ctx-load` was actually used.
 
 ---
 
@@ -46,6 +48,7 @@ Every agent **must** leave the active task in a resumable and hermetic state.
 1. **Knowledge Extraction**: If you learned universal project patterns or fixes, update `docs/project/context.md`.
 2. **Checkpointing**:
    - **Always**: Refresh `docs/task/active/index.md`, `task.md`, `summary.md`, and `verification.md` as needed.
+   - **Module Work**: If `tasklist.md` exists and you claimed, blocked, or completed a module, update its `Status`, `Owner`, `Branch`, `Last Update`, `Notes`, and `Verification` before ending.
    - **Milestone Reached**: Activate the `context-checkpoint` skill to serialize reasoning and evidence.
    - **Task Completed**: If `verification.md` explicitly says `Status: Complete` or `Status: Done`, move the active task snapshot into `docs/task/archive/<YYYY-MM-DD>-<slug>/`, then recreate `active/` from the task templates.
 3. **Decision Capture**: If you reached a conclusion that should remain true across future tasks, add or update a file in `docs/decisions/` instead of leaving it only in `summary.md`.
@@ -63,6 +66,7 @@ Every agent **must** leave the active task in a resumable and hermetic state.
 | `docs/proposals/*.md` | Unsettled designs and reviewable proposals. |
 | `docs/task/active/index.md` | Fast launch summary for the current task. |
 | `docs/task/active/task.md` | High-level objective for the current task. |
+| `docs/task/active/tasklist.md` | Optional module list for scope control, ownership, WIP, and per-module verification. |
 | `docs/task/active/summary.md` | Default resumable image of the current state. |
 | `docs/task/active/verification.md` | Latest validation state for the current task. |
 | `docs/task/active/assets/` | Large artifacts captured for the current task. |
@@ -71,4 +75,5 @@ Every agent **must** leave the active task in a resumable and hermetic state.
 
 - IDE artifacts / chat history are **ephemeral drafts**. The Project Context tree is the **only durable memory**.
 - `active/` is for the single current task.
+- `tasklist.md` is the default multi-agent coordination surface. Do not create per-module document trees by default.
 - Completed tasks must not remain in `active/`.

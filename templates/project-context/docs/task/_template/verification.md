@@ -8,10 +8,19 @@ Update it whenever tests, manual checks, review conclusions, or proof-of-work ch
 - [ ] [Criterion 2]
 
 ## Latest Automated Results
-[Record the most recent meaningful automated result, or "Not run yet".]
+- Command: `[command or "Not run"]`
+- Result: `[Passed / Failed / Skipped / Not run]`
+- Date: `{{date}}`
+- Environment: `[Local / Staging / Prod]`
+- Notes: `[Failure reason, skipped reason, or key output]`
 
 ## Latest Manual / Review Evidence
-[Describe the latest manual check, code review conclusion, API validation, or other evidence.]
+- Check: `[manual check, review conclusion, API validation, or "None"]`
+- Result: `[Passed / Failed / Skipped / Not run]`
+- Notes: `[Relevant evidence or remaining gap]`
+
+## Remaining Validation Gap
+- [What still has not been proven, or "None"]
 
 ## Task Status
 - **Status**: [In Progress / Complete / Partially Complete / Blocked]
@@ -21,3 +30,4 @@ Update it whenever tests, manual checks, review conclusions, or proof-of-work ch
 ## Notes
 - Keep only the latest durable state here. Large logs should go into `assets/`.
 - If the task is not done yet, this file should still reflect the best-known validation state.
+- Only use `Status: Complete` or `Status: Done` when success criteria and verification agree.

@@ -54,7 +54,7 @@ Do not pollute the active task summary with failed experiments.
 
 ### Completed Task
 - A completed task should be archived under `docs/task/archive/<YYYY-MM-DD>-<slug>/`.
-- Archive the full active task snapshot: `index.md`, `task.md`, `summary.md`, `verification.md`, and any `commits/`, `assets/`, or `workstreams/`.
+- Archive the full active task snapshot: `index.md`, `task.md`, `tasklist.md`, `summary.md`, `verification.md`, and any `commits/` or `assets/`.
 
 ### Design Intent
 - Keep the model simple and repo-native.

@@ -22,11 +22,12 @@ Write back the current execution state before ending the session so the next age
 6. **Refresh Fast Index**: Update `.project-context/docs/task/active/index.md`.
 7. **Refresh Task State**:
    - Overwrite `.project-context/docs/task/active/summary.md` with current state, completed work, blockers, task-local decisions, and next executable action.
+   - If `.project-context/docs/task/active/tasklist.md` exists and module status changed, update the relevant module's `Status`, `Owner`, `Branch`, `Last Update`, `Notes`, and `Verification`.
    - Update `.project-context/docs/task/active/verification.md` whenever tests, manual checks, review conclusions, skipped checks, or validation gaps changed materially.
    - Milestone reached? -> Call `activate_skill(name="context-checkpoint")`.
 8. **Archive If Complete**:
    - If `.project-context/docs/task/active/verification.md` explicitly says `Status: Complete` or `Status: Done`, archive the current active task snapshot before ending `/ctx-save`.
-   - Move `.project-context/docs/task/active/index.md`, `task.md`, `summary.md`, `verification.md`, and any `commits/`, `assets/`, or `workstreams/` into `.project-context/docs/task/archive/YYYY-MM-DD-<slug>/`.
+   - Move `.project-context/docs/task/active/index.md`, `task.md`, `tasklist.md`, `summary.md`, `verification.md`, and any `commits/` or `assets/` into `.project-context/docs/task/archive/YYYY-MM-DD-<slug>/`.
    - Derive `<slug>` from the task title in `task.md`. If no good short name exists, create a short readable slug from the task title.
    - After archiving, recreate `.project-context/docs/task/active/` from `.project-context/docs/task/_template/`.
 
@@ -36,6 +37,7 @@ Write back the current execution state before ending the session so the next age
 - Overwrite the file; do not append logs.
 - Keep `active/index.md` short and scannable.
 - Use the root task files for the common case.
+- Use `tasklist.md` as the default multi-agent coordination surface; do not create per-module document trees by default.
 - Write facts that survive a context reset: what changed, what was verified, what is unknown, and what to do next.
 - If a task changes project-level architecture, commands, conventions, or verification policy, update the matching `docs/project/` file before ending `/ctx-save`.
 - Do not leave completed-task history in `active/`; move completed task files to `archive/`.
