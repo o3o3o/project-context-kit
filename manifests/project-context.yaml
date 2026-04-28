@@ -25,15 +25,22 @@ assets:
     - templates/project-context/repo-contract.md
     - templates/project-context/install-manifest.yaml
   commands:
+    - templates/project-context/commands/ctx-doctor.md
     - templates/project-context/commands/ctx-load.md
     - templates/project-context/commands/ctx-save.md
   host_commands:
+    - templates/.claude/commands/ctx-doctor.md
     - templates/.claude/commands/ctx-load.md
     - templates/.claude/commands/ctx-save.md
+    - templates/.opencode/commands/ctx-doctor.md
     - templates/.opencode/commands/ctx-load.md
     - templates/.opencode/commands/ctx-save.md
+    - templates/.codex/prompts/ctx-doctor.md
     - templates/.codex/prompts/ctx-load.md
     - templates/.codex/prompts/ctx-save.md
+    - templates/.gemini/commands/ctx-doctor.toml
+    - templates/.gemini/commands/ctx-load.toml
+    - templates/.gemini/commands/ctx-save.toml
   scripts:
     - templates/project-context/scripts/sync-commands.sh
   rules:
@@ -42,6 +49,7 @@ assets:
     - templates/.agents/skills/context-bootstrap
     - templates/.agents/skills/context-load
     - templates/.agents/skills/context-checkpoint
+    - templates/.agents/skills/context-doctor
   docs_project:
     - templates/project-context/docs/project/metadata.yaml
     - templates/project-context/docs/project/context.md
@@ -49,9 +57,11 @@ assets:
     - templates/project-context/docs/project/coding-standards.md
     - templates/project-context/docs/project/verify-runbook.md
   docs_task_template:
+    - templates/project-context/docs/task/_template/README.md
     - templates/project-context/docs/task/_template/task.md
     - templates/project-context/docs/task/_template/plan.md
     - templates/project-context/docs/task/_template/index.md
+    - templates/project-context/docs/task/_template/tasklist.md
     - templates/project-context/docs/task/_template/summary.md
     - templates/project-context/docs/task/_template/verification.md
     - templates/project-context/docs/task/_template/commits/_commit_template.md

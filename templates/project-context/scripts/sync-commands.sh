@@ -26,5 +26,6 @@ mkdir -p "$CLAUDE_CMD_DIR" "$OPENCODE_CMD_DIR" "$CODEX_PRMPT_DIR" "$GEMINI_CMD_D
 
 sync_cmd "ctx-load"
 sync_cmd "ctx-save"
+sync_cmd "ctx-doctor"
 
 echo "Sync complete."

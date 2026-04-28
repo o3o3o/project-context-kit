@@ -21,6 +21,7 @@ Use this map to choose the next project-context file without reading everything.
 - Changing commands or environment: update `docs/project/metadata.yaml`.
 - Changing style or coding conventions: read `docs/project/coding-standards.md`.
 - Verifying work: follow `docs/project/verify-runbook.md`, then update `docs/task/active/verification.md`.
+- Diagnosing harness quality, missing code rules, stale paths, or unclear workflows: run `/ctx-doctor`.
 - Capturing durable conclusions: write `docs/decisions/`.
 - Exploring unsettled designs: write `docs/proposals/`.
 
