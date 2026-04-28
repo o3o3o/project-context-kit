@@ -19,8 +19,10 @@ The only durable memory for this project is the Project Context tree.
 | **Project** | **Metadata** | `docs/project/metadata.yaml` | **READ FIRST**. Env, commands, and repo structure. |
 | **Project** | **Context** | `docs/project/context.md` | Long-term brain: Architecture, Standards, and History. |
 | **Project** | **Decisions** | `docs/decisions/*.md` | Lightweight long-lived design decisions that should outlive the current task. |
+| **Project** | **Proposals** | `docs/proposals/*.md` | Drafts, discussion notes, and candidate changes that are not final yet. |
 | **Task** | **Index** | `docs/task/active/index.md` | Fast launch summary for the current task. |
 | **Task** | **Task** | `docs/task/active/task.md` | Scope and success criteria for the current task. |
+| **Task** | **Task List** | `docs/task/active/tasklist.md` | Optional module list for scope control, ownership, WIP, and per-module verification. |
 | **Task** | **Summary** | `docs/task/active/summary.md` | Resumable image of the current task. |
 | **Task** | **Verification** | `docs/task/active/verification.md` | Latest proof-of-work for the current task. |
 | **Task** | **Assets** | `docs/task/active/assets/` | Captured evidence for the current task. |

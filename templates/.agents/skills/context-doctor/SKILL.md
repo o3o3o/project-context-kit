@@ -88,6 +88,7 @@ Return exactly these sections:
 ```
 
 Keep findings concise and evidence-based. If a file is missing, say whether it is required, optional, or only useful for this repo.
+Reply in the user's language unless the user explicitly requests another language.
 
 ## Apply Rules
 When applying recommendations:
@@ -100,6 +101,10 @@ When applying recommendations:
   - Content outside Project Context marker blocks in root entry files is user-owned project guidance.
   - `.project-context/AGENTS.shared.md` is kit-owned shared protocol, not a place for project-specific rules.
   - `.project-context/docs/project/*` and `.project-context/docs/task/active/*` are project-owned harness state and are the default apply targets.
+- Apply project-specific recommendations to the current project's `.project-context/**` docs and user-owned root entry content outside marker blocks.
+- Do not edit kit-owned install templates or generated install blocks during normal doctor apply.
+- Treat `templates/**`, `installer/**`, `manifests/**`, and Project Context marker blocks as product-owned install surfaces. They may be overwritten by install or upgrade.
+- If a recommendation requires changing an install surface, report it under `Skipped Recommendations` and recommend changing the project-context-kit source separately, then reinstalling.
 - Do not write project-specific code rules, workflows, or task guidance into `<!-- BEGIN PROJECT-CONTEXT --> ... <!-- END PROJECT-CONTEXT -->` blocks.
 - Do not edit outside root entry marker blocks unless the user explicitly asks for apply mode and the recommendation belongs in project-specific entry guidance.
 - Prefer `AGENTS.md` outside the Project Context marker for short project-specific agent entry notes.
@@ -109,6 +114,10 @@ When applying recommendations:
 - Keep `AGENTS.shared.md` as a generic harness map and shared protocol, not a long project manual.
 - Write generic project-context-kit workflow improvements to `.project-context/AGENTS.shared.md` or `ctx-*` commands.
 - Write project-specific agent workflow details to root entry files outside the marker, or to project docs referenced from there.
+- For root entry changes:
+  - User-specific project guidance goes outside marker blocks in the actual root entry files.
+  - Kit install block wording changes require changing project-context-kit source separately and reinstalling.
+  - Do not update `templates/root/*.append.md` for one target repo's project-specific workflow.
 - Write stable code rules to `.project-context/docs/project/coding-standards.md`.
 - Write project purpose, domain facts, and durable repo knowledge to `.project-context/docs/project/context.md`.
 - Write commands, runtime, repo layout, and branch conventions to `.project-context/docs/project/metadata.yaml`.
@@ -141,3 +150,5 @@ After edits, return:
 ## Verification
 [Static checks, smoke checks, or "Not run" with reason.]
 ```
+
+Use the user's language for this output unless instructed otherwise.
