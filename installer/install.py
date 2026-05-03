@@ -9,6 +9,8 @@ import shutil
 import datetime
 import re
 import argparse
+import subprocess
+import sys
 
 VERSION = "1.4.0"
 MARKER_START = "<!-- BEGIN PROJECT-CONTEXT -->"
@@ -119,6 +121,26 @@ def seed_active_task_files(source_kit, target_repo):
         )
 
 
+def build_context_map(target_repo):
+    script_path = os.path.join(target_repo, ".project-context/scripts/ctx_map.py")
+    if not os.path.exists(script_path):
+        raise RuntimeError("ctx_map.py is not installed.")
+
+    result = subprocess.run(
+        [sys.executable, script_path, "build"],
+        cwd=target_repo,
+        text=True,
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        message = "Context map generation failed."
+        if result.stderr.strip():
+            message += f" {result.stderr.strip()}"
+        raise RuntimeError(message)
+
+    log("  Generated .project-context/runtime/context-map.yaml")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Install project-context-kit")
     parser.add_argument(
@@ -151,6 +173,7 @@ def main():
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/active/assets"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/archive"))
     ensure_dir(os.path.join(target_repo, ".project-context/docs/task/_template/assets"))
+    ensure_dir(os.path.join(target_repo, ".project-context/runtime"))
     print()
 
 
@@ -263,6 +286,15 @@ def main():
     with open(manifest_dst, 'w') as f:
         f.write(manifest_content)
     log(f"  Generated: {manifest_dst}")
+    print()
+
+    # ── 9. Generate runtime context map ──────────────────────────────────
+    log("Step 9: Generating runtime context map...")
+    try:
+        build_context_map(target_repo)
+    except RuntimeError as exc:
+        warn(str(exc))
+        raise SystemExit(1)
     print()
 
     log("✅ Installation complete!")

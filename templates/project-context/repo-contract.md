@@ -16,9 +16,10 @@ The only durable memory for this project is the Project Context tree.
 
 | Tier | Object | Path | Purpose |
 |------|--------|------|---------|
-| **Project** | **Metadata** | `docs/project/metadata.yaml` | **READ FIRST**. Env, commands, and repo structure. |
+| **Project** | **Metadata** | `docs/project/metadata.yaml` | Env, commands, and repo structure; read when map or task needs command detail. |
 | **Project** | **Context** | `docs/project/context.md` | Long-term brain: Architecture, Standards, and History. |
 | **Project** | **Decisions** | `docs/decisions/*.md` | Lightweight long-lived design decisions that should outlive the current task. |
+| **Runtime** | **Context Map** | `runtime/context-map.yaml` | Generated routing cache for `/ctx-load`; not source of truth. |
 | **Project** | **Proposals** | `docs/proposals/*.md` | Drafts, discussion notes, and candidate changes that are not final yet. |
 | **Task** | **Index** | `docs/task/active/index.md` | Fast launch summary for the current task. |
 | **Task** | **Task** | `docs/task/active/task.md` | Scope and success criteria for the current task. |
@@ -32,16 +33,17 @@ The only durable memory for this project is the Project Context tree.
 ## 2. Interaction Protocol
 
 ### Session Start (/ctx-load)
-1. Read Metadata and Project Context first to establish a "worldview."
-2. Read `docs/decisions/` when the current task depends on prior long-lived design choices.
-3. Read `docs/task/active/index.md` for the fastest current-state view.
-4. Read `docs/task/active/task.md`, `summary.md`, and `verification.md` as needed.
+1. Read `runtime/context-map.yaml` first if present and fresh.
+2. If the map is missing, stale, or has placeholder `current` fields, read `docs/task/active/index.md` and `summary.md` first.
+3. Read `docs/project/metadata.yaml` and `docs/project/context.md` when the map or task needs them.
+4. Read `docs/decisions/` when the current task depends on prior long-lived design choices.
+5. Read `docs/task/active/task.md`, `verification.md`, and `tasklist.md` only as needed.
 
 ### Session End (/ctx-save)
 - **Knowledge Promotion**: If a Session produces universal knowledge (bug fixes, infra patterns), the agent MUST update the **Project Tier** (`context.md`).
 - **Decision Promotion**: If a Session produces a project-level design conclusion that should outlive the current task, the agent SHOULD add or update a file in `docs/decisions/`.
 - **Hermetic Reference**: Move critical logs/evidence into `docs/task/active/assets/` before referencing them.
-- **Checkpointing**: Update the active task files. Create a structured **Commit** only when a milestone is reached.
+- **Checkpointing**: Update the active task files first, then run `python .project-context/scripts/ctx_map.py build` and `python .project-context/scripts/ctx_map.py check` before ending. Create a structured **Commit** only when a milestone is reached.
 - **Task Completion**: When the active task is explicitly complete, move its snapshot into `archive/<YYYY-MM-DD>-<slug>/` and recreate `active/` from the templates.
 
 ## 3. Reasoning Integrity
@@ -53,6 +55,7 @@ Do not pollute the active task summary with failed experiments.
 - `docs/task/active/` is the startup surface for in-progress work.
 - `docs/task/active/index.md` should describe the current goal, status, next step, latest verification, and latest milestone.
 - The active tree should stay small so `/ctx-load` remains fast and reliable.
+- `tasklist.md` is deep context; do not treat it as default startup input.
 
 ### Completed Task
 - A completed task should be archived under `docs/task/archive/<YYYY-MM-DD>-<slug>/`.

@@ -4,6 +4,7 @@ installed_at: "{{INSTALLED_AT}}"
 
 managed_paths:
   - ".project-context/"
+  - ".project-context/runtime/"
   - ".agents/"
   - "docs/project/"
   - "docs/task/"

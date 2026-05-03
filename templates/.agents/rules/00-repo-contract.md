@@ -3,7 +3,7 @@
 ## MANDATORY: Priority Instructions
 
 ### GCC Hierarchy & Metadata
-- **Read `metadata.yaml` before guessing**: Never assume build commands or directory structures. Always consult `.project-context/docs/project/metadata.yaml` first.
+- **Use the context map first**: Read `.project-context/runtime/context-map.yaml` first when restoring task state. If you need build commands or directory structure, follow its route to `.project-context/docs/project/metadata.yaml` instead of guessing.
 - **Cognitive Isolation**: Use `task-branch` for exploration. This isolates your reasoning from the `main` branch.
 
 ### Write-Back Requirements (Resumability)

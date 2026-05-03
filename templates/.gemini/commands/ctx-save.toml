@@ -2,7 +2,10 @@ prompt = """
 Write back the current execution state before ending the session.
 1. Use the `activate_skill` tool with `name='context-checkpoint'` if you have completed a milestone.
 2. Update `.project-context/docs/task/active/index.md`, `.project-context/docs/task/active/summary.md`, and `.project-context/docs/task/active/verification.md` when validation changed.
-3. If `.project-context/docs/task/active/verification.md` explicitly says `Status: Complete` or `Status: Done`, archive the completed task snapshot by moving the current active task files into `.project-context/docs/task/archive/YYYY-MM-DD-<slug>/`.
-4. After archiving, recreate `.project-context/docs/task/active/` from `.project-context/docs/task/_template/`.
+3. If `.project-context/docs/task/active/tasklist.md` module status changed, update the relevant module status, owner, notes, and verification.
+4. Run `python .project-context/scripts/ctx_map.py build` and `python .project-context/scripts/ctx_map.py check` after refreshing active docs.
+5. Treat `.project-context/runtime/context-map.yaml` as generated routing cache, not source of truth; do not edit it manually.
+6. If `.project-context/docs/task/active/verification.md` explicitly says `Status: Complete` or `Status: Done`, archive the completed task snapshot by moving the current active task files into `.project-context/docs/task/archive/YYYY-MM-DD-<slug>/`.
+7. After archiving, recreate `.project-context/docs/task/active/` from `.project-context/docs/task/_template/`.
 """
 description = "Write back project context (Gemini CLI)"
